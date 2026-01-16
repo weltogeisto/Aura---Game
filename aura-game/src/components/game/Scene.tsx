@@ -20,7 +20,7 @@ export function Scene() {
         style={{ width: '100%', height: '100%' }}
       >
         <Panorama color={selectedScenario.panoramaColor} />
-        <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
+        <TargetObjects targets={selectedScenario.targets} />
         <BallisticsSystem />
       </Canvas>
       <Crosshair />

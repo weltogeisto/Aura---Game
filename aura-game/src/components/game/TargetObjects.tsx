@@ -1,47 +1,51 @@
+import * as THREE from 'three';
 import type { Target } from '@/types';
 
 interface TargetObjectsProps {
   targets: Target[];
-  onTargetClick: (targetId: string) => void;
 }
 
-export function TargetObjects({ targets, onTargetClick }: TargetObjectsProps) {
+// Helper to determine geometry type based on target type
+type GeometryType = 'sphere' | 'cylinder' | 'box' | 'plane';
+
+function getGeometryType(targetType: Target['type']): GeometryType {
+  switch (targetType) {
+    case 'sculpture':
+      return 'sphere';
+    case 'easter-egg-dadaist':
+      return 'cylinder';
+    case 'easter-egg-systemic':
+      return 'box';
+    default:
+      return 'plane';
+  }
+}
+
+// Helper to get material properties based on target type
+function getMaterialProps(targetType: Target['type']) {
+  // Base properties for each type
+  const baseProps = {
+    sculpture: { color: 0xcccccc, emissive: 0x000000, metalness: 0.1, roughness: 0.8 },
+    'easter-egg-dadaist': { color: 0x8b4513, emissive: 0x000000, metalness: 0.3, roughness: 0.7 },
+    'easter-egg-systemic': { color: 0xff0000, emissive: 0xff0000, metalness: 0.8, roughness: 0.2 },
+    masterpiece: { color: 0xffff00, emissive: 0x000000, metalness: 0, roughness: 0.5 },
+    other: { color: 0xffff00, emissive: 0x000000, metalness: 0, roughness: 0.5 },
+  };
+
+  return baseProps[targetType] || baseProps.other;
+}
+
+export function TargetObjects({ targets }: TargetObjectsProps) {
   return (
     <group>
-      {/* Lighting */}
+      {/* Scene Lighting */}
       <directionalLight position={[5, 10, 5]} intensity={1} />
       <ambientLight intensity={0.5} />
 
-      {/* Render each target */}
+      {/* Render each target as a 3D mesh */}
       {targets.map((target) => {
-        const color =
-          target.type === 'sculpture'
-            ? 0xcccccc
-            : target.type === 'easter-egg-dadaist'
-              ? 0x8b4513
-              : target.type === 'easter-egg-systemic'
-                ? 0xff0000
-                : 0xffff00;
-
-        const emissive =
-          target.type === 'easter-egg-systemic' ? 0xff0000 : 0x000000;
-
-        let GeometryComponent;
-        let geometryProps: any = {};
-
-        if (target.type === 'sculpture') {
-          GeometryComponent = 'sphereGeometry';
-          geometryProps = { args: [target.radius, 32, 32] };
-        } else if (target.type === 'easter-egg-dadaist') {
-          GeometryComponent = 'cylinderGeometry';
-          geometryProps = { args: [target.radius, target.radius, target.radius * 2, 16] };
-        } else if (target.type === 'easter-egg-systemic') {
-          GeometryComponent = 'boxGeometry';
-          geometryProps = { args: [target.radius, target.radius, target.radius] };
-        } else {
-          GeometryComponent = 'planeGeometry';
-          geometryProps = { args: [target.radius * 2, target.radius * 2.5] };
-        }
+        const geometryType = getGeometryType(target.type);
+        const materialProps = getMaterialProps(target.type);
 
         return (
           <mesh
@@ -53,23 +57,23 @@ export function TargetObjects({ targets, onTargetClick }: TargetObjectsProps) {
               value: target.value,
             }}
           >
-            {GeometryComponent === 'sphereGeometry' && (
+            {/* Render appropriate geometry based on target type */}
+            {geometryType === 'sphere' && (
               <sphereGeometry args={[target.radius, 32, 32]} />
             )}
-            {GeometryComponent === 'cylinderGeometry' && (
+            {geometryType === 'cylinder' && (
               <cylinderGeometry args={[target.radius, target.radius, target.radius * 2, 16]} />
             )}
-            {GeometryComponent === 'boxGeometry' && (
+            {geometryType === 'box' && (
               <boxGeometry args={[target.radius, target.radius, target.radius]} />
             )}
-            {GeometryComponent === 'planeGeometry' && (
+            {geometryType === 'plane' && (
               <planeGeometry args={[target.radius * 2, target.radius * 2.5]} />
             )}
             <meshStandardMaterial
-              color={color}
-              emissive={emissive}
-              metalness={target.type === 'easter-egg-systemic' ? 0.8 : target.type === 'easter-egg-dadaist' ? 0.3 : target.type === 'sculpture' ? 0.1 : 0}
-              roughness={target.type === 'easter-egg-systemic' ? 0.2 : target.type === 'easter-egg-dadaist' ? 0.7 : target.type === 'sculpture' ? 0.8 : 0.5}
+              {...materialProps}
+              // Make planes double-sided for reliable raycast hit detection
+              side={geometryType === 'plane' ? THREE.DoubleSide : THREE.FrontSide}
             />
           </mesh>
         );

@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 
 export function Crosshair() {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
   const setCrosshairPosition = useGameStore((state) => state.setCrosshairPosition);
 
   useEffect(() => {
+    // Hide the default cursor during gameplay
+    document.body.style.cursor = 'none';
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       // Store normalized position (0-1)
@@ -16,7 +19,12 @@ export function Crosshair() {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      // Restore cursor when component unmounts
+      document.body.style.cursor = 'auto';
+    };
   }, [setCrosshairPosition]);
 
   return (
