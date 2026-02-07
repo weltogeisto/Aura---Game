@@ -34,11 +34,19 @@ export interface ShotResult {
   specialEffects: string[];
 }
 
+export interface ShotFeedback {
+  active: boolean;
+  hit: boolean;
+  firedAt: number;
+  crosshairPosition: { x: number; y: number };
+}
+
 export interface GameState {
   gamePhase: GamePhase;
   selectedScenario: Scenario | null;
   crosshairPosition: { x: number; y: number };
   shotFired: boolean;
   lastShotResult: ShotResult | null;
+  shotFeedback: ShotFeedback | null;
   ammoRemaining: number;
 }

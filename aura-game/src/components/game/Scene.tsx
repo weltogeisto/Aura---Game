@@ -4,12 +4,13 @@ import { Panorama } from './Panorama';
 import { TargetObjects } from './TargetObjects';
 import { Crosshair } from './Crosshair';
 import { BallisticsSystem } from './BallisticsSystem';
+import { CameraShake } from './CameraShake';
 
 export function Scene() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
 
-  if (gamePhase !== 'aiming' || !selectedScenario) {
+  if ((gamePhase !== 'aiming' && gamePhase !== 'shooting') || !selectedScenario) {
     return null;
   }
 
@@ -23,6 +24,7 @@ export function Scene() {
         <Panorama color={selectedScenario.panoramaColor} />
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
         <BallisticsSystem />
+        <CameraShake />
       </Canvas>
       <Crosshair />
     </>
