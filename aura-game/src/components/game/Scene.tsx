@@ -19,6 +19,7 @@ export function Scene() {
         camera={{ position: [0, 0, 0], fov: 75 }}
         style={{ width: '100%', height: '100%' }}
       >
+        <fog attach="fog" args={['#0b0b0f', 8, 120]} />
         <Panorama color={selectedScenario.panoramaColor} />
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
         <BallisticsSystem />
