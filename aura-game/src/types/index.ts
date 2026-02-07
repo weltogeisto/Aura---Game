@@ -18,6 +18,11 @@ export interface Scenario {
   panoramaColor: string;
   targets: Target[];
   totalMaxValue: number;
+  criticLines?: {
+    low: string[];
+    mid: string[];
+    high: string[];
+  };
 }
 
 export interface ShotResult {
@@ -34,11 +39,21 @@ export interface ShotResult {
   specialEffects: string[];
 }
 
+export interface ShotFeedback {
+  active: boolean;
+  hit: boolean;
+  firedAt: number;
+  crosshairPosition: { x: number; y: number };
+  hitPoint?: [number, number, number];
+  hitNormal?: [number, number, number];
+}
+
 export interface GameState {
   gamePhase: GamePhase;
   selectedScenario: Scenario | null;
   crosshairPosition: { x: number; y: number };
   shotFired: boolean;
   lastShotResult: ShotResult | null;
+  shotFeedback: ShotFeedback | null;
   ammoRemaining: number;
 }

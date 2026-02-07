@@ -1,2 +1,69 @@
 /* Game styles */
 
+.muzzle-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 226, 190, 0.45) 0%, rgba(0, 0, 0, 0) 55%);
+  opacity: 0;
+  animation: muzzle-flash 0.25s ease-out forwards;
+}
+
+.shot-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0) 35%, rgba(0, 0, 0, 0.35) 100%);
+  opacity: 0;
+  animation: vignette-pulse 0.45s ease-out forwards;
+}
+
+.hit-marker {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: hit-marker 0.45s ease-out forwards;
+}
+
+.hit-marker-line {
+  position: absolute;
+  width: 28px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 6px rgba(255, 220, 200, 0.8);
+}
+
+.hit-marker-line:last-child {
+  transform: rotate(90deg);
+}
+
+@keyframes muzzle-flash {
+  0% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes vignette-pulse {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hit-marker {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
