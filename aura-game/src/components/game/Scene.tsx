@@ -4,12 +4,16 @@ import { Panorama } from './Panorama';
 import { TargetObjects } from './TargetObjects';
 import { Crosshair } from './Crosshair';
 import { BallisticsSystem } from './BallisticsSystem';
+import { CameraShake } from './CameraShake';
+import { ShotImpact } from './ShotImpact';
+import { ShotTracer } from './ShotTracer';
+import { ValueMesh } from './ValueMesh';
 
 export function Scene() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
 
-  if (gamePhase !== 'aiming' || !selectedScenario) {
+  if ((gamePhase !== 'aiming' && gamePhase !== 'shooting') || !selectedScenario) {
     return null;
   }
 
@@ -19,9 +23,14 @@ export function Scene() {
         camera={{ position: [0, 0, 0], fov: 75 }}
         style={{ width: '100%', height: '100%' }}
       >
+        <fog attach="fog" args={['#0b0b0f', 8, 120]} />
         <Panorama color={selectedScenario.panoramaColor} />
+        <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
         <BallisticsSystem />
+        <CameraShake />
+        <ShotImpact />
+        <ShotTracer />
       </Canvas>
       <Crosshair />
     </>

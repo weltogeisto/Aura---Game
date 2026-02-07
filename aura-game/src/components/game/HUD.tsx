@@ -5,7 +5,7 @@ export function HUD() {
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const ammoRemaining = useGameStore((state) => state.ammoRemaining);
 
-  if (gamePhase !== 'aiming' || !selectedScenario) {
+  if ((gamePhase !== 'aiming' && gamePhase !== 'shooting') || !selectedScenario) {
     return null;
   }
 
