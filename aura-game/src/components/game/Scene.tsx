@@ -24,7 +24,7 @@ export function Scene() {
         style={{ width: '100%', height: '100%' }}
       >
         <fog attach="fog" args={['#1b1416', 12, 180]} />
-        <Panorama color={selectedScenario.panoramaColor} />
+        <Panorama />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
         <BallisticsSystem />
