@@ -1,7 +1,9 @@
+import { getScenariosList } from '@/data/scenarios';
 import { useGameStore } from '@/stores/gameStore';
 
 export function MainMenu() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
+  const scenarioCount = getScenariosList().length;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-gray-900 to-black z-50">
@@ -13,7 +15,7 @@ export function MainMenu() {
           of the 21st Century
         </h2>
         <p className="text-gray-400 mb-12 max-w-md mx-auto">
-          One shot. Nine iconic interiors. Maximum cultural damage.
+          One shot. {scenarioCount} iconic interiors. Maximum cultural damage.
         </p>
         <button
           onClick={() => setGamePhase('scenario-select')}
