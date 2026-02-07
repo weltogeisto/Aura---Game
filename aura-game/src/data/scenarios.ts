@@ -66,7 +66,7 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'An ordinary mop bucket. But is it art? Is value arbitrary?',
       },
     ],
-    totalMaxValue: 3500000000,
+    totalMaxValue: 1390000215,
     criticLines: {
       low: [
         'A whisper of damage. The Louvre barely notices the breeze.',
