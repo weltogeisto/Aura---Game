@@ -48,6 +48,15 @@ export function BallisticsSystem() {
         const hitMesh = firstIntersect.object as THREE.Mesh;
         hitTarget = hitMesh.userData.targetId as string;
         hitValue = hitMesh.userData.value || 0;
+        const hitPoint = firstIntersect.point.clone();
+        const hitNormal = firstIntersect.face?.normal
+          ? firstIntersect.face.normal.clone()
+          : new THREE.Vector3(0, 0, 1);
+
+        if (firstIntersect.face && hitMesh.matrixWorld) {
+          const normalMatrix = new THREE.Matrix3().getNormalMatrix(hitMesh.matrixWorld);
+          hitNormal.applyMatrix3(normalMatrix).normalize();
+        }
 
         // Calculate damage based on hit
         totalDamage = hitValue;
@@ -97,6 +106,8 @@ export function BallisticsSystem() {
           hit: true,
           firedAt: Date.now(),
           crosshairPosition,
+          hitPoint: [hitPoint.x, hitPoint.y, hitPoint.z],
+          hitNormal: [hitNormal.x, hitNormal.y, hitNormal.z],
         });
         timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       } else {
