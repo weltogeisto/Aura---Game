@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
@@ -10,6 +10,8 @@ export function BallisticsSystem() {
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
   const fireShotResult = useGameStore((state) => state.fireShotResult);
+  const finalizeShot = useGameStore((state) => state.finalizeShot);
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (gamePhase !== 'aiming') return;
@@ -90,7 +92,13 @@ export function BallisticsSystem() {
           specialEffects,
         };
 
-        fireShotResult(result);
+        fireShotResult(result, {
+          active: true,
+          hit: true,
+          firedAt: Date.now(),
+          crosshairPosition,
+        });
+        timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       } else {
         // Miss
         const result: ShotResult = {
@@ -102,13 +110,24 @@ export function BallisticsSystem() {
           specialEffects: ['Shot missed the target completely.'],
         };
 
-        fireShotResult(result);
+        fireShotResult(result, {
+          active: true,
+          hit: false,
+          firedAt: Date.now(),
+          crosshairPosition,
+        });
+        timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       }
     };
 
     window.addEventListener('click', handleClick);
-    return () => window.removeEventListener('click', handleClick);
-  }, [gamePhase, selectedScenario, crosshairPosition, scene, camera, fireShotResult]);
+    return () => {
+      window.removeEventListener('click', handleClick);
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [gamePhase, selectedScenario, crosshairPosition, scene, camera, fireShotResult, finalizeShot]);
 
   return null;
 }
