@@ -28,7 +28,7 @@ export function Scene() {
         <Panorama color={selectedScenario.panoramaColor} />
         <RoomShell />
         <ValueMesh scenario={selectedScenario} />
-        <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
+        <TargetObjects targets={selectedScenario.targets} />
         <BallisticsSystem />
         <CameraShake />
         <ShotImpact />
