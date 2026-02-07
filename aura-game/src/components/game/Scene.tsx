@@ -23,7 +23,7 @@ export function Scene() {
         camera={{ position: [0, 0, 0], fov: 75 }}
         style={{ width: '100%', height: '100%' }}
       >
-        <fog attach="fog" args={['#0b0b0f', 8, 120]} />
+        <fog attach="fog" args={['#1b1416', 12, 180]} />
         <Panorama color={selectedScenario.panoramaColor} />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />

@@ -105,6 +105,14 @@ export function Panorama({ color }: PanoramaProps) {
         ctx.fillStyle = 'rgba(220, 200, 170, 0.2)';
       }
 
+      // Banner stripe to anchor horizon
+      const bannerGradient = ctx.createLinearGradient(0, frameY - 40, 0, frameY + 60);
+      bannerGradient.addColorStop(0, 'rgba(90, 60, 45, 0)');
+      bannerGradient.addColorStop(0.5, 'rgba(120, 80, 60, 0.35)');
+      bannerGradient.addColorStop(1, 'rgba(90, 60, 45, 0)');
+      ctx.fillStyle = bannerGradient;
+      ctx.fillRect(0, frameY - 40, canvas.width, 120);
+
       // Wall paneling
       ctx.strokeStyle = 'rgba(170, 140, 110, 0.4)';
       ctx.lineWidth = 3;
@@ -132,6 +140,14 @@ export function Panorama({ color }: PanoramaProps) {
         ctx.lineTo(x, canvas.height);
         ctx.stroke();
       }
+
+      // Floor sheen
+      const floorSheen = ctx.createLinearGradient(0, tileStartY, 0, canvas.height);
+      floorSheen.addColorStop(0, 'rgba(255, 214, 170, 0.12)');
+      floorSheen.addColorStop(0.5, 'rgba(80, 50, 40, 0)');
+      floorSheen.addColorStop(1, 'rgba(0, 0, 0, 0.35)');
+      ctx.fillStyle = floorSheen;
+      ctx.fillRect(0, tileStartY, canvas.width, canvas.height - tileStartY);
 
       // Vignette for depth
       const vignette = ctx.createRadialGradient(
