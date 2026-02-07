@@ -18,21 +18,28 @@ export function Panorama({ color }: PanoramaProps) {
       // Base gradients for ceiling, walls, and floor
       const wallGradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
       wallGradient.addColorStop(0, color);
-      wallGradient.addColorStop(0.4, '#b08157');
-      wallGradient.addColorStop(0.7, '#5a3e2c');
-      wallGradient.addColorStop(1, '#201a1f');
+      wallGradient.addColorStop(0.35, '#c68f5f');
+      wallGradient.addColorStop(0.62, '#694831');
+      wallGradient.addColorStop(1, '#231b22');
       ctx.fillStyle = wallGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const ceilingGradient = ctx.createLinearGradient(0, 0, 0, canvas.height * 0.55);
-      ceilingGradient.addColorStop(0, '#5a4030');
+      ceilingGradient.addColorStop(0, '#6b4b36');
       ceilingGradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
       ctx.fillStyle = ceilingGradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height * 0.55);
 
+      const horizonGlow = ctx.createLinearGradient(0, canvas.height * 0.4, 0, canvas.height * 0.7);
+      horizonGlow.addColorStop(0, 'rgba(255, 220, 185, 0.18)');
+      horizonGlow.addColorStop(0.5, 'rgba(255, 214, 170, 0.28)');
+      horizonGlow.addColorStop(1, 'rgba(80, 50, 40, 0)');
+      ctx.fillStyle = horizonGlow;
+      ctx.fillRect(0, canvas.height * 0.38, canvas.width, canvas.height * 0.35);
+
       const floorGradient = ctx.createLinearGradient(0, canvas.height * 0.6, 0, canvas.height);
       floorGradient.addColorStop(0, 'rgba(30, 24, 18, 0)');
-      floorGradient.addColorStop(1, '#141018');
+      floorGradient.addColorStop(1, '#1c161f');
       ctx.fillStyle = floorGradient;
       ctx.fillRect(0, canvas.height * 0.6, canvas.width, canvas.height);
 

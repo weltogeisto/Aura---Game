@@ -10,7 +10,7 @@ interface ValueMeshProps {
 export function ValueMesh({ scenario }: ValueMeshProps) {
   const { camera } = useThree();
   const meshRefs = useMemo(
-    () => scenario.targets.map(() => createRef<THREE.Mesh>()),
+    () => scenario.targets.map(() => createRef<THREE.Group>()),
     [scenario.targets]
   );
 
@@ -36,21 +36,32 @@ export function ValueMesh({ scenario }: ValueMeshProps) {
                 ? '#ff6b6b'
                 : '#c9f18f';
 
+        const outerSize = size * 1.25;
         return (
-          <mesh
-            key={`value-${target.id}`}
-            position={target.position}
-            ref={meshRefs[index]}
-          >
-            <planeGeometry args={[size, size]} />
-            <meshBasicMaterial
-              color={color}
-              transparent
-              opacity={0.2 + intensity * 0.9}
-              depthWrite={false}
-              blending={THREE.AdditiveBlending}
-            />
-          </mesh>
+          <group key={`value-${target.id}`} position={target.position} ref={meshRefs[index]}>
+            <mesh>
+              <planeGeometry args={[outerSize, outerSize]} />
+              <meshBasicMaterial
+                color={color}
+                transparent
+                opacity={0.12 + intensity * 0.6}
+                depthWrite={false}
+                depthTest={false}
+                blending={THREE.AdditiveBlending}
+              />
+            </mesh>
+            <mesh>
+              <planeGeometry args={[size, size]} />
+              <meshBasicMaterial
+                color={color}
+                transparent
+                opacity={0.24 + intensity * 0.9}
+                depthWrite={false}
+                depthTest={false}
+                blending={THREE.AdditiveBlending}
+              />
+            </mesh>
+          </group>
         );
       })}
     </group>
