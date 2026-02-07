@@ -67,6 +67,20 @@ export const SCENARIOS: Record<string, Scenario> = {
       },
     ],
     totalMaxValue: 3500000000,
+    criticLines: {
+      low: [
+        'A whisper of damage. The Louvre barely notices the breeze.',
+        'A timid graze. History yawns and turns the page.',
+      ],
+      mid: [
+        'Respectable damage—enough to make the curators flinch.',
+        'A clean strike. The gallery will remember this silence.',
+      ],
+      high: [
+        'Catastrophic. The canon reels beneath the blow.',
+        'Devastation worthy of a manifesto. The walls will never forget.',
+      ],
+    },
   },
 };
 

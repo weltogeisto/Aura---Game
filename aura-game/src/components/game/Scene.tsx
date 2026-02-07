@@ -5,6 +5,9 @@ import { TargetObjects } from './TargetObjects';
 import { Crosshair } from './Crosshair';
 import { BallisticsSystem } from './BallisticsSystem';
 import { CameraShake } from './CameraShake';
+import { ShotImpact } from './ShotImpact';
+import { ShotTracer } from './ShotTracer';
+import { ValueMesh } from './ValueMesh';
 
 export function Scene() {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -22,9 +25,12 @@ export function Scene() {
       >
         <fog attach="fog" args={['#0b0b0f', 8, 120]} />
         <Panorama color={selectedScenario.panoramaColor} />
+        <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
         <BallisticsSystem />
         <CameraShake />
+        <ShotImpact />
+        <ShotTracer />
       </Canvas>
       <Crosshair />
     </>
