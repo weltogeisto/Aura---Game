@@ -40,8 +40,9 @@ export function ShotImpact() {
 
   useEffect(() => {
     if (!meshRef.current) return;
-    meshRef.current.position.copy(hitPosition);
-  }, [hitPosition]);
+    const offset = hitNormal.clone().multiplyScalar(0.06);
+    meshRef.current.position.copy(hitPosition.clone().add(offset));
+  }, [hitPosition, hitNormal]);
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback.hit) {
@@ -63,7 +64,8 @@ export function ShotImpact() {
       const impactScale = shotFeedback.damageScale ?? 0.4;
       const scale = 0.25 + progress * (0.7 + impactScale);
       meshRef.current.scale.set(scale, scale, scale);
-      meshRef.current.position.copy(hitPosition);
+      const offset = hitNormal.clone().multiplyScalar(0.06);
+      meshRef.current.position.copy(hitPosition.clone().add(offset));
       meshRef.current.lookAt(camera.position);
       meshRef.current.rotateOnAxis(hitNormal, Math.sin(progress * Math.PI) * 0.15);
     }
@@ -73,7 +75,8 @@ export function ShotImpact() {
       const impactScale = shotFeedback.damageScale ?? 0.4;
       const scale = 0.35 + progress * (1.2 + impactScale);
       particlesRef.current.scale.set(scale, scale, scale);
-      particlesRef.current.position.copy(hitPosition);
+      const offset = hitNormal.clone().multiplyScalar(0.06);
+      particlesRef.current.position.copy(hitPosition.clone().add(offset));
       particlesRef.current.lookAt(camera.position);
     }
   });

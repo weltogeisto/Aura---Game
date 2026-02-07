@@ -59,6 +59,8 @@ export function BallisticsSystem() {
           const normalMatrix = new THREE.Matrix3().getNormalMatrix(hitMesh.matrixWorld);
           hitNormal.applyMatrix3(normalMatrix).normalize();
         }
+        const impactOffset = hitNormal.clone().multiplyScalar(0.06);
+        const traceEnd = hitPoint.clone().add(impactOffset);
 
         // Calculate damage based on hit + simple distance attenuation
         const attenuation = THREE.MathUtils.clamp(1 - firstIntersect.distance * 0.15, 0.6, 1);
@@ -134,7 +136,7 @@ export function BallisticsSystem() {
           hitDistance: firstIntersect.distance,
           damageScale,
           travelTimeMs,
-          traceEnd: [hitPoint.x, hitPoint.y, hitPoint.z],
+          traceEnd: [traceEnd.x, traceEnd.y, traceEnd.z],
           hitPoint: [hitPoint.x, hitPoint.y, hitPoint.z],
           hitNormal: [hitNormal.x, hitNormal.y, hitNormal.z],
         });
