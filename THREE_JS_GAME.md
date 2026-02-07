@@ -199,6 +199,37 @@ function calculateDamage(
 }
 ```
 
+## Graphics Polish & Adaptability
+
+### Postprocessing Stack (Quality Tiers)
+
+```tsx
+import { EffectComposer, Bloom, Vignette, ChromaticAberration } from '@react-three/postprocessing'
+
+function PostFX({ quality }: { quality: 'low' | 'medium' | 'high' }) {
+  if (quality === 'low') return null
+  return (
+    <EffectComposer>
+      <Bloom intensity={quality === 'high' ? 0.6 : 0.35} luminanceThreshold={0.2} />
+      <Vignette eskil={false} offset={0.1} darkness={0.7} />
+      {quality === 'high' ? <ChromaticAberration offset={[0.0006, 0.0006]} /> : null}
+    </EffectComposer>
+  )
+}
+```
+
+### Adaptive Rendering
+
+- **Dynamic resolution:** scale `dpr` based on device capability.
+- **GPU load guard:** disable expensive effects if `fps < 50` for 2 seconds.
+- **Texture tiers:** load 4K on high, 2K on medium, 1K on low.
+
+### “Cool Feature” Hooks
+
+- **Photo mode:** pause physics, hide UI, increase render quality, export screenshot.
+- **Replay mode:** record trajectory samples, play back in slow-mo.
+- **Accessibility presets:** aim assist, reduced motion, and high-contrast UI.
+
 ## Material Properties
 
 ```tsx

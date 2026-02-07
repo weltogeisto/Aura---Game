@@ -251,6 +251,24 @@ setTimeout(() => bulletTimeScale.set(1), 2000)
 - Keyboard support for shooting (Spacebar)
 - Screen reader announces score
 - Reduce motion option (disables slow-mo)
+- Quality toggle (Low/Medium/High) for weaker GPUs
+- Colorblind-safe accents for gold/red/green indicators
+
+## Visual Polish Targets
+
+- **Panorama fidelity:** 8K source, subtle vignette, and calibrated exposure per room.
+- **Material readability:** glass/gloss highlights for modern spaces, matte diffusion for stone/plaster.
+- **UI depth:** thin drop shadows + 1px borders to float over bright scenes without feeling modern.
+- **Impact feedback:** micro-shake on shot, dust motes, and brief bloom on high-value hits.
+- **Cinematic pacing:** slow fade-to-black on score reveal, with gold line wipe.
+
+## Adaptable UI & Feature Hooks
+
+- **Theme variants:** “Museum Daylight” and “After Hours” presets with identical layout.
+- **Layout slots:** reserve a right-side panel for platform-specific UI (desktop: score; mobile: drawer).
+- **Scalable effects:** tie postprocessing intensity to a quality setting (disable bloom/DOF on Low).
+- **Feature flags:** enable/disable Easter egg reveals, commentary overlay, or assist mode without UI refactor.
+- **Localization-ready:** keep all text in a single dictionary and avoid UI hardcoding.
 
 ## Anti-Patterns to Avoid
 

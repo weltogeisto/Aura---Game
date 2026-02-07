@@ -71,6 +71,32 @@ bash ../scripts/bundle-artifact.sh
 
 ---
 
+## Updated Plan: Move Toward a Desktop Beta
+
+This plan incorporates the graphics/adaptability frame while defining the next concrete steps.
+
+### Phase 1 — Visual Baseline (Web)
+1. **Single-scenario vertical slice:** Implement the Louvre with a full value mesh, one Dadaist egg, and critic review.
+2. **Polish targets:** Ship 8K panorama, calibrated exposure, restrained postprocessing (bloom + vignette), and crisp UI overlays.
+3. **Impact feedback:** Add micro-shake, dust motes, and brief bloom spike for high-value hits.
+
+### Phase 2 — Performance & Adaptability
+1. **Quality tiers:** Low/Medium/High settings that scale postprocessing, texture resolution, and device pixel ratio.
+2. **GPU load guard:** Auto-disable heavy effects when FPS stays below target.
+3. **Adaptive UI layout:** Reserve a desktop score panel and keep the mobile drawer layout available.
+
+### Phase 3 — Desktop Wrapper (Beta)
+1. **Package the web build:** Use Tauri or Electron to wrap `bundle.html`/`dist` into a desktop app.
+2. **Offline-ready assets:** Ensure all panoramas/audio are bundled with the app.
+3. **Beta distribution:** Produce installers for Windows/macOS (and Linux if feasible).
+
+### Phase 4 — “Cool Feature” Hooks
+1. **Photo mode:** Pause physics, hide UI, increase render quality, export a screenshot.
+2. **Replay mode:** Record the shot trajectory and play back in slow motion.
+3. **Accessibility presets:** Reduced motion, aim assist, and high-contrast UI mode.
+
+---
+
 ## Project Structure
 
 ```
