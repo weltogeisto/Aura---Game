@@ -5,7 +5,6 @@ import { TargetObjects } from './TargetObjects';
 import { Crosshair } from './Crosshair';
 import { BallisticsSystem } from './BallisticsSystem';
 import { CameraShake } from './CameraShake';
-import { ShotImpact } from './ShotImpact';
 
 export function Scene() {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -26,7 +25,6 @@ export function Scene() {
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
         <BallisticsSystem />
         <CameraShake />
-        <ShotImpact />
       </Canvas>
       <Crosshair />
     </>

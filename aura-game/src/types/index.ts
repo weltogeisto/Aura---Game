@@ -39,8 +39,6 @@ export interface ShotFeedback {
   hit: boolean;
   firedAt: number;
   crosshairPosition: { x: number; y: number };
-  hitPoint?: [number, number, number];
-  hitNormal?: [number, number, number];
 }
 
 export interface GameState {
