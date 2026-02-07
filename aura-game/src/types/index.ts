@@ -44,6 +44,10 @@ export interface ShotFeedback {
   hit: boolean;
   firedAt: number;
   crosshairPosition: { x: number; y: number };
+  hitDistance?: number;
+  damageScale?: number;
+  travelTimeMs?: number;
+  traceEnd?: [number, number, number];
   hitPoint?: [number, number, number];
   hitNormal?: [number, number, number];
 }

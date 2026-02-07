@@ -60,7 +60,8 @@ export function ShotImpact() {
 
     if (materialRef.current && meshRef.current) {
       materialRef.current.opacity = (1 - progress) * 0.85;
-      const scale = 0.35 + progress * 0.9;
+      const impactScale = shotFeedback.damageScale ?? 0.4;
+      const scale = 0.25 + progress * (0.7 + impactScale);
       meshRef.current.scale.set(scale, scale, scale);
       meshRef.current.position.copy(hitPosition);
       meshRef.current.lookAt(camera.position);
@@ -69,7 +70,8 @@ export function ShotImpact() {
 
     if (particlesRef.current) {
       particlesRef.current.visible = true;
-      const scale = 0.4 + progress * 1.4;
+      const impactScale = shotFeedback.damageScale ?? 0.4;
+      const scale = 0.35 + progress * (1.2 + impactScale);
       particlesRef.current.scale.set(scale, scale, scale);
       particlesRef.current.position.copy(hitPosition);
       particlesRef.current.lookAt(camera.position);

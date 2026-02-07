@@ -6,6 +6,7 @@ import { Crosshair } from './Crosshair';
 import { BallisticsSystem } from './BallisticsSystem';
 import { CameraShake } from './CameraShake';
 import { ShotImpact } from './ShotImpact';
+import { ShotTracer } from './ShotTracer';
 import { ValueMesh } from './ValueMesh';
 
 export function Scene() {
@@ -29,6 +30,7 @@ export function Scene() {
         <BallisticsSystem />
         <CameraShake />
         <ShotImpact />
+        <ShotTracer />
       </Canvas>
       <Crosshair />
     </>

@@ -43,6 +43,7 @@ export function BallisticsSystem() {
       let hitTarget: string | null = null;
       let hitValue = 0;
       let totalDamage = 0;
+      const missTraceDistance = 45;
 
       if (intersects.length > 0) {
         const firstIntersect = intersects[0];
@@ -63,6 +64,16 @@ export function BallisticsSystem() {
         const attenuation = THREE.MathUtils.clamp(1 - firstIntersect.distance * 0.15, 0.6, 1);
         const adjustedDamage = Math.round(hitValue * attenuation);
         totalDamage = adjustedDamage;
+        const damageScale = THREE.MathUtils.clamp(
+          adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1),
+          0.1,
+          1
+        );
+        const travelTimeMs = THREE.MathUtils.clamp(
+          (firstIntersect.distance / 45) * 1000,
+          140,
+          480
+        );
 
         // Check for easter eggs
         const specialEffects: string[] = [];
@@ -120,11 +131,18 @@ export function BallisticsSystem() {
           hit: true,
           firedAt: Date.now(),
           crosshairPosition,
+          hitDistance: firstIntersect.distance,
+          damageScale,
+          travelTimeMs,
+          traceEnd: [hitPoint.x, hitPoint.y, hitPoint.z],
           hitPoint: [hitPoint.x, hitPoint.y, hitPoint.z],
           hitNormal: [hitNormal.x, hitNormal.y, hitNormal.z],
         });
         timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       } else {
+        const missEnd = raycaster.ray.at(missTraceDistance, new THREE.Vector3());
+        const travelTimeMs = THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420);
+
         // Miss
         const result: ShotResult = {
           hitTargetId: null,
@@ -140,6 +158,10 @@ export function BallisticsSystem() {
           hit: false,
           firedAt: Date.now(),
           crosshairPosition,
+          hitDistance: missTraceDistance,
+          damageScale: 0.15,
+          travelTimeMs,
+          traceEnd: [missEnd.x, missEnd.y, missEnd.z],
         });
         timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       }
