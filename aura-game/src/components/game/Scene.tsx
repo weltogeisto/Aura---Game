@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
 import { Panorama } from './Panorama';
+import { RoomShell } from './RoomShell';
 import { TargetObjects } from './TargetObjects';
 import { Crosshair } from './Crosshair';
 import { BallisticsSystem } from './BallisticsSystem';
@@ -25,6 +26,7 @@ export function Scene() {
       >
         <fog attach="fog" args={['#1b1416', 12, 180]} />
         <Panorama color={selectedScenario.panoramaColor} />
+        <RoomShell />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} onTargetClick={() => {}} />
         <BallisticsSystem />
