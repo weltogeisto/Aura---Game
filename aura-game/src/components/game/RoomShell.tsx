@@ -7,18 +7,18 @@ const ROOM_WIDTH = 38;
 const WALL_HEIGHT = 14;
 const WALL_Z = -13;
 
-const createParquetTexture = () => {
+const createParquetTexture = (textureSize: number) => {
   const canvas = document.createElement('canvas');
-  canvas.width = 512;
-  canvas.height = 512;
+  canvas.width = textureSize;
+  canvas.height = textureSize;
   const ctx = canvas.getContext('2d');
 
   if (ctx) {
     ctx.fillStyle = '#70452c';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    const plankWidth = 80;
-    const plankHeight = 40;
+    const plankWidth = Math.max(24, Math.round(textureSize * 0.16));
+    const plankHeight = Math.max(16, Math.round(textureSize * 0.08));
     const tones = ['#8b5e3b', '#7a5236', '#9a6a44', '#6d4630', '#a3744b', '#b07a50'];
 
     for (let y = 0; y < canvas.height; y += plankHeight) {
@@ -30,7 +30,7 @@ const createParquetTexture = () => {
     }
 
     ctx.strokeStyle = 'rgba(255, 235, 210, 0.14)';
-    ctx.lineWidth = 1.25;
+    ctx.lineWidth = Math.max(0.75, textureSize * 0.0024);
     for (let x = 0; x < canvas.width; x += plankWidth) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
@@ -45,8 +45,8 @@ const createParquetTexture = () => {
     }
 
     ctx.strokeStyle = 'rgba(40, 20, 12, 0.22)';
-    ctx.lineWidth = 2.5;
-    for (let x = -canvas.height; x < canvas.width + canvas.height; x += 120) {
+    ctx.lineWidth = Math.max(1.5, textureSize * 0.0049);
+    for (let x = -canvas.height; x < canvas.width + canvas.height; x += textureSize * 0.234) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x + canvas.height, canvas.height);
@@ -64,16 +64,16 @@ const createParquetTexture = () => {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
   texture.repeat.set(4, 4);
-  texture.anisotropy = 12;
+  texture.anisotropy = 8;
   texture.needsUpdate = true;
 
   return texture;
 };
 
-const createPlasterTexture = () => {
+const createPlasterTexture = (textureSize: number) => {
   const canvas = document.createElement('canvas');
-  canvas.width = 512;
-  canvas.height = 512;
+  canvas.width = textureSize;
+  canvas.height = textureSize;
   const ctx = canvas.getContext('2d');
 
   if (ctx) {
@@ -83,7 +83,8 @@ const createPlasterTexture = () => {
     ctx.fillStyle = baseGradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    for (let i = 0; i < 1400; i++) {
+    const speckCount = Math.round(textureSize * 2.6);
+    for (let i = 0; i < speckCount; i++) {
       const radius = Math.random() * 2.4 + 0.4;
       const alpha = Math.random() * 0.07 + 0.02;
       ctx.fillStyle = `rgba(120, 90, 70, ${alpha})`;
@@ -99,8 +100,8 @@ const createPlasterTexture = () => {
     }
 
     ctx.strokeStyle = 'rgba(255, 245, 230, 0.18)';
-    ctx.lineWidth = 1.5;
-    for (let x = 0; x < canvas.width; x += 96) {
+    ctx.lineWidth = Math.max(1, textureSize * 0.003);
+    for (let x = 0; x < canvas.width; x += textureSize * 0.1875) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, canvas.height);
@@ -117,9 +118,13 @@ const createPlasterTexture = () => {
   return texture;
 };
 
-export function RoomShell() {
-  const floorTexture = useMemo(() => createParquetTexture(), []);
-  const wallTexture = useMemo(() => createPlasterTexture(), []);
+interface RoomShellProps {
+  textureSize: number;
+}
+
+export function RoomShell({ textureSize }: RoomShellProps) {
+  const floorTexture = useMemo(() => createParquetTexture(textureSize), [textureSize]);
+  const wallTexture = useMemo(() => createPlasterTexture(textureSize), [textureSize]);
 
   return (
     <group>
