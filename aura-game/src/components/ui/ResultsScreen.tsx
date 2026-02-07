@@ -3,10 +3,22 @@ import { formatCurrency } from '@/lib/utils';
 
 export function ResultsScreen() {
   const lastShotResult = useGameStore((state) => state.lastShotResult);
+  const selectedScenario = useGameStore((state) => state.selectedScenario);
   const resetGame = useGameStore((state) => state.resetGame);
 
   if (!lastShotResult) {
     return null;
+  }
+
+  const totalDamage = lastShotResult.totalDamage;
+  const maxValue = selectedScenario?.totalMaxValue ?? totalDamage;
+  const ratio = maxValue ? totalDamage / maxValue : 0;
+  const criticLines = selectedScenario?.criticLines;
+  let criticLine = 'The critic is still taking notes.';
+
+  if (criticLines) {
+    const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
+    criticLine = pool[Math.floor(Math.random() * pool.length)] ?? criticLine;
   }
 
   return (
@@ -54,6 +66,11 @@ export function ResultsScreen() {
             </ul>
           </div>
         )}
+
+        <div className="bg-black/40 border border-orange-500/40 p-4 rounded mb-8">
+          <p className="text-orange-200 text-sm uppercase tracking-[0.2em] mb-2">Critic</p>
+          <p className="text-orange-100 italic">“{criticLine}”</p>
+        </div>
 
         <button
           onClick={resetGame}
