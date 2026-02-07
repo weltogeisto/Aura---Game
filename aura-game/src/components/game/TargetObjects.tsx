@@ -9,8 +9,10 @@ export function TargetObjects({ targets, onTargetClick }: TargetObjectsProps) {
   return (
     <group>
       {/* Lighting */}
-      <directionalLight position={[5, 10, 5]} intensity={1} />
-      <ambientLight intensity={0.5} />
+      <hemisphereLight color={0xffe7c2} groundColor={0xffd1a1} intensity={0.65} />
+      <directionalLight position={[6, 12, 6]} intensity={0.45} color={0xfff1d6} />
+      <directionalLight position={[-4, 9, -6]} intensity={0.3} color={0xffe6c7} />
+      <ambientLight intensity={0.6} />
 
       {/* Render each target */}
       {targets.map((target) => {
