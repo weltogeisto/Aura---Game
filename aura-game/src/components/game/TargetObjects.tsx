@@ -2,10 +2,9 @@ import type { Target } from '@/types';
 
 interface TargetObjectsProps {
   targets: Target[];
-  onTargetClick: (targetId: string) => void;
 }
 
-export function TargetObjects({ targets, onTargetClick }: TargetObjectsProps) {
+export function TargetObjects({ targets }: TargetObjectsProps) {
   return (
     <group>
       {/* Lighting */}
