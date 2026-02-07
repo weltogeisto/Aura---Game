@@ -1,7 +1,15 @@
 import type { Scenario } from '@/types';
 
+const sumTargetValues = (targets: Scenario['targets']): number =>
+  targets.reduce((total, target) => total + target.value, 0);
+
+const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => ({
+  ...scenario,
+  totalMaxValue: sumTargetValues(scenario.targets),
+});
+
 export const SCENARIOS: Record<string, Scenario> = {
-  louvre: {
+  louvre: createScenario({
     id: 'louvre',
     name: 'The Louvre - Salle des États',
     description: 'Paris, France. One shot to maximize cultural damage in the most visited museum.',
@@ -66,7 +74,6 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'An ordinary mop bucket. But is it art? Is value arbitrary?',
       },
     ],
-    totalMaxValue: 1390000215,
     criticLines: {
       low: [
         'A whisper of damage. The Louvre barely notices the breeze.',
@@ -81,8 +88,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         'Devastation worthy of a manifesto. The walls will never forget.',
       ],
     },
-  },
-  'st-peters': {
+  }),
+  'st-peters': createScenario({
     id: 'st-peters',
     name: "St. Peter's Basilica - Nave",
     description: 'Vatican City. Sacred architecture where atmosphere outvalues material.',
@@ -157,9 +164,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'A paperback conspiracy that manufactures value from myth.',
       },
     ],
-    totalMaxValue: 1000000000,
-  },
-  topkapi: {
+  }),
+  topkapi: createScenario({
     id: 'topkapi',
     name: 'Topkapi Palace - Imperial Treasury',
     description: 'Istanbul, Turkey. Ottoman opulence where display wars with authenticity.',
@@ -234,9 +240,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'The replica that reveals the real diamond.',
       },
     ],
-    totalMaxValue: 500000000,
-  },
-  'forbidden-city': {
+  }),
+  'forbidden-city': createScenario({
     id: 'forbidden-city',
     name: 'Forbidden City - Hall of Supreme Harmony',
     description: 'Beijing, China. Imperial power and cultural contamination collide.',
@@ -311,9 +316,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'A Western brand on a guard\'s desk.',
       },
     ],
-    totalMaxValue: 1000000000000,
-  },
-  tsmc: {
+  }),
+  tsmc: createScenario({
     id: 'tsmc',
     name: 'TSMC Clean Room - Fab 18',
     description: 'Tainan, Taiwan. Technological value balanced on a dust particle.',
@@ -388,9 +392,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'An illegal seat in the temple of productivity.',
       },
     ],
-    totalMaxValue: 10000000000,
-  },
-  hermitage: {
+  }),
+  hermitage: createScenario({
     id: 'hermitage',
     name: 'The Hermitage - Peacock Clock Room',
     description: 'St. Petersburg, Russia. Mechanical complexity and political economy.',
@@ -465,9 +468,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'A fragile chain that drops the chandelier.',
       },
     ],
-    totalMaxValue: 50000000,
-  },
-  'federal-reserve': {
+  }),
+  'federal-reserve': createScenario({
     id: 'federal-reserve',
     name: 'Federal Reserve - Gold Vault',
     description: 'New York, USA. Fiat abstraction where value is pure hallucination.',
@@ -533,9 +535,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'Cold concrete with zero symbolic value.',
       },
     ],
-    totalMaxValue: 1000000000000,
-  },
-  moma: {
+  }),
+  moma: createScenario({
     id: 'moma',
     name: 'MoMA - Contemporary Gallery',
     description: 'New York, USA. Modern art where destruction becomes creation.',
@@ -611,9 +612,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'Definitely not art. Probably.',
       },
     ],
-    totalMaxValue: 50000000,
-  },
-  'borges-library': {
+  }),
+  'borges-library': createScenario({
     id: 'borges-library',
     name: 'The Borges Library - Canon Room',
     description: 'Impossible hexagonal chamber where ideas outweigh objects.',
@@ -679,8 +679,7 @@ export const SCENARIOS: Record<string, Scenario> = {
         description: 'Cuts the desire-mining algorithm.',
       },
     ],
-    totalMaxValue: 1000000000000,
-  },
+  }),
 };
 
 export const getScenario = (id: string): Scenario | undefined => {
