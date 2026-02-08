@@ -9,6 +9,9 @@ export interface Target {
   type: 'masterpiece' | 'sculpture' | 'easter-egg-dadaist' | 'easter-egg-systemic' | 'other';
   material?: string;
   description?: string;
+  specialEffects?: string[];
+  overrideTotalDamage?: number;
+  breakdownMode?: 'hit-target' | 'masterpieces-and-sculptures' | 'all-targets' | 'none';
 }
 
 export interface Scenario {

@@ -55,6 +55,13 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-systemic',
         description: 'Hitting this triggers the sprinkler system, destroying all paintings.',
+        specialEffects: [
+          'Fire suppression system activated!',
+          'All paintings destroyed by water damage.',
+          'Total cultural damage: €3.5 Billion',
+        ],
+        overrideTotalDamage: 1390000215,
+        breakdownMode: 'masterpieces-and-sculptures',
       },
       {
         id: 'mop-bucket',
@@ -64,6 +71,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.08,
         type: 'easter-egg-dadaist',
         description: 'An ordinary mop bucket. But is it art? Is value arbitrary?',
+        specialEffects: [
+          'DUCHAMP MODE ACTIVATED',
+          'All values have been philosophically inverted.',
+        ],
+        overrideTotalDamage: 0,
+        breakdownMode: 'none',
       },
     ],
     totalMaxValue: 1390000215,
@@ -146,6 +159,13 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.08,
         type: 'easter-egg-systemic',
         description: 'Hidden bellows trigger a shockwave through stained glass.',
+        specialEffects: [
+          'Organ shockwave unleashed.',
+          'Stained glass fractures across the nave.',
+          'Sacred atmosphere collapses into rubble.',
+        ],
+        overrideTotalDamage: 1000000000,
+        breakdownMode: 'all-targets',
       },
       {
         id: 'dan-brown-novel',
@@ -155,6 +175,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-dadaist',
         description: 'A paperback conspiracy that manufactures value from myth.',
+        specialEffects: [
+          'Myth machine engaged.',
+          'Conspiracy fiction inflates devotional value.',
+        ],
+        overrideTotalDamage: 500000000,
+        breakdownMode: 'none',
       },
     ],
     totalMaxValue: 1000000000,
@@ -223,6 +249,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-dadaist',
         description: 'A heist movie poster tucked behind a display.',
+        specialEffects: [
+          'Cinematic heist energy detected.',
+          'Legend eclipses the artifact.',
+        ],
+        overrideTotalDamage: 0,
+        breakdownMode: 'none',
       },
       {
         id: 'gift-shop-replica',
@@ -232,6 +264,13 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-systemic',
         description: 'The replica that reveals the real diamond.',
+        specialEffects: [
+          'Replica shattered.',
+          'Authenticity crisis spreads across the treasury.',
+          'Collectors panic at once.',
+        ],
+        overrideTotalDamage: 500000000,
+        breakdownMode: 'all-targets',
       },
     ],
     totalMaxValue: 500000000,
@@ -300,6 +339,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.07,
         type: 'easter-egg-systemic',
         description: 'A jade seal that revokes dynastic legitimacy.',
+        specialEffects: [
+          'Mandate of Heaven revoked.',
+          'Imperial legitimacy collapses instantly.',
+        ],
+        overrideTotalDamage: 1000000000000,
+        breakdownMode: 'all-targets',
       },
       {
         id: 'coca-cola-bottle',
@@ -309,6 +354,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-dadaist',
         description: 'A Western brand on a guard\'s desk.',
+        specialEffects: [
+          'Global brand erases imperial aura.',
+          'Antique value collapses into pop kitsch.',
+        ],
+        overrideTotalDamage: 0,
+        breakdownMode: 'none',
       },
     ],
     totalMaxValue: 1000000000000,
@@ -377,6 +428,13 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.06,
         type: 'easter-egg-systemic',
         description: 'A tiny filter that can contaminate an entire fab.',
+        specialEffects: [
+          'Particle storm unleashed.',
+          'Yield crash ripples through the fab.',
+          'Global supply chain freezes.',
+        ],
+        overrideTotalDamage: 10000000000,
+        breakdownMode: 'all-targets',
       },
       {
         id: 'wooden-chair',
@@ -386,6 +444,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.08,
         type: 'easter-egg-dadaist',
         description: 'An illegal seat in the temple of productivity.',
+        specialEffects: [
+          'Forbidden rest embraced.',
+          'Productivity myth dissolves.',
+        ],
+        overrideTotalDamage: 0,
+        breakdownMode: 'none',
       },
     ],
     totalMaxValue: 10000000000,
@@ -454,6 +518,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.06,
         type: 'easter-egg-dadaist',
         description: 'A tiny portrait that revalues everything into oligarch prices.',
+        specialEffects: [
+          'Oligarch revaluation triggered.',
+          'Every artifact suddenly appreciates.',
+        ],
+        overrideTotalDamage: 50000000,
+        breakdownMode: 'none',
       },
       {
         id: 'chandelier-chain',
@@ -463,6 +533,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-systemic',
         description: 'A fragile chain that drops the chandelier.',
+        specialEffects: [
+          'Chain snapped.',
+          'The chandelier crashes through the room.',
+        ],
+        overrideTotalDamage: 50000000,
+        breakdownMode: 'all-targets',
       },
     ],
     totalMaxValue: 50000000,
@@ -492,6 +568,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         type: 'easter-egg-dadaist',
         material: 'tungsten',
         description: 'A QC-tagged bar that reveals a tungsten core.',
+        specialEffects: [
+          'Counterfeit core exposed.',
+          'Faith in reserves evaporates.',
+        ],
+        overrideTotalDamage: 0,
+        breakdownMode: 'none',
       },
       {
         id: 'security-camera',
@@ -521,6 +603,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-systemic',
         description: 'Severing this collapses the digital ledger.',
+        specialEffects: [
+          'Ledger severed.',
+          'Digital trust network collapses.',
+        ],
+        overrideTotalDamage: 1000000000000,
+        breakdownMode: 'all-targets',
       },
       {
         id: 'concrete-floor',
@@ -580,6 +668,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         type: 'easter-egg-dadaist',
         material: 'canvas',
         description: 'Shooting it turns you into the collaborator.',
+        specialEffects: [
+          'Authorship crisis declared.',
+          'The act itself becomes the artwork.',
+        ],
+        overrideTotalDamage: 50000000,
+        breakdownMode: 'none',
       },
       {
         id: 'fire-alarm',
@@ -589,6 +683,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.06,
         type: 'easter-egg-systemic',
         description: 'Triggers a “happening” that inflates provenance.',
+        specialEffects: [
+          'Happening initiated.',
+          'Provenance spikes across the gallery.',
+        ],
+        overrideTotalDamage: 50000000,
+        breakdownMode: 'all-targets',
       },
       {
         id: 'empty-plinth',
@@ -668,6 +768,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         type: 'easter-egg-dadaist',
         material: 'paper',
         description: 'The unwritten book worth a trillion futures.',
+        specialEffects: [
+          'Infinite authorship unlocked.',
+          'Every unwritten future collapses into value.',
+        ],
+        overrideTotalDamage: 1000000000000,
+        breakdownMode: 'none',
       },
       {
         id: 'library-ethernet',
@@ -677,6 +783,12 @@ export const SCENARIOS: Record<string, Scenario> = {
         radius: 0.05,
         type: 'easter-egg-systemic',
         description: 'Cuts the desire-mining algorithm.',
+        specialEffects: [
+          'Desire-mining algorithm terminated.',
+          'The catalog dissolves into entropy.',
+        ],
+        overrideTotalDamage: 1000000000000,
+        breakdownMode: 'all-targets',
       },
     ],
     totalMaxValue: 1000000000000,
