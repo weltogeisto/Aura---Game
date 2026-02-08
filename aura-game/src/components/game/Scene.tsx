@@ -4,7 +4,7 @@ import { useGameStore } from '@/stores/gameStore';
 import {
   DEFAULT_RENDER_TIER,
   RENDER_TIER_SETTINGS,
-  RenderTier,
+  type RenderTier,
 } from '@/lib/renderSettings';
 import { Panorama } from './Panorama';
 import { RoomShell } from './RoomShell';

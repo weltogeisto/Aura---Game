@@ -103,9 +103,7 @@ export function ShotImpact() {
         <bufferGeometry>
           <bufferAttribute
             attach="attributes-position"
-            array={particleOffsets}
-            count={particleOffsets.length / 3}
-            itemSize={3}
+            args={[particleOffsets, 3]}
           />
         </bufferGeometry>
         <pointsMaterial
