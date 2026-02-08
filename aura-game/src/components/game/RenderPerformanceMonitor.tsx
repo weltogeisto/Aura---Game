@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import {
   FPS_DEGRADATION_THRESHOLDS,
-  RenderTier,
   getNextLowerTier,
+  type RenderTier,
 } from '@/lib/renderSettings';
 
 interface RenderPerformanceMonitorProps {
