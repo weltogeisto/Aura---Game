@@ -77,47 +77,41 @@ export function BallisticsSystem() {
           480
         );
 
-        // Check for easter eggs
-        const specialEffects: string[] = [];
-
-        if (hitTarget === 'fire-sensor') {
-          // Systemic trigger: all paintings destroyed
-          totalDamage = selectedScenario.totalMaxValue;
-          specialEffects.push('Fire suppression system activated!');
-          specialEffects.push('All paintings destroyed by water damage.');
-          specialEffects.push('Total cultural damage: €3.5 Billion');
-        } else if (hitTarget === 'mop-bucket') {
-          // Dadaist trigger: values inverted
-          specialEffects.push('DUCHAMP MODE ACTIVATED');
-          specialEffects.push('All values have been philosophically inverted.');
-          totalDamage = 0;
-        }
+        const hitTargetData = selectedScenario.targets.find((target) => target.id === hitTarget);
+        const specialEffects = hitTargetData?.specialEffects ? [...hitTargetData.specialEffects] : [];
+        totalDamage = hitTargetData?.overrideTotalDamage ?? adjustedDamage;
+        const breakdownMode = hitTargetData?.breakdownMode ?? 'hit-target';
 
         // Create breakdown
-        const breakdown = selectedScenario.targets
-          .filter(t => {
-            if (hitTarget === 'fire-sensor') {
-              return t.type === 'masterpiece' || t.type === 'sculpture';
-            }
-            return t.id === hitTarget;
-          })
-          .map(t => {
-            if (hitTarget === 'fire-sensor') {
-              return {
-                targetId: t.id,
-                targetName: t.name,
-                damage: t.value,
-                percentage: (t.value / selectedScenario.totalMaxValue) * 100,
-              };
-            }
+        const breakdownTargets = (() => {
+          switch (breakdownMode) {
+            case 'none':
+              return [];
+            case 'all-targets':
+              return selectedScenario.targets;
+            case 'masterpieces-and-sculptures':
+              return selectedScenario.targets.filter(
+                (target) => target.type === 'masterpiece' || target.type === 'sculpture'
+              );
+            case 'hit-target':
+            default:
+              return selectedScenario.targets.filter((target) => target.id === hitTarget);
+          }
+        })();
 
-            return {
-              targetId: t.id,
-              targetName: t.name,
-              damage: t.id === hitTarget ? adjustedDamage : 0,
-              percentage: (adjustedDamage / selectedScenario.totalMaxValue) * 100,
-            };
-          });
+        const breakdown = breakdownTargets.map((target) => {
+          const damage =
+            breakdownMode === 'hit-target'
+              ? adjustedDamage
+              : target.value;
+
+          return {
+            targetId: target.id,
+            targetName: target.name,
+            damage,
+            percentage: (damage / selectedScenario.totalMaxValue) * 100,
+          };
+        });
 
         const result: ShotResult = {
           hitTargetId: hitTarget,
