@@ -107,6 +107,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'st-peters',
     name: "St. Peter's Basilica - Nave",
     description: 'Vatican City. Sacred architecture where atmosphere outvalues material.',
+    isMvp: true,
     panoramaColor: '#cbb89a',
     targets: [
       {
@@ -550,6 +551,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'federal-reserve',
     name: 'Federal Reserve - Gold Vault',
     description: 'New York, USA. Fiat abstraction where value is pure hallucination.',
+    isMvp: true,
     panoramaColor: '#9f8b58',
     targets: [
       {
@@ -629,6 +631,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'moma',
     name: 'MoMA - Contemporary Gallery',
     description: 'New York, USA. Modern art where destruction becomes creation.',
+    isMvp: true,
     panoramaColor: '#f5f5f5',
     targets: [
       {
