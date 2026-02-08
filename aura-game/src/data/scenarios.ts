@@ -13,6 +13,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'louvre',
     name: 'The Louvre - Salle des États',
     description: 'Paris, France. One shot to maximize cultural damage in the most visited museum.',
+    isMvp: true,
     panoramaColor: '#d4a574',
     targets: [
       {

@@ -5,7 +5,7 @@ export function ScenarioSelect() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
   const setSelectedScenario = useGameStore((state) => state.setSelectedScenario);
 
-  const scenarios = getScenariosList();
+  const scenarios = getScenariosList().filter((scenario) => scenario.isMvp);
 
   const handleSelectScenario = (scenarioId: string) => {
     const scenario = scenarios.find(s => s.id === scenarioId);

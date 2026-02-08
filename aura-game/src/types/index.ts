@@ -18,6 +18,7 @@ export interface Scenario {
   id: string;
   name: string;
   description: string;
+  isMvp?: boolean;
   panoramaColor: string;
   targets: Target[];
   totalMaxValue: number;
