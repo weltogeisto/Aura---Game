@@ -19,6 +19,16 @@ export interface Scenario {
   name: string;
   description: string;
   isMvp?: boolean;
+  panoramaAsset: {
+    lowRes: string;
+    mediumRes?: string;
+    highRes: string;
+  };
+  colorGrading?: {
+    lutAsset?: string;
+    tint?: string;
+    tintStrength?: number;
+  };
   panoramaColor: string;
   targets: Target[];
   totalMaxValue: number;
