@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber';
-import { useMemo, useState } from 'react';
+import { Suspense, useMemo, useState } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 import {
   DEFAULT_RENDER_TIER,
@@ -17,6 +17,15 @@ import { ShotTracer } from './ShotTracer';
 import { ValueMesh } from './ValueMesh';
 import { RenderPerformanceMonitor } from './RenderPerformanceMonitor';
 
+function LoadingFallback() {
+  return (
+    <mesh>
+      <sphereGeometry args={[100, 32, 32]} />
+      <meshBasicMaterial color="#1a1020" side={2} />
+    </mesh>
+  );
+}
+
 export function Scene() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
@@ -33,14 +42,19 @@ export function Scene() {
   return (
     <>
       <Canvas
-        camera={{ position: [0, 0, 0], fov: 75 }}
+        camera={{ position: [0, 1.6, 0], fov: 75, near: 0.1, far: 200 }}
         dpr={renderSettings.dpr}
         gl={{ antialias: renderSettings.postprocessing }}
         style={{ width: '100%', height: '100%' }}
       >
-        <fog attach="fog" args={['#1b1416', 12, 180]} />
+        <fog attach="fog" args={['#1b1416', 30, 180]} />
         <RenderPerformanceMonitor tier={renderTier} onTierChange={setRenderTier} />
-        <Panorama color={selectedScenario.panoramaColor} textureSize={renderSettings.textureSize} />
+        <Suspense fallback={<LoadingFallback />}>
+          <Panorama
+            color={selectedScenario.panoramaColor}
+            textureSize={renderSettings.textureSize}
+          />
+        </Suspense>
         <RoomShell textureSize={renderSettings.textureSize} />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} />
