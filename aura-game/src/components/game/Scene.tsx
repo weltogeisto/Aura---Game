@@ -55,7 +55,7 @@ export function Scene() {
             textureSize={renderSettings.textureSize}
           />
         </Suspense>
-        <RoomShell textureSize={renderSettings.textureSize} />
+        <RoomShell textureSize={renderSettings.textureSize} renderTier={renderTier} />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} />
         <BallisticsSystem />
