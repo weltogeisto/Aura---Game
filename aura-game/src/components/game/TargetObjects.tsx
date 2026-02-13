@@ -7,13 +7,6 @@ interface TargetObjectsProps {
 export function TargetObjects({ targets }: TargetObjectsProps) {
   return (
     <group>
-      {/* Lighting */}
-      <hemisphereLight color={0xffe7c2} groundColor={0xffd1a1} intensity={0.65} />
-      <directionalLight position={[6, 12, 6]} intensity={0.45} color={0xfff1d6} />
-      <directionalLight position={[-4, 9, -6]} intensity={0.3} color={0xffe6c7} />
-      <ambientLight intensity={0.6} />
-
-      {/* Render each target */}
       {targets.map((target) => {
         const color =
           target.type === 'sculpture'
@@ -24,25 +17,7 @@ export function TargetObjects({ targets }: TargetObjectsProps) {
                 ? 0xff0000
                 : 0xffff00;
 
-        const emissive =
-          target.type === 'easter-egg-systemic' ? 0xff0000 : 0x000000;
-
-        let GeometryComponent;
-        let geometryProps: any = {};
-
-        if (target.type === 'sculpture') {
-          GeometryComponent = 'sphereGeometry';
-          geometryProps = { args: [target.radius, 32, 32] };
-        } else if (target.type === 'easter-egg-dadaist') {
-          GeometryComponent = 'cylinderGeometry';
-          geometryProps = { args: [target.radius, target.radius, target.radius * 2, 16] };
-        } else if (target.type === 'easter-egg-systemic') {
-          GeometryComponent = 'boxGeometry';
-          geometryProps = { args: [target.radius, target.radius, target.radius] };
-        } else {
-          GeometryComponent = 'planeGeometry';
-          geometryProps = { args: [target.radius * 2, target.radius * 2.5] };
-        }
+        const emissive = target.type === 'easter-egg-systemic' ? 0xff0000 : 0x000000;
 
         return (
           <mesh
@@ -54,23 +29,37 @@ export function TargetObjects({ targets }: TargetObjectsProps) {
               value: target.value,
             }}
           >
-            {GeometryComponent === 'sphereGeometry' && (
-              <sphereGeometry args={[target.radius, 32, 32]} />
-            )}
-            {GeometryComponent === 'cylinderGeometry' && (
+            {target.type === 'sculpture' && <sphereGeometry args={[target.radius, 32, 32]} />}
+            {target.type === 'easter-egg-dadaist' && (
               <cylinderGeometry args={[target.radius, target.radius, target.radius * 2, 16]} />
             )}
-            {GeometryComponent === 'boxGeometry' && (
+            {target.type === 'easter-egg-systemic' && (
               <boxGeometry args={[target.radius, target.radius, target.radius]} />
             )}
-            {GeometryComponent === 'planeGeometry' && (
+            {(target.type === 'masterpiece' || target.type === 'other') && (
               <planeGeometry args={[target.radius * 2, target.radius * 2.5]} />
             )}
             <meshStandardMaterial
               color={color}
               emissive={emissive}
-              metalness={target.type === 'easter-egg-systemic' ? 0.8 : target.type === 'easter-egg-dadaist' ? 0.3 : target.type === 'sculpture' ? 0.1 : 0}
-              roughness={target.type === 'easter-egg-systemic' ? 0.2 : target.type === 'easter-egg-dadaist' ? 0.7 : target.type === 'sculpture' ? 0.8 : 0.5}
+              metalness={
+                target.type === 'easter-egg-systemic'
+                  ? 0.8
+                  : target.type === 'easter-egg-dadaist'
+                    ? 0.3
+                    : target.type === 'sculpture'
+                      ? 0.1
+                      : 0
+              }
+              roughness={
+                target.type === 'easter-egg-systemic'
+                  ? 0.2
+                  : target.type === 'easter-egg-dadaist'
+                    ? 0.7
+                    : target.type === 'sculpture'
+                      ? 0.8
+                      : 0.5
+              }
             />
           </mesh>
         );
