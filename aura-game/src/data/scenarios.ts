@@ -28,12 +28,137 @@ const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => 
   };
 };
 
+const toPanoramaDataUri = (
+  scenarioId: string,
+  palette: { sky: string; wall: string; accent: string },
+  detailLevel: 'low' | 'high'
+): string => {
+  const stripeCount = detailLevel === 'high' ? 40 : 20;
+  const lineCount = detailLevel === 'high' ? 80 : 28;
+
+  const stripes = Array.from({ length: stripeCount }, (_, index) => {
+    const x = (index / stripeCount) * 100;
+    const width = detailLevel === 'high' ? 1.5 : 2.8;
+    const opacity = detailLevel === 'high' ? 0.17 : 0.11;
+    return `<rect x='${x}' y='26' width='${width}' height='54' fill='${palette.accent}' opacity='${opacity}' />`;
+  }).join('');
+
+  const lines = Array.from({ length: lineCount }, (_, index) => {
+    const y = 25 + index * (55 / lineCount);
+    const opacity = detailLevel === 'high' ? 0.07 : 0.045;
+    return `<line x1='0' y1='${y}' x2='100' y2='${y}' stroke='${palette.accent}' stroke-opacity='${opacity}' stroke-width='0.22' />`;
+  }).join('');
+
+  const svg = `
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50' preserveAspectRatio='none'>
+      <defs>
+        <linearGradient id='g-${scenarioId}' x1='0' y1='0' x2='0' y2='1'>
+          <stop offset='0%' stop-color='${palette.sky}' />
+          <stop offset='55%' stop-color='${palette.wall}' />
+          <stop offset='100%' stop-color='${palette.accent}' />
+        </linearGradient>
+      </defs>
+      <rect width='100' height='50' fill='url(#g-${scenarioId})' />
+      <ellipse cx='50' cy='27' rx='58' ry='20' fill='${palette.wall}' opacity='0.22' />
+      ${stripes}
+      ${lines}
+    </svg>
+  `;
+
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+};
+
+const createScenarioPanoramaAsset = (
+  scenarioId: string,
+  palette: { sky: string; wall: string; accent: string; tint: string; tintStrength: number }
+) => ({
+  lowRes: toPanoramaDataUri(scenarioId, palette, 'low'),
+  mediumRes: toPanoramaDataUri(scenarioId, palette, 'high'),
+  highRes: toPanoramaDataUri(scenarioId, palette, 'high'),
+  tint: palette.tint,
+  tintStrength: palette.tintStrength,
+});
+
+const SCENARIO_ENVIRONMENT_ASSETS: Record<
+  string,
+  ReturnType<typeof createScenarioPanoramaAsset>
+> = {
+  louvre: createScenarioPanoramaAsset('louvre', {
+    sky: '#f2d8b2',
+    wall: '#c99564',
+    accent: '#825735',
+    tint: '#fff4dc',
+    tintStrength: 0.22,
+  }),
+  'st-peters': createScenarioPanoramaAsset('st-peters', {
+    sky: '#efe2cd',
+    wall: '#ceb898',
+    accent: '#8f7a5f',
+    tint: '#f6efdf',
+    tintStrength: 0.2,
+  }),
+  topkapi: createScenarioPanoramaAsset('topkapi', {
+    sky: '#5a4332',
+    wall: '#7d5b43',
+    accent: '#2f2117',
+    tint: '#f8d29f',
+    tintStrength: 0.25,
+  }),
+  'forbidden-city': createScenarioPanoramaAsset('forbidden-city', {
+    sky: '#cf5757',
+    wall: '#a11c1c',
+    accent: '#560f0f',
+    tint: '#ffc8af',
+    tintStrength: 0.26,
+  }),
+  tsmc: createScenarioPanoramaAsset('tsmc', {
+    sky: '#ecedd8',
+    wall: '#bec1b0',
+    accent: '#66798a',
+    tint: '#e6fbff',
+    tintStrength: 0.16,
+  }),
+  hermitage: createScenarioPanoramaAsset('hermitage', {
+    sky: '#d3e8f6',
+    wall: '#a9c8de',
+    accent: '#5d778a',
+    tint: '#e5f5ff',
+    tintStrength: 0.18,
+  }),
+  'federal-reserve': createScenarioPanoramaAsset('federal-reserve', {
+    sky: '#ddcda0',
+    wall: '#9f8b58',
+    accent: '#584927',
+    tint: '#fff7d0',
+    tintStrength: 0.22,
+  }),
+  moma: createScenarioPanoramaAsset('moma', {
+    sky: '#fdfdfd',
+    wall: '#ebebeb',
+    accent: '#919191',
+    tint: '#ffffff',
+    tintStrength: 0.08,
+  }),
+  'borges-library': createScenarioPanoramaAsset('borges-library', {
+    sky: '#d8b98f',
+    wall: '#b48a5a',
+    accent: '#513521',
+    tint: '#f6d1a1',
+    tintStrength: 0.2,
+  }),
+};
+
 export const SCENARIOS: Record<string, Scenario> = {
   louvre: createScenario({
     id: 'louvre',
     name: 'The Louvre - Salle des États',
     description: 'Paris, France. One shot to maximize cultural damage in the most visited museum.',
     isMvp: true,
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.louvre,
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS.louvre.tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS.louvre.tintStrength,
+    },
     panoramaColor: '#d4a574',
     targets: [
       {
@@ -127,6 +252,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'st-peters',
     name: "St. Peter's Basilica - Nave",
     description: 'Vatican City. Sacred architecture where atmosphere outvalues material.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['st-peters'],
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS['st-peters'].tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS['st-peters'].tintStrength,
+    },
     panoramaColor: '#cbb89a',
     targets: [
       {
@@ -216,6 +346,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'topkapi',
     name: 'Topkapi Palace - Imperial Treasury',
     description: 'Istanbul, Turkey. Ottoman opulence where display wars with authenticity.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.topkapi,
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS.topkapi.tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS.topkapi.tintStrength,
+    },
     panoramaColor: '#3b2a1f',
     targets: [
       {
@@ -305,6 +440,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'forbidden-city',
     name: 'Forbidden City - Hall of Supreme Harmony',
     description: 'Beijing, China. Imperial power and cultural contamination collide.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'],
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'].tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'].tintStrength,
+    },
     panoramaColor: '#a11c1c',
     targets: [
       {
@@ -393,6 +533,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'tsmc',
     name: 'TSMC Clean Room - Fab 18',
     description: 'Tainan, Taiwan. Technological value balanced on a dust particle.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.tsmc,
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS.tsmc.tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS.tsmc.tintStrength,
+    },
     panoramaColor: '#d6d2a9',
     targets: [
       {
@@ -482,6 +627,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'hermitage',
     name: 'The Hermitage - Peacock Clock Room',
     description: 'St. Petersburg, Russia. Mechanical complexity and political economy.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.hermitage,
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS.hermitage.tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS.hermitage.tintStrength,
+    },
     panoramaColor: '#b1c6d6',
     targets: [
       {
@@ -570,6 +720,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'federal-reserve',
     name: 'Federal Reserve - Gold Vault',
     description: 'New York, USA. Fiat abstraction where value is pure hallucination.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'],
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tintStrength,
+    },
     panoramaColor: '#9f8b58',
     targets: [
       {
@@ -649,6 +804,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'moma',
     name: 'MoMA - Contemporary Gallery',
     description: 'New York, USA. Modern art where destruction becomes creation.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.moma,
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS.moma.tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS.moma.tintStrength,
+    },
     panoramaColor: '#f5f5f5',
     targets: [
       {
@@ -738,6 +898,11 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'borges-library',
     name: 'The Borges Library - Canon Room',
     description: 'Impossible hexagonal chamber where ideas outweigh objects.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['borges-library'],
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS['borges-library'].tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS['borges-library'].tintStrength,
+    },
     panoramaColor: '#b48a5a',
     targets: [
       {

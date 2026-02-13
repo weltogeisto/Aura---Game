@@ -63,7 +63,11 @@ export function Scene() {
         <RenderPerformanceMonitor tier={renderTier} onTierChange={setRenderTier} />
         <Suspense fallback={<LoadingFallback />}>
           <Panorama
-            color={selectedScenario.panoramaColor}
+            panoramaAsset={selectedScenario.panoramaAsset}
+            fallbackColor={selectedScenario.panoramaColor}
+            tint={selectedScenario.colorGrading?.tint}
+            tintStrength={selectedScenario.colorGrading?.tintStrength}
+            renderTier={renderTier}
             textureSize={renderSettings.textureSize}
           />
         </Suspense>
