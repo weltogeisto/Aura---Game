@@ -1,4 +1,5 @@
 import { Canvas } from '@react-three/fiber';
+import { ACESFilmicToneMapping, PCFSoftShadowMap, SRGBColorSpace } from 'three';
 import { Suspense, useMemo, useState } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 import {
@@ -16,6 +17,7 @@ import { ShotImpact } from './ShotImpact';
 import { ShotTracer } from './ShotTracer';
 import { ValueMesh } from './ValueMesh';
 import { RenderPerformanceMonitor } from './RenderPerformanceMonitor';
+import { MuseumLighting } from './lighting/MuseumLighting';
 
 function LoadingFallback() {
   return (
@@ -44,7 +46,17 @@ export function Scene() {
       <Canvas
         camera={{ position: [0, 1.6, 0], fov: 75, near: 0.1, far: 200 }}
         dpr={renderSettings.dpr}
-        gl={{ antialias: renderSettings.postprocessing }}
+        gl={{
+          antialias: renderSettings.postprocessing,
+          toneMapping: ACESFilmicToneMapping,
+          outputColorSpace: SRGBColorSpace,
+        }}
+        onCreated={({ gl }) => {
+          gl.shadowMap.enabled = true;
+          gl.shadowMap.type = PCFSoftShadowMap;
+          gl.toneMappingExposure = 1.08;
+        }}
+        shadows
         style={{ width: '100%', height: '100%' }}
       >
         <fog attach="fog" args={['#1b1416', 30, 180]} />
@@ -55,7 +67,8 @@ export function Scene() {
             textureSize={renderSettings.textureSize}
           />
         </Suspense>
-        <RoomShell textureSize={renderSettings.textureSize} renderTier={renderTier} />
+        <MuseumLighting scenarioId={selectedScenario.id} />
+        <RoomShell textureSize={renderSettings.textureSize} />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} />
         <BallisticsSystem />
