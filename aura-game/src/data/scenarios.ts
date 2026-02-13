@@ -3,10 +3,30 @@ import type { Scenario } from '@/types';
 const sumTargetValues = (targets: Scenario['targets']): number =>
   targets.reduce((total, target) => total + target.value, 0);
 
-const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => ({
-  ...scenario,
-  totalMaxValue: sumTargetValues(scenario.targets),
-});
+const isNormalizedPosition = ([x, y, z]: [number, number, number]): boolean =>
+  x >= 0 && x <= 1 && y >= 0 && y <= 1 && z >= 0 && z <= 1;
+
+const toWorldPosition = ([x, y, z]: [number, number, number]): [number, number, number] => [
+  x * 25,
+  y * 6 + 0.5,
+  z * -20 - 3,
+];
+
+const normalizeTargetPosition = (targets: Scenario['targets']): Scenario['targets'] =>
+  targets.map((target) => ({
+    ...target,
+    position: isNormalizedPosition(target.position) ? toWorldPosition(target.position) : target.position,
+  }));
+
+const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => {
+  const targets = normalizeTargetPosition(scenario.targets);
+
+  return {
+    ...scenario,
+    targets,
+    totalMaxValue: sumTargetValues(targets),
+  };
+};
 
 export const SCENARIOS: Record<string, Scenario> = {
   louvre: createScenario({
