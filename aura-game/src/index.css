@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 * {
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -14,10 +20,13 @@ html, body, #root {
 }
 
 body {
-  font-family: system-ui, -apple-system, sans-serif;
-  background: #1a1a2e;
-  color: #fff;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  background: #0d0c11;
+  color: #f9fafb;
   overflow: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 canvas {
