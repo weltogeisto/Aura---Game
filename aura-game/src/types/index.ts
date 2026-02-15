@@ -17,7 +17,6 @@ export interface Target {
   breakdownMode?: 'hit-target' | 'masterpieces-and-sculptures' | 'all-targets' | 'none';
 }
 
-
 export interface ScenarioScoring {
   fallbackSampleValue: number;
   defaultZoneMultiplier: number;
@@ -25,11 +24,27 @@ export interface ScenarioScoring {
   dadaistScore: number;
 }
 
+export type ScenarioStatus = 'prototype' | 'playable' | 'locked';
+
+export interface ScenarioContentCompleteness {
+  targets: boolean;
+  criticLines: boolean;
+  panoramaAssets: boolean;
+  scoring: boolean;
+}
+
+export interface ScenarioMetadata {
+  region: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+  status: ScenarioStatus;
+  contentCompleteness: ScenarioContentCompleteness;
+}
+
 export interface Scenario {
   id: string;
   name: string;
   description: string;
-  isMvp?: boolean;
+  metadata: ScenarioMetadata;
   panoramaAsset: {
     lowRes: string;
     mediumRes?: string;
@@ -72,7 +87,6 @@ export interface ShotResult {
   resolvedWithOverride?: boolean;
 }
 
-
 export interface ShotFeedback {
   active: boolean;
   hit: boolean;
@@ -95,7 +109,6 @@ export interface ShotFeedback {
   };
   isDadaistTrigger?: boolean;
 }
-
 
 export interface GameState {
   gamePhase: GamePhase;
