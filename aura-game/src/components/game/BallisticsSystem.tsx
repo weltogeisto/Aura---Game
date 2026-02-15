@@ -2,66 +2,19 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
-import type { Scenario, ShotResult, Target } from '@/types';
+import type { Scenario, Target } from '@/types';
+import { simulateShot, type SimulationObject } from '@/lib/ballistics/simulation';
+import { resolveShotScore } from '@/lib/scoring/shotScoring';
+import type { BallisticsConfig } from '@/lib/ballistics/trajectory';
 
-const DADAIST_SCORE = 1917000001;
-
-const buildHitLocationLabel = (
-  hitPoint: THREE.Vector3,
-  target: Target | undefined,
-  scenario: Scenario
-): string => {
-  if (!target) {
-    return 'Unknown contact';
-  }
-
-  const localPoint = hitPoint.clone().sub(new THREE.Vector3(...target.position));
-  const horizontal = localPoint.x < -target.radius * 0.35
-    ? 'Left'
-    : localPoint.x > target.radius * 0.35
-      ? 'Right'
-      : 'Center';
-  const vertical = localPoint.y > target.radius * 0.35
-    ? 'Upper'
-    : localPoint.y < -target.radius * 0.35
-      ? 'Lower'
-      : 'Midline';
-
-  return `${scenario.name} — ${target.name} (${vertical} ${horizontal})`;
-};
-
-const deterministicCriticLine = (
-  scenario: Scenario,
-  totalScore: number,
-  hitTargetId: string | null,
-  hitTargetType: Target['type'] | null,
-  hitLocationLabel: string
-): string => {
-  if (hitTargetType === 'easter-egg-dadaist') {
-    return 'Dadaist inversion confirmed: valuation collapses into pure gesture. The market applauds the void.';
-  }
-
-  const criticLines = scenario.criticLines;
-  if (!criticLines) {
-    return 'The critic is still taking notes.';
-  }
-
-  const ratio = scenario.totalMaxValue ? totalScore / scenario.totalMaxValue : 0;
-  const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
-  const seedInput = `${scenario.id}|${hitTargetId ?? 'miss'}|${totalScore}|${hitLocationLabel}`;
-  const hash = seedInput
-    .split('')
-    .reduce((acc, char, index) => acc + char.charCodeAt(0) * (index + 1), 0);
-
-  return pool[hash % pool.length] ?? 'The critic is still taking notes.';
-};
-
-const DEFAULT_BALLISTICS = {
+const DEFAULT_BALLISTICS: BallisticsConfig = {
+  seed: 0,
   swayRadians: 0.008,
   muzzleVelocity: 52,
   gravity: 9.81,
   maxDistance: 55,
   timeStep: 1 / 120,
+  maxInteractions: 6,
 };
 
 export function BallisticsSystem() {
@@ -72,7 +25,6 @@ export function BallisticsSystem() {
   const shotLocked = useGameStore((state) => state.shotLocked);
   const fireShotResult = useGameStore((state) => state.fireShotResult);
   const finalizeShot = useGameStore((state) => state.finalizeShot);
-  const setFireBlocked = useGameStore((state) => state.setFireBlocked);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -81,161 +33,52 @@ export function BallisticsSystem() {
     const handleClick = () => {
       if (!scene || !camera || !selectedScenario || shotLocked) return;
 
-      const raycaster = new THREE.Raycaster();
-      const sway = 0.008;
-      const mouse = new THREE.Vector2(
-        crosshairPosition.x * 2 - 1 + (Math.random() - 0.5) * sway,
-        -(crosshairPosition.y * 2 - 1) + (Math.random() - 0.5) * sway
-      );
-
-      raycaster.setFromCamera(mouse, camera);
-
-      const allObjects: THREE.Object3D[] = [];
-      scene.traverse((obj) => {
-        if (obj instanceof THREE.Mesh && obj.userData.targetId) {
-          allObjects.push(obj);
-        }
+      const ballisticsSeed = hashSeed(`${selectedScenario.id}|${crosshairPosition.x.toFixed(4)}|${crosshairPosition.y.toFixed(4)}`);
+      const simulationObjects = collectSimulationObjects(scene, selectedScenario);
+      const simulation = simulateShot(camera, crosshairPosition, simulationObjects, {
+        ...DEFAULT_BALLISTICS,
+        seed: ballisticsSeed,
       });
 
-      const intersects = raycaster.intersectObjects(allObjects);
-      const missTraceDistance = 45;
+      const hitTarget = simulation.hitObject?.targetId
+        ? selectedScenario.targets.find((target) => target.id === simulation.hitObject?.targetId)
+        : undefined;
 
-      if (intersects.length > 0) {
-        const firstIntersect = intersects[0];
-        const hitMesh = firstIntersect.object as THREE.Mesh;
-        const hitTarget = hitMesh.userData.targetId as string;
-        const hitValue = hitMesh.userData.value || 0;
-        const hitPoint = firstIntersect.point.clone();
-        const hitNormal = firstIntersect.face?.normal
-          ? firstIntersect.face.normal.clone()
-          : new THREE.Vector3(0, 0, 1);
+      const scoreResolution = resolveShotScore(selectedScenario, simulation, hitTarget);
+      const travelTimeMs = THREE.MathUtils.clamp((simulation.hitDistance / 45) * 1000, 140, 520);
+      const damageScale = THREE.MathUtils.clamp(
+        scoreResolution.result.damageAmount / Math.max(selectedScenario.totalMaxValue, 1),
+        0.1,
+        1
+      );
 
-        if (firstIntersect.face && hitMesh.matrixWorld) {
-          const normalMatrix = new THREE.Matrix3().getNormalMatrix(hitMesh.matrixWorld);
-          hitNormal.applyMatrix3(normalMatrix).normalize();
-        }
-        const impactOffset = hitNormal.clone().multiplyScalar(0.06);
-        const traceEnd = hitPoint.clone().add(impactOffset);
-
-        const attenuation = THREE.MathUtils.clamp(1 - firstIntersect.distance * 0.15, 0.6, 1);
-        const adjustedDamage = Math.round(hitValue * attenuation);
-        const damageScale = THREE.MathUtils.clamp(
-          adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1),
-          0.1,
-          1
-        );
-        const travelTimeMs = THREE.MathUtils.clamp((firstIntersect.distance / 45) * 1000, 140, 480);
-
-        const hitTargetData = selectedScenario.targets.find((target) => target.id === hitTarget);
-        const hitTargetType = (hitMesh.userData.targetType as Target['type'] | undefined)
-          ?? hitTargetData?.type
-          ?? null;
-        const specialEffects = hitTargetData?.specialEffects ? [...hitTargetData.specialEffects] : [];
-        const totalDamage = hitTargetData?.overrideTotalDamage ?? adjustedDamage;
-        const totalScore = hitTargetType === 'easter-egg-dadaist' ? DADAIST_SCORE : totalDamage;
-        const breakdownMode = hitTargetData?.breakdownMode ?? 'hit-target';
-
-        const breakdownTargets = (() => {
-          switch (breakdownMode) {
-            case 'none':
-              return [];
-            case 'all-targets':
-              return selectedScenario.targets;
-            case 'masterpieces-and-sculptures':
-              return selectedScenario.targets.filter(
-                (target) => target.type === 'masterpiece' || target.type === 'sculpture'
-              );
-            case 'hit-target':
-            default:
-              return hitTarget ? [hitTarget] : [];
-          }
-        })();
-
-        const breakdown = breakdownTargets.map((target) => ({
-          targetId: target.id,
-          targetName: target.name,
-          damage: breakdownMode === 'hit-target' ? adjustedDamage : target.value,
-          percentage:
-            ((breakdownMode === 'hit-target' ? adjustedDamage : target.value)
-              / selectedScenario.totalMaxValue)
-            * 100,
-        }));
-
-        const hitLocationLabel = buildHitLocationLabel(hitPoint, hitTargetData, selectedScenario);
-        const criticLine = deterministicCriticLine(
-          selectedScenario,
-          totalScore,
-          hitTarget,
-          hitTargetType,
-          hitLocationLabel
-        );
-
-        const result: ShotResult = {
-          hitTargetId: hitTarget,
-          hitTargetName: hitMesh.userData.targetName,
-          hitTargetType,
-          hitLocationLabel,
-          damageAmount: adjustedDamage,
-          totalDamage,
-          totalScore,
-          breakdown,
-          specialEffects,
-          criticLine,
-        };
-
-        fireShotResult(result, {
-          active: true,
-          hit: true,
-          firedAt: Date.now(),
-          crosshairPosition,
-          hitDistance: impact.distance,
-          damageScale: THREE.MathUtils.clamp(adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1), 0.1, 1),
-          travelTimeMs: THREE.MathUtils.clamp((impact.distance / 45) * 1000, 140, 480),
-          traceEnd: [traceEnd.x, traceEnd.y, traceEnd.z],
-          hitPoint: [impact.point.x, impact.point.y, impact.point.z],
-          hitNormal: [impact.normal.x, impact.normal.y, impact.normal.z],
-          impactUv: impact.uv ? [impact.uv.x, impact.uv.y] : null,
-          sampledValue: sampled.value,
-          usedFallbackSample: sampled.usedFallback,
-          ballisticsSeed,
-        });
-      } else {
-        const missEnd = raycaster.ray.at(missTraceDistance, new THREE.Vector3());
-        const travelTimeMs = THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420);
-        const missLocationLabel = `${selectedScenario.name} — No registered contact`;
-        const criticLine = deterministicCriticLine(
-          selectedScenario,
-          0,
-          null,
-          null,
-          missLocationLabel
-        );
-
-        const result: ShotResult = {
-          hitTargetId: null,
-          hitTargetName: null,
-          hitTargetType: null,
-          hitLocationLabel: missLocationLabel,
-          damageAmount: 0,
-          totalDamage: 0,
-          totalScore: 0,
-          breakdown: [],
-          specialEffects: ['Shot missed the target completely.'],
-          criticLine,
-        };
-
-        fireShotResult(result, {
-          active: true,
-          hit: false,
-          firedAt: Date.now(),
-          crosshairPosition,
-          hitDistance: missTraceDistance,
-          damageScale: 0.15,
-          travelTimeMs: THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420),
-          traceEnd: [missEnd.x, missEnd.y, missEnd.z],
-          ballisticsSeed,
-        });
-      }
+      fireShotResult(scoreResolution.result, {
+        active: true,
+        hit: simulation.hit,
+        firedAt: Date.now(),
+        crosshairPosition,
+        hitDistance: simulation.hitDistance,
+        damageScale,
+        travelTimeMs,
+        traceEnd: [simulation.traceEnd.x, simulation.traceEnd.y, simulation.traceEnd.z],
+        hitPoint: simulation.hitPoint
+          ? [simulation.hitPoint.x, simulation.hitPoint.y, simulation.hitPoint.z]
+          : undefined,
+        hitNormal: simulation.hitNormal
+          ? [simulation.hitNormal.x, simulation.hitNormal.y, simulation.hitNormal.z]
+          : undefined,
+        impactUv: simulation.hitUv ? [simulation.hitUv.x, simulation.hitUv.y] : null,
+        sampledValue: scoreResolution.sampledValue,
+        usedFallbackSample: scoreResolution.usedFallbackSample,
+        ballisticsSeed,
+        scoreBreakdown: {
+          sampledValue: scoreResolution.sampledValue,
+          zoneMultiplier: scoreResolution.zoneMultiplier,
+          criticalModifier: scoreResolution.criticalModifier,
+        },
+        isDadaistTrigger: scoreResolution.isDadaistTrigger,
+        simulationEvents: simulation.events,
+      });
 
       timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
     };
@@ -259,6 +102,36 @@ export function BallisticsSystem() {
   ]);
 
   return null;
+}
+
+function collectSimulationObjects(scene: THREE.Scene, scenario: Scenario): SimulationObject[] {
+  const objects: SimulationObject[] = [];
+
+  scene.traverse((obj) => {
+    if (!(obj instanceof THREE.Mesh)) return;
+
+    const targetId = typeof obj.userData.targetId === 'string' ? obj.userData.targetId : null;
+    const linkedTarget = targetId
+      ? scenario.targets.find((target) => target.id === targetId)
+      : undefined;
+
+    objects.push({
+      object: obj,
+      targetId,
+      targetName:
+        (obj.userData.targetName as string | undefined)
+        ?? linkedTarget?.name
+        ?? obj.name
+        ?? null,
+      targetType:
+        (obj.userData.targetType as Target['type'] | undefined)
+        ?? linkedTarget?.type
+        ?? null,
+      material: linkedTarget?.material,
+    });
+  });
+
+  return objects;
 }
 
 function hashSeed(input: string): number {
