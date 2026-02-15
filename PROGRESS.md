@@ -15,10 +15,10 @@ Command outcomes:
 - `pnpm exec tsc -b` — pass.
 - `pnpm build` — pass.
 
-## Tuning-Hebel (Scoring)
 
-- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.fallbackSampleValue`
-- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.defaultZoneMultiplier`
-- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.defaultCriticalModifier`
-- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.dadaistScore`
-- `aura-game/src/data/scenarios.ts` → `SCENARIOS.louvre.targets[*].zoneMultiplier` / `criticalModifier`
+## Minimal Release-Checkliste (Desktop Beta)
+
+- [ ] **Versionierung:** `aura-game/package.json` Version erhöhen und Release-Tag setzen (`vX.Y.Z-beta.N`).
+- [ ] **Smoke-Checks:** `pnpm run build:canonical` erfolgreich; Desktop-Wrapper startet offline mit Assets aus `release/web/current`.
+- [ ] **Known Issues:** Offene Punkte + Workarounds vor Distribution in den Release Notes dokumentieren.
+
