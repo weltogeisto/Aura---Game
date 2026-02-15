@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# Aura of the 21st Century — Desktop Beta Vertical Slice
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A satirical single-shot destruction game prototype focused on a polished Louvre scenario and a reproducible desktop-beta delivery path.
 
-Currently, two official plugins are available:
+## Quickstart
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd aura-game
+pnpm install
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Open the local Vite URL and run the loop:
+1. Start view → Main menu
+2. Select an available scenario (currently Louvre is MVP)
+3. Aim once, fire once, review score + critic output
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Canonical Build (Desktop Beta Handoff)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+cd aura-game
+pnpm run build:canonical
 ```
+
+This is the release entrypoint aligned with `WEB_BUILD.md` and `DESKTOP_BETA_PLAN.md`:
+- validates offline-safe assets
+- builds production web artifacts
+- generates a single-file bundle artifact
+- stages everything under `release/web/current` for desktop wrapping
+
+## Architecture at a Glance
+
+- **Frontend:** React 19 + TypeScript + Vite
+- **3D Runtime:** Three.js via `@react-three/fiber` and `@react-three/drei`
+- **State:** Zustand (`src/stores/gameStore.ts`) for game phase, shot lock, score, critic output
+- **Data-driven scenarios:** `src/data/scenarios.ts` (targets, value maps, critic lines, MVP gating)
+- **Copy system:**
+  - `src/data/uiCopyMap.ts` for centralized screen copy, CTA labels, hints, score/critic framing, and beta limitation language
+  - `src/data/copy.ts` for normalized scenario text and gameplay microcopy export
+- **Rendering adaptability:** render tiers + FPS guard in `src/lib/renderSettings.ts`
+
+## Gameplay Loop
+
+1. **Briefing:** Player enters desktop beta vertical slice context (single polished scenario, one-shot premise).
+2. **Scenario select:** Available-now scenarios can be launched; maturing scenarios are visible but locked.
+3. **Aiming phase:** One bullet only. HUD communicates controls and lock behavior.
+4. **Shot + evaluation:** Ballistics resolves impact, value mesh samples cultural value zones, score is computed.
+5. **Results:** Critic line + breakdown + replay/new-scenario options.
+
+## Known Limitations (Beta Honesty)
+
+- One shot is hard-locked per run (no in-run reload).
+- Scenario maturity is uneven (Louvre polished first, other rooms still iterating).
+- Performance tiers may auto-step down visual fidelity to preserve responsive input under sustained FPS pressure.

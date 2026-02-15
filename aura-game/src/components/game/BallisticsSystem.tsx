@@ -47,20 +47,11 @@ export function BallisticsSystem() {
     const handleClick = () => {
       if (!scene || !camera || !selectedScenario || shotLocked) return;
 
-      const raycaster = new THREE.Raycaster();
-      const sway = 0.008;
-      const mouse = new THREE.Vector2(
-        crosshairPosition.x * 2 - 1 + (Math.random() - 0.5) * sway,
-        -(crosshairPosition.y * 2 - 1) + (Math.random() - 0.5) * sway
-      );
-
-      raycaster.setFromCamera(mouse, camera);
-
-      const allObjects: THREE.Object3D[] = [];
-      scene.traverse((obj) => {
-        if (obj instanceof THREE.Mesh && obj.userData.targetId) {
-          allObjects.push(obj);
-        }
+      const ballisticsSeed = hashSeed(`${selectedScenario.id}|${crosshairPosition.x.toFixed(4)}|${crosshairPosition.y.toFixed(4)}`);
+      const simulationObjects = collectSimulationObjects(scene, selectedScenario);
+      const simulation = simulateShot(camera, crosshairPosition, simulationObjects, {
+        ...DEFAULT_BALLISTICS,
+        seed: ballisticsSeed,
       });
 
       const intersects = raycaster.intersectObjects(allObjects);
@@ -142,7 +133,7 @@ export function BallisticsSystem() {
           criticLine,
         };
 
-        fireShotResult(result, {
+        commitShot(result, {
           active: true,
           hit: true,
           firedAt: Date.now(),
@@ -182,7 +173,7 @@ export function BallisticsSystem() {
           criticLine,
         };
 
-        fireShotResult(result, {
+        commitShot(result, {
           active: true,
           hit: false,
           firedAt: Date.now(),
@@ -195,7 +186,7 @@ export function BallisticsSystem() {
         });
       }
 
-      timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
+      timeoutRef.current = window.setTimeout(() => finalizeResults(), 700);
     };
 
     window.addEventListener('click', handleClick);
@@ -212,8 +203,8 @@ export function BallisticsSystem() {
     scene,
     camera,
     shotLocked,
-    fireShotResult,
-    finalizeShot,
+    commitShot,
+    finalizeResults,
   ]);
 
   return null;

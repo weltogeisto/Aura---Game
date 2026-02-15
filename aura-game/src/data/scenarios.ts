@@ -1023,10 +1023,6 @@ export const SCENARIOS: Record<string, Scenario> = {
   }),
 };
 
-export const getScenario = (id: string): Scenario | undefined => {
-  return SCENARIOS[id];
-};
+export const getScenario = (id: string): Scenario | undefined => SCENARIOS[id];
 
-export const getScenariosList = (): Scenario[] => {
-  return Object.values(SCENARIOS);
-};
+export const getScenariosList = (): Scenario[] => Object.values(SCENARIOS);

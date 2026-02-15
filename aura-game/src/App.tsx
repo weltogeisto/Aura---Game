@@ -8,9 +8,12 @@ import { HUD } from '@/components/game/HUD';
 import { ShotEffects } from '@/components/game/ShotEffects';
 import { StartView } from '@/components/ui/StartView';
 import { LouvreSceneContainer } from '@/components/louvre/LouvreSceneContainer';
+import { hasResult } from '@/stores/gameSelectors';
 
 function App() {
   const gamePhase = useGameStore((state) => state.gamePhase);
+  const showResults = useGameStore((state) => state.gamePhase === 'results' && hasResult(state));
+  const showRunView = useGameStore((state) => state.gamePhase === 'aiming' || state.gamePhase === 'shooting');
 
   return (
     <div className="w-screen h-screen bg-black overflow-hidden">
@@ -18,14 +21,14 @@ function App() {
       {gamePhase === 'louvre' && <LouvreSceneContainer />}
       {gamePhase === 'menu' && <MainMenu />}
       {gamePhase === 'scenario-select' && <ScenarioSelect />}
-      {(gamePhase === 'aiming' || gamePhase === 'shooting') && (
+      {showRunView && (
         <>
           <Scene />
           <HUD />
           <ShotEffects />
         </>
       )}
-      {gamePhase === 'results' && <ResultsScreen />}
+      {showResults && <ResultsScreen />}
     </div>
   );
 }

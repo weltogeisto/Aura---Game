@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/1",
+  "build": {
+    "beforeBuildCommand": "pnpm run build:canonical",
+    "beforeDevCommand": "pnpm run build:canonical",
+    "devPath": "../release/web/current/dist",
+    "distDir": "../release/web/current/dist"
+  },
+  "package": {
+    "productName": "Aura of the 21st Century",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": false,
+      "shell": {
+        "all": false,
+        "open": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "identifier": "com.aura.game",
+      "targets": "all",
+      "category": "Game"
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "title": "Aura of the 21st Century",
+        "width": 1600,
+        "height": 900,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ]
+  }
+}

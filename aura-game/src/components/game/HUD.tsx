@@ -1,5 +1,6 @@
 import { useGameStore } from '@/stores/gameStore';
 import { MICROCOPY } from '@/data/copy';
+import { UI_COPY_MAP } from '@/data/uiCopyMap';
 
 export function HUD() {
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -29,15 +30,19 @@ export function HUD() {
 
       {gamePhase === 'aiming' ? (
         <div className="absolute bottom-6 left-6 space-y-1 text-sm text-gray-300">
-          <p>Move mouse to aim</p>
-          <p>Use arrows or WASD for micro-adjustments</p>
-          <p>Click to fire your only shot</p>
-          {fireBlocked && <p className="text-orange-300">Shot already locked for this run.</p>}
+          {UI_COPY_MAP.hud.controls.map((control) => (
+            <p key={control}>{control}</p>
+          ))}
+          {fireBlocked && <p className="text-orange-300">{UI_COPY_MAP.hud.blockedShot}</p>}
         </div>
       ) : (
         <div className="absolute bottom-6 left-6 rounded-lg border border-orange-500/35 bg-black/45 px-4 py-3 text-sm text-orange-100">
-          <p className="font-medium">Shot in evaluation…</p>
-          {lastShotResult?.hitTargetName && <p className="mt-1 text-orange-200">Registered: {lastShotResult.hitTargetName}</p>}
+          <p className="font-medium">{UI_COPY_MAP.hud.evaluating}</p>
+          {lastShotResult?.hitTargetName && (
+            <p className="mt-1 text-orange-200">
+              {UI_COPY_MAP.hud.registeredPrefix} {lastShotResult.hitTargetName}
+            </p>
+          )}
         </div>
       )}
     </div>
