@@ -33,8 +33,19 @@ const DEFAULT_CRITIC_LINES = {
   high: ['The critic is still taking notes.'],
 };
 
-const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => {
-  const normalizedScenario = normalizeScenarioCopy(scenario);
+type ScenarioInput = Omit<Scenario, 'totalMaxValue' | 'metadata'> & {
+  metadata: Omit<Scenario['metadata'], 'contentCompleteness'>;
+};
+
+const inferContentCompleteness = (scenario: ScenarioInput): Scenario['metadata']['contentCompleteness'] => ({
+  targets: scenario.targets.length > 0,
+  criticLines: !!scenario.criticLines && scenario.criticLines.low.length > 0,
+  panoramaAssets: !!scenario.panoramaAsset?.lowRes,
+  scoring: !!scenario.scoring,
+});
+
+const createScenario = (scenario: ScenarioInput): Scenario => {
+  const normalizedScenario = normalizeScenarioCopy(scenario as Omit<Scenario, 'totalMaxValue'>);
   const targets = normalizeTargetPosition(normalizedScenario.targets);
 
   return {
@@ -43,6 +54,10 @@ const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => 
     criticLines: normalizedScenario.criticLines ?? DEFAULT_CRITIC_LINES,
     targets,
     totalMaxValue: sumTargetValues(targets),
+    metadata: {
+      ...scenario.metadata,
+      contentCompleteness: inferContentCompleteness(scenario),
+    },
   };
 };
 
@@ -192,6 +207,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     name: 'The Louvre - Salle des États',
     description: 'Paris, France. One shot to maximize cultural damage in the most visited museum.',
     isMvp: true,
+    metadata: { region: 'Europe', difficulty: 'easy', status: 'playable' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.louvre,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.louvre.tint,
@@ -295,6 +311,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'st-peters',
     name: "St. Peter's Basilica - Nave",
     description: 'Vatican City. Sacred architecture where atmosphere outvalues material.',
+    metadata: { region: 'Europe', difficulty: 'medium', status: 'prototype' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['st-peters'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['st-peters'].tint,
@@ -389,6 +406,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'topkapi',
     name: 'Topkapi Palace - Imperial Treasury',
     description: 'Istanbul, Turkey. Ottoman opulence where display wars with authenticity.',
+    metadata: { region: 'Middle East', difficulty: 'medium', status: 'prototype' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.topkapi,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.topkapi.tint,
@@ -483,6 +501,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'forbidden-city',
     name: 'Forbidden City - Hall of Supreme Harmony',
     description: 'Beijing, China. Imperial power and cultural contamination collide.',
+    metadata: { region: 'Asia', difficulty: 'hard', status: 'locked' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'].tint,
@@ -576,6 +595,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'tsmc',
     name: 'TSMC Clean Room - Fab 18',
     description: 'Tainan, Taiwan. Technological value balanced on a dust particle.',
+    metadata: { region: 'Asia', difficulty: 'hard', status: 'prototype' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.tsmc,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.tsmc.tint,
@@ -670,6 +690,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'hermitage',
     name: 'The Hermitage - Peacock Clock Room',
     description: 'St. Petersburg, Russia. Mechanical complexity and political economy.',
+    metadata: { region: 'Europe', difficulty: 'medium', status: 'prototype' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.hermitage,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.hermitage.tint,
@@ -763,6 +784,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'federal-reserve',
     name: 'Federal Reserve - Gold Vault',
     description: 'New York, USA. Fiat abstraction where value is pure hallucination.',
+    metadata: { region: 'Americas', difficulty: 'easy', status: 'locked' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tint,
@@ -847,6 +869,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'moma',
     name: 'MoMA - Contemporary Gallery',
     description: 'New York, USA. Modern art where destruction becomes creation.',
+    metadata: { region: 'Americas', difficulty: 'easy', status: 'prototype' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.moma,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.moma.tint,
@@ -941,6 +964,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'borges-library',
     name: 'The Borges Library - Canon Room',
     description: 'Impossible hexagonal chamber where ideas outweigh objects.',
+    metadata: { region: 'Americas', difficulty: 'hard', status: 'prototype' },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['borges-library'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['borges-library'].tint,

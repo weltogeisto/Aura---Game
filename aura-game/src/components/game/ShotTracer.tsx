@@ -24,8 +24,6 @@ export function ShotTracer() {
     const end = new THREE.Vector3(shotFeedback.traceEnd[0], shotFeedback.traceEnd[1], shotFeedback.traceEnd[2]);
     const currentEnd = start.clone().lerp(end, progress);
     const basePositions = basePositionsRef.current;
-
-    const basePositions = basePositionsRef.current;
     basePositions[0] = start.x;
     basePositions[1] = start.y;
     basePositions[2] = start.z;

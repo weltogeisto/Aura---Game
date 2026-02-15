@@ -38,7 +38,7 @@ export function simulateShot(
   const raycaster = new THREE.Raycaster();
 
   let origin = trajectory.origin.clone();
-  let direction = trajectory.velocity.clone().normalize();
+  const direction = trajectory.velocity.clone().normalize();
   let traveledDistance = 0;
   let remainingDistance = config.maxDistance;
   let energy = 1;
