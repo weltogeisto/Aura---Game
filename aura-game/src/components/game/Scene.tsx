@@ -72,7 +72,7 @@ export function Scene() {
           />
         </Suspense>
         <MuseumLighting scenarioId={selectedScenario.id} />
-        <RoomShell textureSize={renderSettings.textureSize} />
+        <RoomShell textureSize={renderSettings.textureSize} renderTier={renderTier} />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} />
         <BallisticsSystem />
