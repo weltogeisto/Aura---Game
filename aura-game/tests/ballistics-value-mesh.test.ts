@@ -11,6 +11,7 @@ const config = {
   gravity: 9.81,
   maxDistance: 50,
   timeStep: 1 / 240,
+  maxInteractions: 6,
 };
 
 test('same seed + same input yields deterministic score', () => {

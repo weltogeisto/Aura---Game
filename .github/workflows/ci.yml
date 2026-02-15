@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - 'aura-game/**'
+      - '.github/workflows/ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'aura-game/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  fast:
+    name: Fast checks
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aura-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: aura-game/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run ci:fast
+
+  full:
+    name: Full checks
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aura-game
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: aura-game/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run ci:full

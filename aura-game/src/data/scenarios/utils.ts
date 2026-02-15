@@ -9,6 +9,20 @@ export type ScenarioSeed = Omit<Scenario, 'totalMaxValue' | 'metadata'> & {
 const sumTargetValues = (targets: Scenario['targets']): number =>
   targets.reduce((total, target) => total + target.value, 0);
 
+
+const DEFAULT_SCORING = {
+  fallbackSampleValue: 5,
+  defaultZoneMultiplier: 1,
+  defaultCriticalModifier: 1,
+  dadaistScore: 1917000001,
+} as const;
+
+const DEFAULT_CRITIC_LINES = {
+  low: ['The critic is still taking notes.'],
+  mid: ['The critic is still taking notes.'],
+  high: ['The critic is still taking notes.'],
+};
+
 const isNormalizedPosition = ([x, y, z]: [number, number, number]): boolean =>
   x >= 0 && x <= 1 && y >= 0 && y <= 1 && z >= 0 && z <= 1;
 
@@ -162,6 +176,8 @@ export const createScenario = (scenario: ScenarioSeed): Scenario => {
 
   const scenarioWithCompleteness: Scenario = {
     ...normalizedScenario,
+    scoring: normalizedScenario.scoring ?? DEFAULT_SCORING,
+    criticLines: normalizedScenario.criticLines ?? DEFAULT_CRITIC_LINES,
     targets,
     totalMaxValue: sumTargetValues(targets),
     metadata: {

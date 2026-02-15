@@ -6,3 +6,5 @@ export const sortScenariosByStatus = (scenarios: Scenario[]): Scenario[] => {
     (a, b) => statusOrder.indexOf(a.metadata.status) - statusOrder.indexOf(b.metadata.status)
   );
 };
+
+export const isScenarioPlayable = (scenario: Scenario): boolean => scenario.metadata.status === 'playable';

@@ -33,6 +33,22 @@ const baseScenario: Scenario = {
     defaultCriticalModifier: 1.3,
     dadaistScore: 1917000001,
   },
+  criticLines: {
+    low: ['Low'],
+    mid: ['Mid'],
+    high: ['High'],
+  },
+  metadata: {
+    region: 'Test',
+    difficulty: 'easy',
+    status: 'playable',
+    contentCompleteness: {
+      targets: true,
+      criticLines: true,
+      panoramaAssets: true,
+      scoring: true,
+    },
+  },
 };
 
 const hitSimulation: ShotSimulationResult = {

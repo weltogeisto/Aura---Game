@@ -16,6 +16,28 @@ const mockScenario: Scenario = {
   panoramaColor: '#000000',
   targets: [],
   totalMaxValue: 100,
+  metadata: {
+    region: 'Test',
+    difficulty: 'easy',
+    status: 'playable',
+    contentCompleteness: {
+      targets: true,
+      criticLines: true,
+      panoramaAssets: true,
+      scoring: true,
+    },
+  },
+  scoring: {
+    fallbackSampleValue: 5,
+    defaultZoneMultiplier: 1,
+    defaultCriticalModifier: 1,
+    dadaistScore: 1917000001,
+  },
+  criticLines: {
+    low: ['x'],
+    mid: ['y'],
+    high: ['z'],
+  },
 };
 
 const mockResult: ShotResult = {

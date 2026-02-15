@@ -1,4 +1,4 @@
-import { access, readFile } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -7,9 +7,24 @@ import { SCENARIOS } from '../src/data/scenarios.ts';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
+const scenarioDataDir = path.join(projectRoot, 'src', 'data');
 
-const scenarioSourcePath = path.join(projectRoot, 'src', 'data', 'scenarios.ts');
-const scenarioSource = await readFile(scenarioSourcePath, 'utf8');
+const walkFiles = async (dir) => {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await walkFiles(fullPath)));
+      continue;
+    }
+
+    files.push(fullPath);
+  }
+
+  return files;
+};
 
 const findings = [];
 const scenarioIds = new Set();
@@ -39,19 +54,29 @@ for (const [key, scenario] of Object.entries(SCENARIOS)) {
   }
 }
 
+const sourceFiles = (await walkFiles(scenarioDataDir)).filter((filePath) =>
+  filePath.endsWith('.ts') || filePath.endsWith('.tsx') || filePath.endsWith('.mjs')
+);
+
 const pathLiteralPattern = /['"](\.?\.?\/[^'"\n]+|\/[^'"\n]+)['"]/g;
-for (const match of scenarioSource.matchAll(pathLiteralPattern)) {
-  const rawPath = match[1];
-  if (rawPath.startsWith('data:') || rawPath.includes('${')) continue;
+for (const sourceFile of sourceFiles) {
+  const source = await readFile(sourceFile, 'utf8');
 
-  const resolved = rawPath.startsWith('/')
-    ? path.join(projectRoot, 'public', rawPath.slice(1))
-    : path.resolve(path.join(projectRoot, 'src', 'data'), rawPath);
+  for (const match of source.matchAll(pathLiteralPattern)) {
+    const rawPath = match[1];
+    if (rawPath.startsWith('data:') || rawPath.includes('${')) continue;
 
-  try {
-    await access(resolved);
-  } catch {
-    findings.push(`Broken asset/content path in scenarios.ts: "${rawPath}" -> "${path.relative(projectRoot, resolved)}"`);
+    const resolved = rawPath.startsWith('/')
+      ? path.join(projectRoot, 'public', rawPath.slice(1))
+      : path.resolve(path.dirname(sourceFile), rawPath);
+
+    try {
+      await access(resolved);
+    } catch {
+      findings.push(
+        `Broken asset/content path in ${path.relative(projectRoot, sourceFile)}: "${rawPath}" -> "${path.relative(projectRoot, resolved)}"`
+      );
+    }
   }
 }
 
