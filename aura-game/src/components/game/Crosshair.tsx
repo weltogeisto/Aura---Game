@@ -6,6 +6,7 @@ const FINE_ADJUST_STEP = 0.008;
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
 export function Crosshair() {
+  const gamePhase = useGameStore((state) => state.gamePhase);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
   const setCrosshairPosition = useGameStore((state) => state.setCrosshairPosition);
 
@@ -18,11 +19,12 @@ export function Crosshair() {
   );
 
   useEffect(() => {
+    if (gamePhase !== 'aiming') {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      setCrosshairPosition(
-        clamp01(e.clientX / window.innerWidth),
-        clamp01(e.clientY / window.innerHeight)
-      );
+      setCrosshairPosition(clamp01(e.clientX / window.innerWidth), clamp01(e.clientY / window.innerHeight));
     };
 
     const handleFineAdjust = (e: KeyboardEvent) => {
@@ -49,19 +51,22 @@ export function Crosshair() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('keydown', handleFineAdjust);
     };
-  }, [setCrosshairPosition]);
+  }, [gamePhase, setCrosshairPosition]);
 
   return (
-    <div
-      className="fixed w-8 h-8 pointer-events-none z-40 transform -translate-x-1/2 -translate-y-1/2"
-      style={style}
-    >
-      <div className="absolute inset-0 border-2 border-red-500 rounded-full opacity-70"></div>
-      <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>
-      <div className="absolute top-0 left-1/2 w-0.5 h-2 bg-red-500 transform -translate-x-1/2 -translate-y-2"></div>
-      <div className="absolute bottom-0 left-1/2 w-0.5 h-2 bg-red-500 transform -translate-x-1/2 translate-y-2"></div>
-      <div className="absolute top-1/2 left-0 h-0.5 w-2 bg-red-500 transform -translate-x-2 -translate-y-1/2"></div>
-      <div className="absolute top-1/2 right-0 h-0.5 w-2 bg-red-500 transform translate-x-2 -translate-y-1/2"></div>
+    <div className="fixed z-40 h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform pointer-events-none" style={style}>
+      {gamePhase === 'aiming' ? (
+        <>
+          <div className="absolute inset-0 rounded-full border-2 border-red-500 opacity-70" />
+          <div className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-500" />
+          <div className="absolute left-1/2 top-0 h-2 w-0.5 -translate-x-1/2 -translate-y-2 transform bg-red-500" />
+          <div className="absolute bottom-0 left-1/2 h-2 w-0.5 -translate-x-1/2 translate-y-2 transform bg-red-500" />
+          <div className="absolute left-0 top-1/2 h-0.5 w-2 -translate-x-2 -translate-y-1/2 transform bg-red-500" />
+          <div className="absolute right-0 top-1/2 h-0.5 w-2 translate-x-2 -translate-y-1/2 transform bg-red-500" />
+        </>
+      ) : (
+        <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-300/70 shadow-[0_0_10px_rgba(253,186,116,0.65)]" />
+      )}
     </div>
   );
 }

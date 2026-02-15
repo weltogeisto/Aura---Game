@@ -1,5 +1,10 @@
 export type ValueMeshGrid = number[][];
 
+const NORMALIZED_MIN = 0;
+const NORMALIZED_MAX = 1;
+const MIN_ZONE_MULTIPLIER = 0;
+const MIN_CRITICAL_MODIFIER = 1;
+
 export interface ValueMeshSample {
   value: number;
   usedFallback: boolean;
@@ -46,10 +51,12 @@ export function sampleValueMesh(
 }
 
 export function scoreImpact({ sampledValue, zoneMultiplier, criticalModifier }: ScoreInput): number {
-  const rawScore = sampledValue * Math.max(zoneMultiplier, 0) * Math.max(criticalModifier, 1);
+  const rawScore = sampledValue
+    * Math.max(zoneMultiplier, MIN_ZONE_MULTIPLIER)
+    * Math.max(criticalModifier, MIN_CRITICAL_MODIFIER);
   return Math.round(rawScore);
 }
 
 function clamp01(value: number) {
-  return Math.max(0, Math.min(1, value));
+  return Math.max(NORMALIZED_MIN, Math.min(NORMALIZED_MAX, value));
 }

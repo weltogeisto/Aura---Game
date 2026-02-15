@@ -1,4 +1,5 @@
 import type { Scenario } from '@/types';
+import { normalizeScenarioCopy } from '@/data/copy';
 
 const sumTargetValues = (targets: Scenario['targets']): number =>
   targets.reduce((total, target) => total + target.value, 0);
@@ -19,10 +20,11 @@ const normalizeTargetPosition = (targets: Scenario['targets']): Scenario['target
   }));
 
 const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => {
-  const targets = normalizeTargetPosition(scenario.targets);
+  const normalizedScenario = normalizeScenarioCopy(scenario);
+  const targets = normalizeTargetPosition(normalizedScenario.targets);
 
   return {
-    ...scenario,
+    ...normalizedScenario,
     targets,
     totalMaxValue: sumTargetValues(targets),
   };
@@ -90,6 +92,14 @@ const createScenarioPanoramaAsset = (
   tint: palette.tint,
   tintStrength: palette.tintStrength,
 });
+
+
+const LOUVRE_SCORING = {
+  fallbackSampleValue: 5,
+  defaultZoneMultiplier: 1.2,
+  defaultCriticalModifier: 1.5,
+  dadaistScore: 1917000001,
+} as const;
 
 const SCENARIO_ENVIRONMENT_ASSETS: Record<
   string,
@@ -172,6 +182,7 @@ export const SCENARIOS: Record<string, Scenario> = {
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.louvre.tintStrength,
     },
     panoramaColor: '#d4a574',
+    scoring: LOUVRE_SCORING,
     targets: [
       {
         id: 'mona-lisa',
@@ -182,6 +193,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         type: 'masterpiece',
         material: 'oil-on-wood',
         description: 'Leonardo da Vinci\'s most famous painting, behind bulletproof glass.',
+        zoneMultiplier: LOUVRE_SCORING.defaultZoneMultiplier,
+        criticalModifier: LOUVRE_SCORING.defaultCriticalModifier,
       },
       {
         id: 'wedding-at-cana',
@@ -243,6 +256,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         ],
         overrideTotalDamage: 0,
         breakdownMode: 'none',
+        zoneMultiplier: 0,
+        criticalModifier: 1,
       },
     ],
     criticLines: {

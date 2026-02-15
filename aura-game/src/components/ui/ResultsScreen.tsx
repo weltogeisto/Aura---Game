@@ -1,55 +1,72 @@
-import { useMemo } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 import { formatCurrency } from '@/lib/utils';
+import { MICROCOPY } from '@/data/copy';
 
 export function ResultsScreen() {
+  const selectedScenario = useGameStore((state) => state.selectedScenario);
   const lastShotResult = useGameStore((state) => state.lastShotResult);
   const totalScore = useGameStore((state) => state.totalScore);
   const criticOutput = useGameStore((state) => state.criticOutput);
   const resetGame = useGameStore((state) => state.resetGame);
-  const shotTimestamp = useGameStore((state) => state.shotTimestamp);
+  const resetRunState = useGameStore((state) => state.resetRunState);
+  const setGamePhase = useGameStore((state) => state.setGamePhase);
 
-  if (!lastShotResult) {
-    return null;
-  }
+  if (!lastShotResult) return null;
 
   const isDadaistHit = lastShotResult.hitTargetType === 'easter-egg-dadaist';
 
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
-      <div className="bg-gray-900 p-8 rounded-lg max-w-2xl w-full max-h-screen overflow-y-auto">
-        <h1 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
-          APPRAISAL COMPLETE
-        </h1>
+  const replayScenario = () => {
+    if (!selectedScenario) {
+      resetGame();
+      return;
+    }
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          <div className="bg-gray-800 p-4 rounded">
-            <p className="text-gray-400 mb-1">Total Score</p>
-            <p className={`text-3xl font-bold ${isDadaistHit ? 'text-fuchsia-400' : 'text-red-500'}`}>
+    resetRunState();
+    setGamePhase('aiming');
+  };
+
+  const openScenarioPicker = () => {
+    resetRunState();
+    setGamePhase('scenario-select');
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-4 py-8">
+      <div className="w-full max-w-3xl max-h-screen overflow-y-auto rounded-2xl border border-white/10 bg-gray-950/95 p-8 shadow-2xl md:p-10">
+        <p className="text-xs uppercase tracking-[0.3em] text-orange-300">Run complete</p>
+        <h1 className="mt-3 text-4xl font-bold text-transparent bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text">
+          Appraisal archived
+        </h1>
+        <p className="mt-3 text-sm text-gray-300">{MICROCOPY.resultsHint}</p>
+
+        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="rounded-xl bg-gray-900 p-4">
+            <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Total score</p>
+            <p className={`mt-2 text-2xl font-bold ${isDadaistHit ? 'text-fuchsia-400' : 'text-red-500'}`}>
               {formatCurrency(totalScore)}
             </p>
           </div>
-          <div className="bg-gray-800 p-4 rounded">
-            <p className="text-gray-400 mb-1">Hit Location</p>
-            <p className="text-lg font-semibold text-white">{lastShotResult.hitLocationLabel}</p>
+          <div className="rounded-xl bg-gray-900 p-4 md:col-span-2">
+            <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Impact location</p>
+            <p className="mt-2 text-base font-semibold text-white">{lastShotResult.hitLocationLabel}</p>
           </div>
         </div>
 
-        <div className="mb-8">
-          <p className="text-gray-400 mb-2">Target Hit:</p>
-          <p className="text-2xl font-bold text-white">{lastShotResult.hitTargetName || 'Nothing'}</p>
+        <div className="mt-4 rounded-xl bg-gray-900 p-4">
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Target</p>
+          <p className="mt-2 text-xl font-semibold text-white">{lastShotResult.hitTargetName || 'No registered target'}</p>
         </div>
 
-        <div className="bg-gray-800 p-6 rounded mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-white">Damage Breakdown</h2>
-          <div className="space-y-3">
+        <div className="mt-4 rounded-xl bg-gray-900 p-6">
+          <h2 className="text-lg font-semibold text-white">Damage breakdown</h2>
+          <div className="mt-3 space-y-3">
             {lastShotResult.breakdown.length === 0 && (
-              <p className="text-gray-400">No conventional damage accounting available.</p>
+              <p className="text-sm text-gray-400">No conventional damage accounting available for this hit.</p>
             )}
             {lastShotResult.breakdown.map((item) => (
-              <div key={item.targetId} className="flex justify-between items-center text-gray-300">
+              <div key={item.targetId} className="flex items-center justify-between gap-4 text-sm text-gray-300">
                 <span>{item.targetName}</span>
-                <span className="text-orange-500 font-semibold">
+                <span className="font-semibold text-orange-400">
                   {formatCurrency(item.damage)} ({item.percentage.toFixed(1)}%)
                 </span>
               </div>
@@ -57,45 +74,37 @@ export function ResultsScreen() {
           </div>
         </div>
 
-        <div className="bg-gray-800 p-6 rounded mb-8">
-          <p className="text-gray-400 mb-2">Total Cultural Damage:</p>
-          <p className="text-4xl font-bold text-red-500">{formatCurrency(lastShotResult.totalDamage)}</p>
+        <div className="mt-4 rounded-xl border border-orange-500/30 bg-black/40 p-5">
+          <p className="text-xs uppercase tracking-[0.2em] text-orange-200">Critic</p>
+          <p className="mt-2 text-sm italic text-orange-100">“{criticOutput ?? lastShotResult.criticLine}”</p>
         </div>
 
         {lastShotResult.specialEffects.length > 0 && (
-          <div className="bg-blue-900/30 border border-blue-500 p-4 rounded mb-8">
-            <h3 className="font-semibold text-blue-400 mb-2">Special Effects Triggered:</h3>
-            <ul className="space-y-1">
+          <div className="mt-4 rounded-xl border border-blue-500/40 bg-blue-900/20 p-5">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">Triggered effects</h3>
+            <ul className="mt-3 space-y-1 text-sm text-blue-200">
               {lastShotResult.specialEffects.map((effect, i) => (
-                <li key={i} className="text-blue-300 text-sm">
-                  • {effect}
-                </li>
+                <li key={i}>• {effect}</li>
               ))}
             </ul>
           </div>
         )}
 
-        <div className="bg-black/40 border border-orange-500/40 p-4 rounded mb-8">
-          <p className="text-orange-200 text-sm uppercase tracking-[0.2em] mb-2">Critic</p>
-          <p className="text-orange-100 italic">“{criticOutput ?? lastShotResult.criticLine}”</p>
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <button
+            onClick={replayScenario}
+            className="rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
+          >
+            Play again
+          </button>
+          <button
+            onClick={openScenarioPicker}
+            className="rounded-full border border-white/20 bg-gray-900 px-6 py-3 font-semibold text-gray-100 transition hover:border-white/40"
+          >
+            New scenario
+          </button>
         </div>
-
-        <button
-          onClick={resetGame}
-          className="w-full px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded transition-colors"
-        >
-          Play Again
-        </button>
       </div>
     </div>
   );
-}
-
-function hashSeed(input: string): number {
-  let hash = 2166136261;
-  for (let i = 0; i < input.length; i += 1) {
-    hash ^= input.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return hash >>> 0;
 }
