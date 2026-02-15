@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { getScenariosList } from '../src/data/scenarios.ts';
-import { sortScenariosByStatus } from '../src/components/ui/scenarioSelectModel.ts';
+import { isScenarioPlayable, sortScenariosByStatus } from '../src/components/ui/scenarioSelectModel.ts';
 
 test('scenario sorting prioritizes playable then prototype then locked', () => {
   const sorted = sortScenariosByStatus(getScenariosList());
@@ -31,4 +31,13 @@ test('scenario list contains non-playable entries for explicit status UX', () =>
 
   assert.equal(playableCount > 0, true);
   assert.equal(nonPlayableCount > 0, true);
+});
+
+
+test('scenario interactivity is strictly status-driven', () => {
+  const scenarios = getScenariosList();
+
+  scenarios.forEach((scenario) => {
+    assert.equal(isScenarioPlayable(scenario), scenario.metadata.status === 'playable');
+  });
 });

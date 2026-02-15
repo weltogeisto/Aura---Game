@@ -1,11 +1,12 @@
 import { getScenariosList } from '@/data/scenarios';
 import { useGameStore } from '@/stores/gameStore';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
+import { isScenarioPlayable } from './scenarioSelectModel';
 
 export function MainMenu() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
   const scenarioCount = getScenariosList().length;
-  const mvpScenarioCount = getScenariosList().filter((scenario) => scenario.isMvp).length;
+  const playableScenarioCount = getScenariosList().filter((scenario) => isScenarioPlayable(scenario)).length;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-black px-4">
@@ -18,7 +19,7 @@ export function MainMenu() {
         <p className="mx-auto mt-6 max-w-xl text-base text-gray-200">{UI_COPY_MAP.hints.gameTagline}</p>
         <p className="mx-auto mt-2 max-w-xl text-sm text-gray-400">{UI_COPY_MAP.release.subtitle}</p>
         <p className="mx-auto mt-2 max-w-xl text-sm text-gray-400">
-          {UI_COPY_MAP.mainMenu.scenarioSummary} {mvpScenarioCount} of {scenarioCount} rooms are marked playable right now.
+          {UI_COPY_MAP.mainMenu.scenarioSummary} {playableScenarioCount} of {scenarioCount} rooms are marked playable right now.
         </p>
 
         <button

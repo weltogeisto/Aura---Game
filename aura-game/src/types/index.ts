@@ -1,4 +1,4 @@
-export type GamePhase = 'start' | 'louvre' | 'menu' | 'scenario-select' | 'aiming' | 'shooting' | 'results';
+export type GamePhase = 'start' | 'menu' | 'scenario-select' | 'aiming' | 'shooting' | 'results';
 
 export interface Target {
   id: string;

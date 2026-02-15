@@ -7,7 +7,6 @@ import { Scene } from '@/components/game/Scene';
 import { HUD } from '@/components/game/HUD';
 import { ShotEffects } from '@/components/game/ShotEffects';
 import { StartView } from '@/components/ui/StartView';
-import { LouvreSceneContainer } from '@/components/louvre/LouvreSceneContainer';
 import { hasResult } from '@/stores/gameSelectors';
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
   return (
     <div className="w-screen h-screen bg-black overflow-hidden">
       {gamePhase === 'start' && <StartView />}
-      {gamePhase === 'louvre' && <LouvreSceneContainer />}
       {gamePhase === 'menu' && <MainMenu />}
       {gamePhase === 'scenario-select' && <ScenarioSelect />}
       {showRunView && (

@@ -1,5 +1,5 @@
-import type { Scenario } from '@/types';
-import { UI_COPY_MAP } from '@/data/uiCopyMap';
+import type { Scenario } from '../types/index.ts';
+import { UI_COPY_MAP } from './uiCopyMap.ts';
 
 const ensureSentencePunctuation = (value: string): string => {
   const trimmed = value.trim();

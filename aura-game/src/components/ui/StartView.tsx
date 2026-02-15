@@ -25,7 +25,7 @@ export function StartView() {
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <button
             type="button"
-            onClick={() => setGamePhase('louvre')}
+            onClick={() => setGamePhase('scenario-select')}
             className="rounded-full border border-amber-200/70 bg-amber-300/95 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-slate-900 transition hover:scale-[1.01] hover:bg-amber-200"
           >
             {UI_COPY_MAP.startView.ctaPrimary}
