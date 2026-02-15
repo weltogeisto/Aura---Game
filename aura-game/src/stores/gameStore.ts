@@ -11,6 +11,7 @@ interface GameStore extends GameState {
   clearShotFeedback: () => void;
   resetRunState: () => void;
   resetGame: () => void;
+  resetRunState: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -24,6 +25,9 @@ export const useGameStore = create<GameStore>((set) => ({
   lastShotResult: null,
   shotFeedback: null,
   ammoRemaining: 1,
+  totalScore: 0,
+  criticOutput: null,
+  shotLocked: false,
 
   setGamePhase: (phase: GamePhase) =>
     set({ gamePhase: phase }),
@@ -31,25 +35,30 @@ export const useGameStore = create<GameStore>((set) => ({
   setSelectedScenario: (scenario: Scenario | null) =>
     set({ selectedScenario: scenario }),
 
+  resetRunState: () =>
+    set({
+      shotFired: false,
+      lastShotResult: null,
+      shotFeedback: null,
+      ammoRemaining: 1,
+      totalScore: 0,
+      criticOutput: null,
+      shotLocked: false,
+    }),
+
   setCrosshairPosition: (x: number, y: number) =>
     set({ crosshairPosition: { x, y } }),
 
   fireShotResult: (result: ShotResult, feedback: ShotFeedback) =>
-    set((state) => {
-      if (state.hasFired) {
-        return state;
-      }
-
-      return {
-        shotFired: true,
-        hasFired: true,
-        shotTimestamp: Date.now(),
-        fireBlocked: false,
-        lastShotResult: result,
-        gamePhase: 'shooting',
-        shotFeedback: feedback,
-        ammoRemaining: 0,
-      };
+    set({
+      shotFired: true,
+      lastShotResult: result,
+      gamePhase: 'shooting',
+      shotFeedback: feedback,
+      ammoRemaining: 0,
+      totalScore: result.totalScore,
+      criticOutput: result.criticLine,
+      shotLocked: true,
     }),
 
   finalizeShot: () =>
@@ -88,5 +97,8 @@ export const useGameStore = create<GameStore>((set) => ({
       lastShotResult: null,
       shotFeedback: null,
       ammoRemaining: 1,
+      totalScore: 0,
+      criticOutput: null,
+      shotLocked: false,
     }),
 }));

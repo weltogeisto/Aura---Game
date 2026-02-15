@@ -9,6 +9,7 @@ interface TargetHitData {
   targetName: string;
   targetType: Target['type'];
   value: number;
+  hitTag?: 'dadaist';
 }
 
 const SHOW_DEBUG_PRIMITIVES = import.meta.env.DEV && import.meta.env.VITE_SHOW_TARGET_DEBUG === 'true';
@@ -18,6 +19,7 @@ const createTargetHitData = (target: Target): TargetHitData => ({
   targetName: target.name,
   targetType: target.type,
   value: target.value,
+  hitTag: target.type === 'easter-egg-dadaist' ? 'dadaist' : undefined,
 });
 
 const roughnessOffsetFromId = (targetId: string): number => {
@@ -133,6 +135,7 @@ function SculptureTarget({ target }: { target: Target }) {
 function InteractiveObjectTarget({ target }: { target: Target }) {
   const hitData = createTargetHitData(target);
   const isSystemic = target.type === 'easter-egg-systemic';
+  const isDadaist = target.type === 'easter-egg-dadaist';
 
   return (
     <group position={target.position}>
@@ -143,6 +146,8 @@ function InteractiveObjectTarget({ target }: { target: Target }) {
           emissive={isSystemic ? '#360000' : '#1b130f'}
           metalness={isSystemic ? 0.82 : 0.18}
           roughness={isSystemic ? 0.24 : 0.64}
+          transparent={isDadaist}
+          opacity={isDadaist ? 0.12 : 1}
         />
       </mesh>
 
@@ -153,6 +158,8 @@ function InteractiveObjectTarget({ target }: { target: Target }) {
           emissive={isSystemic ? '#4d0606' : '#000000'}
           metalness={isSystemic ? 0.65 : 0.1}
           roughness={isSystemic ? 0.2 : 0.5}
+          transparent={isDadaist}
+          opacity={isDadaist ? 0.12 : 1}
         />
       </mesh>
 

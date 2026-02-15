@@ -9,8 +9,7 @@ export function ShotTracer() {
   const geometryRef = useRef<THREE.BufferGeometry | null>(null);
   const materialRef = useRef<THREE.LineBasicMaterial | null>(null);
   const attributeRef = useRef<THREE.BufferAttribute | null>(null);
-
-  const basePositionsRef = useRef(new Float32Array(6));
+  const basePositionsRef = useRef<Float32Array>(new Float32Array(6));
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback?.traceEnd || !geometryRef.current) {

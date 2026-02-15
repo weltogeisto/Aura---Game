@@ -3,10 +3,17 @@ import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
 
-function toVector3(point?: [number, number, number], fallback = new THREE.Vector3()) {
-  if (!point) return fallback;
-  return new THREE.Vector3(point[0], point[1], point[2]);
-}
+const buildParticleOffsets = () => {
+  const offsets = new Float32Array(24 * 3);
+  for (let i = 0; i < 24; i += 1) {
+    const angle = (i / 24) * Math.PI * 2;
+    const radialJitter = 0.08 + (i % 5) * 0.04;
+    offsets[i * 3] = Math.cos(angle) * radialJitter;
+    offsets[i * 3 + 1] = Math.sin(angle) * radialJitter;
+    offsets[i * 3 + 2] = ((i % 3) - 1) * 0.06;
+  }
+  return offsets;
+};
 
 export function ShotImpact() {
   const { camera } = useThree();
@@ -15,41 +22,34 @@ export function ShotImpact() {
   const meshRef = useRef<THREE.Mesh | null>(null);
   const particlesRef = useRef<THREE.Points | null>(null);
 
-  const particleOffsets = useMemo(() => {
-    const offsets = new Float32Array(24 * 3);
-    const seed = shotFeedback?.ballisticsSeed ?? 1337;
-    const rand = seededRandom(seed);
-    for (let i = 0; i < 24; i += 1) {
-      offsets[i * 3] = (rand() - 0.5) * 0.5;
-      offsets[i * 3 + 1] = (rand() - 0.5) * 0.5;
-      offsets[i * 3 + 2] = (rand() - 0.5) * 0.5;
-    }
-    return offsets;
-  }, [shotFeedback?.ballisticsSeed]);
-
-  const hitPosition = shotFeedback?.hitPoint
-    ? new THREE.Vector3(shotFeedback.hitPoint[0], shotFeedback.hitPoint[1], shotFeedback.hitPoint[2])
-    : new THREE.Vector3();
-
-  const hitNormal = shotFeedback?.hitNormal
-    ? new THREE.Vector3(shotFeedback.hitNormal[0], shotFeedback.hitNormal[1], shotFeedback.hitNormal[2])
-    : new THREE.Vector3(0, 0, 1);
+  const particleOffsets = useMemo(() => buildParticleOffsets(), []);
 
   useEffect(() => {
-    if (!meshRef.current) return;
-    const offset = hitNormal.clone().multiplyScalar(0.06);
-    meshRef.current.position.copy(hitPosition.clone().add(offset));
-  }, [hitPosition, hitNormal]);
+    if (!meshRef.current || !shotFeedback?.hitPoint) return;
+    const hitPosition = new THREE.Vector3(...shotFeedback.hitPoint);
+    const hitNormal = shotFeedback.hitNormal
+      ? new THREE.Vector3(...shotFeedback.hitNormal)
+      : new THREE.Vector3(0, 0, 1);
+    const offset = hitNormal.multiplyScalar(0.06);
+    meshRef.current.position.copy(hitPosition.add(offset));
+  }, [shotFeedback]);
 
   useFrame(() => {
-    if (!shotFeedback?.active || !shotFeedback.hit) {
-      if (materialRef.current) materialRef.current.opacity = 0;
-      if (particlesRef.current) particlesRef.current.visible = false;
+    if (!shotFeedback?.active || !shotFeedback.hit || !shotFeedback.hitPoint) {
+      if (materialRef.current) {
+        materialRef.current.opacity = 0;
+      }
+      if (particlesRef.current) {
+        particlesRef.current.visible = false;
+      }
       return;
     }
 
-    const hitPosition = toVector3(shotFeedback.hitPoint);
-    const hitNormal = toVector3(shotFeedback.hitNormal, new THREE.Vector3(0, 0, 1));
+    const hitPosition = new THREE.Vector3(...shotFeedback.hitPoint);
+    const hitNormal = shotFeedback.hitNormal
+      ? new THREE.Vector3(...shotFeedback.hitNormal)
+      : new THREE.Vector3(0, 0, 1);
+
     const elapsed = (Date.now() - shotFeedback.firedAt) / 1000;
     const duration = 0.45;
     const progress = Math.min(elapsed / duration, 1);

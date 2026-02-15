@@ -4,24 +4,16 @@ import { formatCurrency } from '@/lib/utils';
 
 export function ResultsScreen() {
   const lastShotResult = useGameStore((state) => state.lastShotResult);
-  const selectedScenario = useGameStore((state) => state.selectedScenario);
+  const totalScore = useGameStore((state) => state.totalScore);
+  const criticOutput = useGameStore((state) => state.criticOutput);
   const resetGame = useGameStore((state) => state.resetGame);
   const shotTimestamp = useGameStore((state) => state.shotTimestamp);
 
-  const totalDamage = lastShotResult?.totalDamage ?? 0;
-  const maxValue = selectedScenario?.totalMaxValue ?? totalDamage;
-  const ratio = maxValue ? totalDamage / maxValue : 0;
-  const criticLines = selectedScenario?.criticLines;
-  const criticLine = useMemo(() => {
-    if (!criticLines) {
-      return 'The critic is still taking notes.';
-    }
-
-    const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
-    const seedSource = `${lastShotResult.hitTargetId ?? 'miss'}:${lastShotResult.totalDamage}:${lastShotResult.damageAmount}`;
-    const seed = hashSeed(seedSource);
-    criticLine = pool[seed % pool.length] ?? criticLine;
+  if (!lastShotResult) {
+    return null;
   }
+
+  const isDadaistHit = lastShotResult.hitTargetType === 'easter-egg-dadaist';
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
@@ -29,6 +21,19 @@ export function ResultsScreen() {
         <h1 className="text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
           APPRAISAL COMPLETE
         </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div className="bg-gray-800 p-4 rounded">
+            <p className="text-gray-400 mb-1">Total Score</p>
+            <p className={`text-3xl font-bold ${isDadaistHit ? 'text-fuchsia-400' : 'text-red-500'}`}>
+              {formatCurrency(totalScore)}
+            </p>
+          </div>
+          <div className="bg-gray-800 p-4 rounded">
+            <p className="text-gray-400 mb-1">Hit Location</p>
+            <p className="text-lg font-semibold text-white">{lastShotResult.hitLocationLabel}</p>
+          </div>
+        </div>
 
         <div className="mb-8">
           <p className="text-gray-400 mb-2">Target Hit:</p>
@@ -38,6 +43,9 @@ export function ResultsScreen() {
         <div className="bg-gray-800 p-6 rounded mb-8">
           <h2 className="text-xl font-semibold mb-4 text-white">Damage Breakdown</h2>
           <div className="space-y-3">
+            {lastShotResult.breakdown.length === 0 && (
+              <p className="text-gray-400">No conventional damage accounting available.</p>
+            )}
             {lastShotResult.breakdown.map((item) => (
               <div key={item.targetId} className="flex justify-between items-center text-gray-300">
                 <span>{item.targetName}</span>
@@ -69,7 +77,7 @@ export function ResultsScreen() {
 
         <div className="bg-black/40 border border-orange-500/40 p-4 rounded mb-8">
           <p className="text-orange-200 text-sm uppercase tracking-[0.2em] mb-2">Critic</p>
-          <p className="text-orange-100 italic">“{criticLine}”</p>
+          <p className="text-orange-100 italic">“{criticOutput ?? lastShotResult.criticLine}”</p>
         </div>
 
         <button

@@ -1,9 +1,16 @@
 # Progress
 
-## Milestone 3
-- ✅ Added deterministic ballistics module with seed-driven sway and gravity drop integration.
-- ✅ Added impact resolution pipeline with object metadata + UV extraction.
-- ✅ Added value-mesh UV sampling with robust fallback behavior.
-- ✅ Added scoring formula using mesh sample, zone multiplier, and critical modifier.
-- ✅ Added deterministic + UV boundary tests.
-- ✅ Added `docs/value-mesh.md` to lock down format, assumptions, equation, and determinism constraints.
+## Milestone 4 — Louvre one-shot loop (value mesh + critic + egg)
+
+Completed:
+- Added deterministic post-shot result modeling (score, location, critic output).
+- Added explicit Dadaist hit tagging and hidden Louvre placement for the easter egg.
+- Added conditional anti-value scoring and critic-path branching for Dadaist hits.
+- Hardened replay reset path to restore one-shot lock, score, and critic state.
+
+## Final CI
+
+Command outcomes:
+- `pnpm lint` — pass.
+- `pnpm exec tsc -b` — pass.
+- `pnpm build` — pass.
