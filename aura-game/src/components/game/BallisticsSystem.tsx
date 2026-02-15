@@ -2,7 +2,17 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
+import { buildTrajectory, resolveImpact } from '@/lib/ballistics';
+import { sampleValueMesh, scoreImpact } from '@/lib/valueMesh';
 import type { ShotResult } from '@/types';
+
+const DEFAULT_BALLISTICS = {
+  swayRadians: 0.008,
+  muzzleVelocity: 52,
+  gravity: 9.81,
+  maxDistance: 55,
+  timeStep: 1 / 120,
+};
 
 export function BallisticsSystem() {
   const { scene, camera } = useThree();
@@ -26,18 +36,6 @@ export function BallisticsSystem() {
 
       if (!scene || !camera || !selectedScenario) return;
 
-      // Create raycaster
-      const raycaster = new THREE.Raycaster();
-      const sway = 0.008;
-      const mouse = new THREE.Vector2(
-        crosshairPosition.x * 2 - 1 + (Math.random() - 0.5) * sway,
-        -(crosshairPosition.y * 2 - 1) + (Math.random() - 0.5) * sway
-      );
-
-      // Cast ray
-      raycaster.setFromCamera(mouse, camera);
-
-      // Get all meshes in the scene
       const allObjects: THREE.Object3D[] = [];
       scene.traverse((obj) => {
         if (obj instanceof THREE.Mesh && obj.userData.targetId) {
@@ -45,51 +43,36 @@ export function BallisticsSystem() {
         }
       });
 
-      const intersects = raycaster.intersectObjects(allObjects);
+      const ballisticsSeed = hashSeed(`${selectedScenario.id}:${crosshairPosition.x.toFixed(5)}:${crosshairPosition.y.toFixed(5)}`);
+      const trajectory = buildTrajectory(camera, crosshairPosition, {
+        ...DEFAULT_BALLISTICS,
+        seed: ballisticsSeed,
+      });
 
-      let hitTarget: string | null = null;
-      let hitValue = 0;
-      let totalDamage = 0;
-      const missTraceDistance = 45;
+      const impact = resolveImpact(trajectory, allObjects, {
+        ...DEFAULT_BALLISTICS,
+        seed: ballisticsSeed,
+      });
 
-      if (intersects.length > 0) {
-        const firstIntersect = intersects[0];
-        const hitMesh = firstIntersect.object as THREE.Mesh;
-        hitTarget = hitMesh.userData.targetId as string;
-        hitValue = hitMesh.userData.value || 0;
-        const hitPoint = firstIntersect.point.clone();
-        const hitNormal = firstIntersect.face?.normal
-          ? firstIntersect.face.normal.clone()
-          : new THREE.Vector3(0, 0, 1);
-
-        if (firstIntersect.face && hitMesh.matrixWorld) {
-          const normalMatrix = new THREE.Matrix3().getNormalMatrix(hitMesh.matrixWorld);
-          hitNormal.applyMatrix3(normalMatrix).normalize();
-        }
-        const impactOffset = hitNormal.clone().multiplyScalar(0.06);
-        const traceEnd = hitPoint.clone().add(impactOffset);
-
-        // Calculate damage based on hit + simple distance attenuation
-        const attenuation = THREE.MathUtils.clamp(1 - firstIntersect.distance * 0.15, 0.6, 1);
-        const adjustedDamage = Math.round(hitValue * attenuation);
-        totalDamage = adjustedDamage;
-        const damageScale = THREE.MathUtils.clamp(
-          adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1),
-          0.1,
-          1
+      if (impact) {
+        const hitTarget = selectedScenario.targets.find((target) => target.id === impact.metadata.objectId);
+        const sampled = sampleValueMesh(
+          hitTarget?.valueMesh ?? [[hitTarget?.value ?? 0]],
+          impact.uv ? { u: impact.uv.x, v: impact.uv.y } : null,
+          hitTarget?.value ?? 0
         );
-        const travelTimeMs = THREE.MathUtils.clamp(
-          (firstIntersect.distance / 45) * 1000,
-          140,
-          480
-        );
+        const adjustedDamage = scoreImpact({
+          sampledValue: sampled.value,
+          zoneMultiplier: hitTarget?.zoneMultiplier ?? 1,
+          criticalModifier: hitTarget?.criticalModifier ?? 1,
+        });
 
-        const hitTargetData = selectedScenario.targets.find((target) => target.id === hitTarget);
-        const specialEffects = hitTargetData?.specialEffects ? [...hitTargetData.specialEffects] : [];
-        totalDamage = hitTargetData?.overrideTotalDamage ?? adjustedDamage;
-        const breakdownMode = hitTargetData?.breakdownMode ?? 'hit-target';
+        const totalDamage = hitTarget?.overrideTotalDamage ?? adjustedDamage;
+        const breakdownMode = hitTarget?.breakdownMode ?? 'hit-target';
+        const specialEffects = hitTarget?.specialEffects ? [...hitTarget.specialEffects] : [];
+        const impactOffset = impact.normal.clone().multiplyScalar(0.06);
+        const traceEnd = impact.point.clone().add(impactOffset);
 
-        // Create breakdown
         const breakdownTargets = (() => {
           switch (breakdownMode) {
             case 'none':
@@ -102,16 +85,12 @@ export function BallisticsSystem() {
               );
             case 'hit-target':
             default:
-              return selectedScenario.targets.filter((target) => target.id === hitTarget);
+              return hitTarget ? [hitTarget] : [];
           }
         })();
 
         const breakdown = breakdownTargets.map((target) => {
-          const damage =
-            breakdownMode === 'hit-target'
-              ? adjustedDamage
-              : target.value;
-
+          const damage = breakdownMode === 'hit-target' ? adjustedDamage : target.value;
           return {
             targetId: target.id,
             targetName: target.name,
@@ -121,8 +100,8 @@ export function BallisticsSystem() {
         });
 
         const result: ShotResult = {
-          hitTargetId: hitTarget,
-          hitTargetName: hitMesh.userData.targetName,
+          hitTargetId: impact.metadata.objectId,
+          hitTargetName: impact.metadata.objectName,
           damageAmount: adjustedDamage,
           totalDamage,
           breakdown,
@@ -134,19 +113,22 @@ export function BallisticsSystem() {
           hit: true,
           firedAt: Date.now(),
           crosshairPosition,
-          hitDistance: firstIntersect.distance,
-          damageScale,
-          travelTimeMs,
+          hitDistance: impact.distance,
+          damageScale: THREE.MathUtils.clamp(adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1), 0.1, 1),
+          travelTimeMs: THREE.MathUtils.clamp((impact.distance / 45) * 1000, 140, 480),
           traceEnd: [traceEnd.x, traceEnd.y, traceEnd.z],
-          hitPoint: [hitPoint.x, hitPoint.y, hitPoint.z],
-          hitNormal: [hitNormal.x, hitNormal.y, hitNormal.z],
+          hitPoint: [impact.point.x, impact.point.y, impact.point.z],
+          hitNormal: [impact.normal.x, impact.normal.y, impact.normal.z],
+          impactUv: impact.uv ? [impact.uv.x, impact.uv.y] : null,
+          sampledValue: sampled.value,
+          usedFallbackSample: sampled.usedFallback,
+          ballisticsSeed,
         });
-        timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       } else {
-        const missEnd = raycaster.ray.at(missTraceDistance, new THREE.Vector3());
-        const travelTimeMs = THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420);
+        const missTraceDistance = 45;
+        const direction = trajectory.velocity.clone().normalize();
+        const missEnd = trajectory.origin.clone().addScaledVector(direction, missTraceDistance);
 
-        // Miss
         const result: ShotResult = {
           hitTargetId: null,
           hitTargetName: null,
@@ -163,11 +145,13 @@ export function BallisticsSystem() {
           crosshairPosition,
           hitDistance: missTraceDistance,
           damageScale: 0.15,
-          travelTimeMs,
+          travelTimeMs: THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420),
           traceEnd: [missEnd.x, missEnd.y, missEnd.z],
+          ballisticsSeed,
         });
-        timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       }
+
+      timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
     };
 
     window.addEventListener('click', handleClick);
@@ -180,4 +164,13 @@ export function BallisticsSystem() {
   }, [gamePhase, selectedScenario, crosshairPosition, scene, camera, hasFired, setFireBlocked, fireShotResult, finalizeShot]);
 
   return null;
+}
+
+function hashSeed(input: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    hash ^= input.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
 }

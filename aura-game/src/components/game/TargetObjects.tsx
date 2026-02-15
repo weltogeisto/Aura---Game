@@ -7,6 +7,7 @@ interface TargetObjectsProps {
 interface TargetHitData {
   targetId: string;
   targetName: string;
+  targetType: Target['type'];
   value: number;
 }
 
@@ -15,6 +16,7 @@ const SHOW_DEBUG_PRIMITIVES = import.meta.env.DEV && import.meta.env.VITE_SHOW_T
 const createTargetHitData = (target: Target): TargetHitData => ({
   targetId: target.id,
   targetName: target.name,
+  targetType: target.type,
   value: target.value,
 });
 

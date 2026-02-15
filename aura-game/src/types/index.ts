@@ -9,6 +9,9 @@ export interface Target {
   type: 'masterpiece' | 'sculpture' | 'easter-egg-dadaist' | 'easter-egg-systemic' | 'other';
   material?: string;
   description?: string;
+  zoneMultiplier?: number;
+  criticalModifier?: number;
+  valueMesh?: number[][];
   specialEffects?: string[];
   overrideTotalDamage?: number;
   breakdownMode?: 'hit-target' | 'masterpieces-and-sculptures' | 'all-targets' | 'none';
@@ -64,7 +67,12 @@ export interface ShotFeedback {
   traceEnd?: [number, number, number];
   hitPoint?: [number, number, number];
   hitNormal?: [number, number, number];
+  impactUv?: [number, number] | null;
+  sampledValue?: number;
+  usedFallbackSample?: boolean;
+  ballisticsSeed?: number;
 }
+
 
 export interface GameState {
   gamePhase: GamePhase;

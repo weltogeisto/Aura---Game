@@ -18,9 +18,9 @@ export function ResultsScreen() {
     }
 
     const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
-    const seed = shotTimestamp ?? 0;
-    const index = pool.length > 0 ? seed % pool.length : 0;
-    criticLine = pool[index] ?? criticLine;
+    const seedSource = `${lastShotResult.hitTargetId ?? 'miss'}:${lastShotResult.totalDamage}:${lastShotResult.damageAmount}`;
+    const seed = hashSeed(seedSource);
+    criticLine = pool[seed % pool.length] ?? criticLine;
   }
 
   return (
@@ -81,4 +81,13 @@ export function ResultsScreen() {
       </div>
     </div>
   );
+}
+
+function hashSeed(input: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    hash ^= input.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
 }

@@ -17,15 +17,29 @@ export function ShotImpact() {
 
   const particleOffsets = useMemo(() => {
     const offsets = new Float32Array(24 * 3);
+    const seed = shotFeedback?.ballisticsSeed ?? 1337;
+    const rand = seededRandom(seed);
     for (let i = 0; i < 24; i += 1) {
-      const angle = (i / 24) * Math.PI * 2;
-      const radius = 0.08 + (i % 5) * 0.06;
-      offsets[i * 3] = Math.cos(angle) * radius;
-      offsets[i * 3 + 1] = Math.sin(angle) * radius;
-      offsets[i * 3 + 2] = ((i % 3) - 1) * 0.07;
+      offsets[i * 3] = (rand() - 0.5) * 0.5;
+      offsets[i * 3 + 1] = (rand() - 0.5) * 0.5;
+      offsets[i * 3 + 2] = (rand() - 0.5) * 0.5;
     }
     return offsets;
-  }, []);
+  }, [shotFeedback?.ballisticsSeed]);
+
+  const hitPosition = shotFeedback?.hitPoint
+    ? new THREE.Vector3(shotFeedback.hitPoint[0], shotFeedback.hitPoint[1], shotFeedback.hitPoint[2])
+    : new THREE.Vector3();
+
+  const hitNormal = shotFeedback?.hitNormal
+    ? new THREE.Vector3(shotFeedback.hitNormal[0], shotFeedback.hitNormal[1], shotFeedback.hitNormal[2])
+    : new THREE.Vector3(0, 0, 1);
+
+  useEffect(() => {
+    if (!meshRef.current) return;
+    const offset = hitNormal.clone().multiplyScalar(0.06);
+    meshRef.current.position.copy(hitPosition.clone().add(offset));
+  }, [hitPosition, hitNormal]);
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback.hit) {
@@ -86,4 +100,15 @@ export function ShotImpact() {
       </points>
     </group>
   );
+}
+
+function seededRandom(seed: number) {
+  let state = seed >>> 0;
+  return () => {
+    state += 0x6d2b79f5;
+    let t = state;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
 }
