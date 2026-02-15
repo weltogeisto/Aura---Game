@@ -42,8 +42,8 @@ This plan defines the concrete steps to produce a **downloadable desktop beta** 
 **Goal:** Produce installable desktop builds using a webview wrapper.
 
 **Deliverables**
-- Web build output (`bundle.html` or `dist/`) is the canonical artifact.
-- Desktop wrapper (Tauri or Electron) loads the artifact offline.
+- Canonical build entry is `cd aura-game && pnpm run build:canonical`.
+- Desktop wrapper loads `release/web/current` artifacts (`dist/` + optional `bundle.html`) fully offline.
 - Installers for Windows/macOS (Linux optional).
 
 **Exit criteria**
@@ -68,6 +68,14 @@ This plan defines the concrete steps to produce a **downloadable desktop beta** 
 
 ---
 
+
+## Canonical Build & Asset Discipline
+
+1. Run `cd aura-game && pnpm run build:canonical`.
+2. Treat `release/web/current` as the handoff folder for desktop wrapping.
+3. Keep scenario asset references offline (`data:` or local paths), enforced by `pnpm run assets:check`.
+4. Never rely on runtime CDN/network fetches for panoramas, audio, or UI assets.
+
 ## Test Plan (Thorough)
 
 ### Functional
@@ -87,6 +95,22 @@ This plan defines the concrete steps to produce a **downloadable desktop beta** 
 
 ---
 
+
+## ADR — Desktop Wrapper Decision (Beta)
+
+**Status:** Accepted for beta phase.
+
+**Decision:** Use **Tauri** as the primary desktop wrapper; keep Electron as fallback only if a required native capability is blocked.
+
+**Criteria**
+- **Bundle-Größe:** Tauri typically yields materially smaller installers because it uses the system webview instead of bundling Chromium.
+- **Signing-Aufwand:** Both require platform signing/notarization for trusted distribution, but Tauri introduces a leaner packaging footprint and fewer binary-update moving parts.
+- **Plattformsupport:** Both support Windows/macOS/Linux; Electron has broader ecosystem maturity, while Tauri is sufficient for the current offline single-window beta scope.
+
+**Consequences**
+- Build handoff remains web-first (`release/web/current`), preserving flexibility.
+- If plugin or API requirements exceed Tauri comfort, we can switch to Electron without rewriting the gameplay frontend.
+
 ## Release Checklist (Beta)
 
 1. Tag version (e.g., `v0.1.0-beta.1`).
@@ -101,3 +125,4 @@ This plan defines the concrete steps to produce a **downloadable desktop beta** 
 - Follows the existing web build workflow and Three.js architecture.
 - Uses the current visual identity and UI guidelines.
 - Keeps the build pipeline deterministic (single source artifact for web + desktop).
+- Reserves `release/web/current` and `release/web/v<version>` for installer input staging.

@@ -29,22 +29,25 @@ React 18 + TypeScript + Vite
 ## Quick Start
 
 ```bash
-# 1. Initialize project
-cd web_build
-bash scripts/init-artifact.sh aura-game
 cd aura-game
-
-# 2. Add Three.js
-pnpm install three @react-three/fiber @react-three/drei @react-three/postprocessing
-pnpm install -D @types/three
-pnpm install zustand howler
-
-# 3. Development
+pnpm install
 pnpm dev
-
-# 4. Bundle
-bash ../scripts/bundle-artifact.sh
 ```
+
+## Canonical Build Entry (WEB_BUILD.md aligned)
+
+```bash
+cd aura-game
+pnpm run build:canonical
+```
+
+This single command now performs the full canonical flow:
+1. `assets:check` verifies that `public/**` and scenario config do not introduce runtime network fetches.
+2. `build:web` generates the Vite production build (`dist/`).
+3. `build:artifact` creates `bundle.html` via `../bundle-artifact.sh`.
+4. `release:stage` stages outputs under `release/web/current` and `release/web/v<version>`.
+
+For local iteration, keep using `pnpm dev`.
 
 ---
 

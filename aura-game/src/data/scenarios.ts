@@ -28,6 +28,18 @@ const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => 
   };
 };
 
+const OFFLINE_ASSET_PREFIXES = ['data:', '/', './', '../'] as const;
+
+const ensureOfflineAssetPath = (assetPath: string): string => {
+  const isOfflinePath = OFFLINE_ASSET_PREFIXES.some((prefix) => assetPath.startsWith(prefix));
+
+  if (!isOfflinePath) {
+    throw new Error(`Asset path must resolve offline: ${assetPath}`);
+  }
+
+  return assetPath;
+};
+
 const toPanoramaDataUri = (
   scenarioId: string,
   palette: { sky: string; wall: string; accent: string },
@@ -72,9 +84,9 @@ const createScenarioPanoramaAsset = (
   scenarioId: string,
   palette: { sky: string; wall: string; accent: string; tint: string; tintStrength: number }
 ) => ({
-  lowRes: toPanoramaDataUri(scenarioId, palette, 'low'),
-  mediumRes: toPanoramaDataUri(scenarioId, palette, 'high'),
-  highRes: toPanoramaDataUri(scenarioId, palette, 'high'),
+  lowRes: ensureOfflineAssetPath(toPanoramaDataUri(scenarioId, palette, 'low')),
+  mediumRes: ensureOfflineAssetPath(toPanoramaDataUri(scenarioId, palette, 'high')),
+  highRes: ensureOfflineAssetPath(toPanoramaDataUri(scenarioId, palette, 'high')),
   tint: palette.tint,
   tintStrength: palette.tintStrength,
 });

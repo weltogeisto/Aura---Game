@@ -4,6 +4,17 @@
 
 Instructions for building the "Aura of the 21st Century" web game using the included build scripts.
 
+## Canonical Build Entry (Current Repo)
+
+For this repository (already initialized), use:
+
+```bash
+cd aura-game
+pnpm run build:canonical
+```
+
+This runs the offline asset audit, builds the web app, creates `bundle.html`, and stages release-ready artifacts in `release/web/`.
+
 ## Prerequisites
 
 - Node.js 18+ 

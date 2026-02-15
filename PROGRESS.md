@@ -14,3 +14,11 @@ Command outcomes:
 - `pnpm lint` — pass.
 - `pnpm exec tsc -b` — pass.
 - `pnpm build` — pass.
+
+
+## Minimal Release-Checkliste (Desktop Beta)
+
+- [ ] **Versionierung:** `aura-game/package.json` Version erhöhen und Release-Tag setzen (`vX.Y.Z-beta.N`).
+- [ ] **Smoke-Checks:** `pnpm run build:canonical` erfolgreich; Desktop-Wrapper startet offline mit Assets aus `release/web/current`.
+- [ ] **Known Issues:** Offene Punkte + Workarounds vor Distribution in den Release Notes dokumentieren.
+
