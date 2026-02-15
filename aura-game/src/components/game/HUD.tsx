@@ -4,6 +4,7 @@ export function HUD() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const ammoRemaining = useGameStore((state) => state.ammoRemaining);
+  const fireBlocked = useGameStore((state) => state.fireBlocked);
 
   if ((gamePhase !== 'aiming' && gamePhase !== 'shooting') || !selectedScenario) {
     return null;
@@ -28,7 +29,9 @@ export function HUD() {
       {/* Bottom left - instructions */}
       <div className="absolute bottom-6 left-6 text-gray-400 text-sm">
         <p>Move mouse to aim</p>
+        <p>Use arrows or WASD for fine-adjust</p>
         <p>Click to shoot</p>
+        {fireBlocked && <p className="text-orange-400">Shot already fired. Reset to shoot again.</p>}
       </div>
     </div>
   );

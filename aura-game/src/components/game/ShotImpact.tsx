@@ -1,7 +1,12 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
+
+function toVector3(point?: [number, number, number], fallback = new THREE.Vector3()) {
+  if (!point) return fallback;
+  return new THREE.Vector3(point[0], point[1], point[2]);
+}
 
 export function ShotImpact() {
   const { camera } = useThree();
@@ -38,15 +43,13 @@ export function ShotImpact() {
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback.hit) {
-      if (materialRef.current) {
-        materialRef.current.opacity = 0;
-      }
-      if (particlesRef.current) {
-        particlesRef.current.visible = false;
-      }
+      if (materialRef.current) materialRef.current.opacity = 0;
+      if (particlesRef.current) particlesRef.current.visible = false;
       return;
     }
 
+    const hitPosition = toVector3(shotFeedback.hitPoint);
+    const hitNormal = toVector3(shotFeedback.hitNormal, new THREE.Vector3(0, 0, 1));
     const elapsed = (Date.now() - shotFeedback.firedAt) / 1000;
     const duration = 0.45;
     const progress = Math.min(elapsed / duration, 1);
@@ -73,9 +76,7 @@ export function ShotImpact() {
     }
   });
 
-  if (!shotFeedback?.hit || !shotFeedback?.hitPoint) {
-    return null;
-  }
+  if (!shotFeedback?.hit || !shotFeedback?.hitPoint) return null;
 
   return (
     <group>
@@ -93,18 +94,9 @@ export function ShotImpact() {
       </mesh>
       <points ref={particlesRef} visible={false}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[particleOffsets, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[particleOffsets, 3]} />
         </bufferGeometry>
-        <pointsMaterial
-          color="#ffe7c6"
-          size={0.06}
-          transparent
-          opacity={0.7}
-          depthWrite={false}
-        />
+        <pointsMaterial color="#ffe7c6" size={0.06} transparent opacity={0.7} depthWrite={false} />
       </points>
     </group>
   );
