@@ -12,7 +12,7 @@ interface GameStore extends GameState {
 }
 
 export const useGameStore = create<GameStore>((set) => ({
-  gamePhase: 'menu',
+  gamePhase: 'start',
   selectedScenario: null,
   crosshairPosition: { x: 0.5, y: 0.5 },
   shotFired: false,
@@ -50,7 +50,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
   resetGame: () =>
     set({
-      gamePhase: 'menu',
+      gamePhase: 'start',
       selectedScenario: null,
       crosshairPosition: { x: 0.5, y: 0.5 },
       shotFired: false,
