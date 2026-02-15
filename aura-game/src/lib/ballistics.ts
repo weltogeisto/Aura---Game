@@ -1,5 +1,14 @@
 import * as THREE from 'three';
 
+const RNG_INCREMENT = 0x6d2b79f5;
+const RNG_SHIFT_A = 15;
+const RNG_SHIFT_B = 7;
+const RNG_SHIFT_C = 14;
+const RNG_MULTIPLIER_A_MASK = 1;
+const RNG_MULTIPLIER_B_MASK = 61;
+const UINT32_DIVISOR = 4294967296;
+const DEFAULT_IMPACT_NORMAL = new THREE.Vector3(0, 0, 1);
+
 export interface BallisticsConfig {
   seed: number;
   swayRadians: number;
@@ -32,11 +41,11 @@ export interface ShotTrajectory {
 export function seededRandom(seed: number) {
   let state = seed >>> 0;
   return () => {
-    state += 0x6d2b79f5;
+    state += RNG_INCREMENT;
     let t = state;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    t = Math.imul(t ^ (t >>> RNG_SHIFT_A), t | RNG_MULTIPLIER_A_MASK);
+    t ^= t + Math.imul(t ^ (t >>> RNG_SHIFT_B), t | RNG_MULTIPLIER_B_MASK);
+    return ((t ^ (t >>> RNG_SHIFT_C)) >>> 0) / UINT32_DIVISOR;
   };
 }
 
@@ -90,7 +99,7 @@ export function resolveImpact(
     if (intersections.length > 0) {
       const hit = intersections[0];
       const hitMesh = hit.object as THREE.Mesh;
-      const normal = hit.face?.normal ? hit.face.normal.clone() : new THREE.Vector3(0, 0, 1);
+      const normal = hit.face?.normal ? hit.face.normal.clone() : DEFAULT_IMPACT_NORMAL.clone();
 
       if (hit.face) {
         const normalMatrix = new THREE.Matrix3().getNormalMatrix(hitMesh.matrixWorld);

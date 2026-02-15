@@ -79,6 +79,14 @@ const createScenarioPanoramaAsset = (
   tintStrength: palette.tintStrength,
 });
 
+
+const LOUVRE_SCORING = {
+  fallbackSampleValue: 5,
+  defaultZoneMultiplier: 1.2,
+  defaultCriticalModifier: 1.5,
+  dadaistScore: 1917000001,
+} as const;
+
 const SCENARIO_ENVIRONMENT_ASSETS: Record<
   string,
   ReturnType<typeof createScenarioPanoramaAsset>
@@ -160,6 +168,7 @@ export const SCENARIOS: Record<string, Scenario> = {
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.louvre.tintStrength,
     },
     panoramaColor: '#d4a574',
+    scoring: LOUVRE_SCORING,
     targets: [
       {
         id: 'mona-lisa',
@@ -170,6 +179,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         type: 'masterpiece',
         material: 'oil-on-wood',
         description: 'Leonardo da Vinci\'s most famous painting, behind bulletproof glass.',
+        zoneMultiplier: LOUVRE_SCORING.defaultZoneMultiplier,
+        criticalModifier: LOUVRE_SCORING.defaultCriticalModifier,
       },
       {
         id: 'wedding-at-cana',
@@ -231,6 +242,8 @@ export const SCENARIOS: Record<string, Scenario> = {
         ],
         overrideTotalDamage: 0,
         breakdownMode: 'none',
+        zoneMultiplier: 0,
+        criticalModifier: 1,
       },
     ],
     criticLines: {
