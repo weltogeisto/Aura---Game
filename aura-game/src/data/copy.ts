@@ -1,4 +1,5 @@
 import type { Scenario } from '@/types';
+import { UI_COPY_MAP } from '@/data/uiCopyMap';
 
 const ensureSentencePunctuation = (value: string): string => {
   const trimmed = value.trim();
@@ -7,13 +8,7 @@ const ensureSentencePunctuation = (value: string): string => {
   return /[.!?…]$/.test(trimmed) ? trimmed : `${trimmed}.`;
 };
 
-export const MICROCOPY = {
-  gameTagline: 'One shot. One appraisal. No undo.',
-  scenarioPickerHint: 'Choose your room, take the shot, live with the verdict.',
-  aimingHint: 'Center your aim, then commit to the only shot.',
-  shootingHint: 'Shot locked. Appraising impact…',
-  resultsHint: 'Run archived. Decide what to do with the next attempt.',
-} as const;
+export const MICROCOPY = UI_COPY_MAP.hints;
 
 export const normalizeScenarioCopy = (scenario: Omit<Scenario, 'totalMaxValue'>): Omit<Scenario, 'totalMaxValue'> => ({
   ...scenario,
@@ -31,4 +26,3 @@ export const normalizeScenarioCopy = (scenario: Omit<Scenario, 'totalMaxValue'>)
       }
     : undefined,
 });
-
