@@ -1,5 +1,5 @@
-import type { Scenario } from '@/types';
-import { normalizeScenarioCopy } from '@/data/copy';
+import type { Scenario } from '../types';
+import { normalizeScenarioCopy } from './copy.ts';
 
 const sumTargetValues = (targets: Scenario['targets']): number =>
   targets.reduce((total, target) => total + target.value, 0);
@@ -19,12 +19,28 @@ const normalizeTargetPosition = (targets: Scenario['targets']): Scenario['target
     position: isNormalizedPosition(target.position) ? toWorldPosition(target.position) : target.position,
   }));
 
+
+const DEFAULT_SCORING = {
+  fallbackSampleValue: 5,
+  defaultZoneMultiplier: 1,
+  defaultCriticalModifier: 1,
+  dadaistScore: 1917000001,
+} as const;
+
+const DEFAULT_CRITIC_LINES = {
+  low: ['The critic is still taking notes.'],
+  mid: ['The critic is still taking notes.'],
+  high: ['The critic is still taking notes.'],
+};
+
 const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => {
   const normalizedScenario = normalizeScenarioCopy(scenario);
   const targets = normalizeTargetPosition(normalizedScenario.targets);
 
   return {
     ...normalizedScenario,
+    scoring: normalizedScenario.scoring ?? DEFAULT_SCORING,
+    criticLines: normalizedScenario.criticLines ?? DEFAULT_CRITIC_LINES,
     targets,
     totalMaxValue: sumTargetValues(targets),
   };

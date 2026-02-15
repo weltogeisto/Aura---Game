@@ -3,8 +3,8 @@ import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
 import type { Scenario, ShotResult, Target } from '@/types';
+import { DADAIST_SCORE, deterministicCriticLine } from '@/lib/shotResolution';
 
-const DADAIST_SCORE = 1917000001;
 
 const buildHitLocationLabel = (
   hitPoint: THREE.Vector3,
@@ -30,39 +30,6 @@ const buildHitLocationLabel = (
   return `${scenario.name} — ${target.name} (${vertical} ${horizontal})`;
 };
 
-const deterministicCriticLine = (
-  scenario: Scenario,
-  totalScore: number,
-  hitTargetId: string | null,
-  hitTargetType: Target['type'] | null,
-  hitLocationLabel: string
-): string => {
-  if (hitTargetType === 'easter-egg-dadaist') {
-    return 'Dadaist inversion confirmed: valuation collapses into pure gesture. The market applauds the void.';
-  }
-
-  const criticLines = scenario.criticLines;
-  if (!criticLines) {
-    return 'The critic is still taking notes.';
-  }
-
-  const ratio = scenario.totalMaxValue ? totalScore / scenario.totalMaxValue : 0;
-  const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
-  const seedInput = `${scenario.id}|${hitTargetId ?? 'miss'}|${totalScore}|${hitLocationLabel}`;
-  const hash = seedInput
-    .split('')
-    .reduce((acc, char, index) => acc + char.charCodeAt(0) * (index + 1), 0);
-
-  return pool[hash % pool.length] ?? 'The critic is still taking notes.';
-};
-
-const DEFAULT_BALLISTICS = {
-  swayRadians: 0.008,
-  muzzleVelocity: 52,
-  gravity: 9.81,
-  maxDistance: 55,
-  timeStep: 1 / 120,
-};
 
 export function BallisticsSystem() {
   const { scene, camera } = useThree();
@@ -72,7 +39,6 @@ export function BallisticsSystem() {
   const shotLocked = useGameStore((state) => state.shotLocked);
   const fireShotResult = useGameStore((state) => state.fireShotResult);
   const finalizeShot = useGameStore((state) => state.finalizeShot);
-  const setFireBlocked = useGameStore((state) => state.setFireBlocked);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -119,13 +85,6 @@ export function BallisticsSystem() {
 
         const attenuation = THREE.MathUtils.clamp(1 - firstIntersect.distance * 0.15, 0.6, 1);
         const adjustedDamage = Math.round(hitValue * attenuation);
-        const damageScale = THREE.MathUtils.clamp(
-          adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1),
-          0.1,
-          1
-        );
-        const travelTimeMs = THREE.MathUtils.clamp((firstIntersect.distance / 45) * 1000, 140, 480);
-
         const hitTargetData = selectedScenario.targets.find((target) => target.id === hitTarget);
         const hitTargetType = (hitMesh.userData.targetType as Target['type'] | undefined)
           ?? hitTargetData?.type
@@ -201,7 +160,6 @@ export function BallisticsSystem() {
         });
       } else {
         const missEnd = raycaster.ray.at(missTraceDistance, new THREE.Vector3());
-        const travelTimeMs = THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420);
         const missLocationLabel = `${selectedScenario.name} — No registered contact`;
         const criticLine = deterministicCriticLine(
           selectedScenario,
@@ -261,11 +219,3 @@ export function BallisticsSystem() {
   return null;
 }
 
-function hashSeed(input: string): number {
-  let hash = 2166136261;
-  for (let i = 0; i < input.length; i += 1) {
-    hash ^= input.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-  return hash >>> 0;
-}
