@@ -9,14 +9,21 @@ export function BallisticsSystem() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
+  const hasFired = useGameStore((state) => state.hasFired);
   const fireShotResult = useGameStore((state) => state.fireShotResult);
   const finalizeShot = useGameStore((state) => state.finalizeShot);
+  const setFireBlocked = useGameStore((state) => state.setFireBlocked);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (gamePhase !== 'aiming') return;
 
     const handleClick = () => {
+      if (hasFired) {
+        setFireBlocked(true);
+        return;
+      }
+
       if (!scene || !camera || !selectedScenario) return;
 
       // Create raycaster
@@ -170,7 +177,7 @@ export function BallisticsSystem() {
         window.clearTimeout(timeoutRef.current);
       }
     };
-  }, [gamePhase, selectedScenario, crosshairPosition, scene, camera, fireShotResult, finalizeShot]);
+  }, [gamePhase, selectedScenario, crosshairPosition, scene, camera, hasFired, setFireBlocked, fireShotResult, finalizeShot]);
 
   return null;
 }

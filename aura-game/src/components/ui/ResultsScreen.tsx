@@ -5,6 +5,7 @@ export function ResultsScreen() {
   const lastShotResult = useGameStore((state) => state.lastShotResult);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const resetGame = useGameStore((state) => state.resetGame);
+  const shotTimestamp = useGameStore((state) => state.shotTimestamp);
 
   if (!lastShotResult) {
     return null;
@@ -18,7 +19,9 @@ export function ResultsScreen() {
 
   if (criticLines) {
     const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
-    criticLine = pool[Math.floor(Math.random() * pool.length)] ?? criticLine;
+    const seed = shotTimestamp ?? 0;
+    const index = pool.length > 0 ? seed % pool.length : 0;
+    criticLine = pool[index] ?? criticLine;
   }
 
   return (
