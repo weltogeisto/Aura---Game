@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 import { formatCurrency } from '@/lib/utils';
 
@@ -6,6 +7,7 @@ export function ResultsScreen() {
   const totalScore = useGameStore((state) => state.totalScore);
   const criticOutput = useGameStore((state) => state.criticOutput);
   const resetGame = useGameStore((state) => state.resetGame);
+  const shotTimestamp = useGameStore((state) => state.shotTimestamp);
 
   if (!lastShotResult) {
     return null;
@@ -35,9 +37,7 @@ export function ResultsScreen() {
 
         <div className="mb-8">
           <p className="text-gray-400 mb-2">Target Hit:</p>
-          <p className="text-2xl font-bold text-white">
-            {lastShotResult.hitTargetName || 'Nothing'}
-          </p>
+          <p className="text-2xl font-bold text-white">{lastShotResult.hitTargetName || 'Nothing'}</p>
         </div>
 
         <div className="bg-gray-800 p-6 rounded mb-8">
@@ -59,9 +59,7 @@ export function ResultsScreen() {
 
         <div className="bg-gray-800 p-6 rounded mb-8">
           <p className="text-gray-400 mb-2">Total Cultural Damage:</p>
-          <p className="text-4xl font-bold text-red-500">
-            {formatCurrency(lastShotResult.totalDamage)}
-          </p>
+          <p className="text-4xl font-bold text-red-500">{formatCurrency(lastShotResult.totalDamage)}</p>
         </div>
 
         {lastShotResult.specialEffects.length > 0 && (
@@ -69,7 +67,9 @@ export function ResultsScreen() {
             <h3 className="font-semibold text-blue-400 mb-2">Special Effects Triggered:</h3>
             <ul className="space-y-1">
               {lastShotResult.specialEffects.map((effect, i) => (
-                <li key={i} className="text-blue-300 text-sm">• {effect}</li>
+                <li key={i} className="text-blue-300 text-sm">
+                  • {effect}
+                </li>
               ))}
             </ul>
           </div>
@@ -89,4 +89,13 @@ export function ResultsScreen() {
       </div>
     </div>
   );
+}
+
+function hashSeed(input: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    hash ^= input.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
 }

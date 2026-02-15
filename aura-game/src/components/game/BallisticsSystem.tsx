@@ -56,6 +56,14 @@ const deterministicCriticLine = (
   return pool[hash % pool.length] ?? 'The critic is still taking notes.';
 };
 
+const DEFAULT_BALLISTICS = {
+  swayRadians: 0.008,
+  muzzleVelocity: 52,
+  gravity: 9.81,
+  maxDistance: 55,
+  timeStep: 1 / 120,
+};
+
 export function BallisticsSystem() {
   const { scene, camera } = useThree();
   const gamePhase = useGameStore((state) => state.gamePhase);
@@ -64,6 +72,7 @@ export function BallisticsSystem() {
   const shotLocked = useGameStore((state) => state.shotLocked);
   const fireShotResult = useGameStore((state) => state.fireShotResult);
   const finalizeShot = useGameStore((state) => state.finalizeShot);
+  const setFireBlocked = useGameStore((state) => state.setFireBlocked);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -138,7 +147,7 @@ export function BallisticsSystem() {
               );
             case 'hit-target':
             default:
-              return selectedScenario.targets.filter((target) => target.id === hitTarget);
+              return hitTarget ? [hitTarget] : [];
           }
         })();
 
@@ -179,14 +188,17 @@ export function BallisticsSystem() {
           hit: true,
           firedAt: Date.now(),
           crosshairPosition,
-          hitDistance: firstIntersect.distance,
-          damageScale,
-          travelTimeMs,
+          hitDistance: impact.distance,
+          damageScale: THREE.MathUtils.clamp(adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1), 0.1, 1),
+          travelTimeMs: THREE.MathUtils.clamp((impact.distance / 45) * 1000, 140, 480),
           traceEnd: [traceEnd.x, traceEnd.y, traceEnd.z],
-          hitPoint: [hitPoint.x, hitPoint.y, hitPoint.z],
-          hitNormal: [hitNormal.x, hitNormal.y, hitNormal.z],
+          hitPoint: [impact.point.x, impact.point.y, impact.point.z],
+          hitNormal: [impact.normal.x, impact.normal.y, impact.normal.z],
+          impactUv: impact.uv ? [impact.uv.x, impact.uv.y] : null,
+          sampledValue: sampled.value,
+          usedFallbackSample: sampled.usedFallback,
+          ballisticsSeed,
         });
-        timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       } else {
         const missEnd = raycaster.ray.at(missTraceDistance, new THREE.Vector3());
         const travelTimeMs = THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420);
@@ -219,11 +231,13 @@ export function BallisticsSystem() {
           crosshairPosition,
           hitDistance: missTraceDistance,
           damageScale: 0.15,
-          travelTimeMs,
+          travelTimeMs: THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420),
           traceEnd: [missEnd.x, missEnd.y, missEnd.z],
+          ballisticsSeed,
         });
-        timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
       }
+
+      timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
     };
 
     window.addEventListener('click', handleClick);
@@ -245,4 +259,13 @@ export function BallisticsSystem() {
   ]);
 
   return null;
+}
+
+function hashSeed(input: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    hash ^= input.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
 }

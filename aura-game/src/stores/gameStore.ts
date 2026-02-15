@@ -7,16 +7,21 @@ interface GameStore extends GameState {
   setCrosshairPosition: (x: number, y: number) => void;
   fireShotResult: (result: ShotResult, feedback: ShotFeedback) => void;
   finalizeShot: () => void;
+  setFireBlocked: (blocked: boolean) => void;
   clearShotFeedback: () => void;
+  resetRunState: () => void;
   resetGame: () => void;
   resetRunState: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
-  gamePhase: 'menu',
+  gamePhase: 'start',
   selectedScenario: null,
   crosshairPosition: { x: 0.5, y: 0.5 },
   shotFired: false,
+  hasFired: false,
+  shotTimestamp: null,
+  fireBlocked: false,
   lastShotResult: null,
   shotFeedback: null,
   ammoRemaining: 1,
@@ -61,17 +66,34 @@ export const useGameStore = create<GameStore>((set) => ({
       gamePhase: 'results',
     }),
 
+  setFireBlocked: (blocked: boolean) =>
+    set({ fireBlocked: blocked }),
+
   clearShotFeedback: () =>
     set({
       shotFeedback: null,
     }),
 
+  resetRunState: () =>
+    set({
+      shotFired: false,
+      hasFired: false,
+      shotTimestamp: null,
+      fireBlocked: false,
+      lastShotResult: null,
+      shotFeedback: null,
+      ammoRemaining: 1,
+    }),
+
   resetGame: () =>
     set({
-      gamePhase: 'menu',
+      gamePhase: 'start',
       selectedScenario: null,
       crosshairPosition: { x: 0.5, y: 0.5 },
       shotFired: false,
+      hasFired: false,
+      shotTimestamp: null,
+      fireBlocked: false,
       lastShotResult: null,
       shotFeedback: null,
       ammoRemaining: 1,

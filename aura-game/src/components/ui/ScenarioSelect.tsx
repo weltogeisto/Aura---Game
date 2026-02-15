@@ -11,6 +11,7 @@ export function ScenarioSelect() {
   const handleSelectScenario = (scenarioId: string) => {
     const scenario = scenarios.find(s => s.id === scenarioId);
     if (scenario) {
+      resetRunState();
       setSelectedScenario(scenario);
       resetRunState();
       setGamePhase('aiming');

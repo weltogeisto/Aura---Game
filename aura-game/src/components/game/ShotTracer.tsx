@@ -13,9 +13,7 @@ export function ShotTracer() {
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback?.traceEnd || !geometryRef.current) {
-      if (materialRef.current) {
-        materialRef.current.opacity = 0;
-      }
+      if (materialRef.current) materialRef.current.opacity = 0;
       return;
     }
 
@@ -23,14 +21,11 @@ export function ShotTracer() {
     const travelTimeMs = shotFeedback.travelTimeMs ?? 260;
     const progress = Math.min(elapsed / travelTimeMs, 1);
     const start = camera.position.clone();
-    const end = new THREE.Vector3(
-      shotFeedback.traceEnd[0],
-      shotFeedback.traceEnd[1],
-      shotFeedback.traceEnd[2]
-    );
+    const end = new THREE.Vector3(shotFeedback.traceEnd[0], shotFeedback.traceEnd[1], shotFeedback.traceEnd[2]);
     const currentEnd = start.clone().lerp(end, progress);
     const basePositions = basePositionsRef.current;
 
+    const basePositions = basePositionsRef.current;
     basePositions[0] = start.x;
     basePositions[1] = start.y;
     basePositions[2] = start.z;
@@ -41,9 +36,9 @@ export function ShotTracer() {
     if (!attributeRef.current) {
       attributeRef.current = new THREE.BufferAttribute(basePositions, 3);
       geometryRef.current.setAttribute('position', attributeRef.current);
-    } else {
-      attributeRef.current.needsUpdate = true;
     }
+
+    attributeRef.current.needsUpdate = true;
     geometryRef.current.computeBoundingSphere();
 
     if (materialRef.current) {
@@ -51,20 +46,12 @@ export function ShotTracer() {
     }
   });
 
-  if (!shotFeedback?.traceEnd) {
-    return null;
-  }
+  if (!shotFeedback?.traceEnd) return null;
 
   return (
     <line>
       <bufferGeometry ref={geometryRef} />
-      <lineBasicMaterial
-        ref={materialRef}
-        color="#fce2be"
-        transparent
-        opacity={0}
-        linewidth={1}
-      />
+      <lineBasicMaterial ref={materialRef} color="#fce2be" transparent opacity={0} linewidth={1} />
     </line>
   );
 }
