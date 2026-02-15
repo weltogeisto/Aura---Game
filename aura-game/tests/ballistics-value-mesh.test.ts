@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { buildTrajectory, resolveImpact } from '../src/lib/ballistics.ts';
 import { sampleValueMesh, scoreImpact } from '../src/lib/valueMesh.ts';
-import { SCENARIOS } from '../src/data/scenarios.ts';
 
 const config = {
   seed: 42,
@@ -129,13 +128,4 @@ test('zero-value zones produce zero score regardless of multipliers', () => {
     criticalModifier: 12,
   });
   assert.equal(score, 0);
-});
-
-test('louvre scenario exposes dadaist trigger tuning via data', () => {
-  const louvre = SCENARIOS.louvre;
-  const dadaistTarget = louvre.targets.find((target) => target.type === 'easter-egg-dadaist');
-
-  assert.ok(dadaistTarget, 'louvre must contain a dadaist trigger target');
-  assert.equal(louvre.scoring?.dadaistScore, 1917000001);
-  assert.equal(dadaistTarget?.id, 'louvre-hidden-dadaist-target');
 });

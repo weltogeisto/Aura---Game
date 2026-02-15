@@ -70,6 +70,19 @@ export interface ShotResult {
   scenarioId?: string;
   scenarioName?: string;
   resolvedWithOverride?: boolean;
+  simulationEvents?: ShotSimulationEvent[];
+}
+
+export interface ShotSimulationEvent {
+  kind: 'material-interaction' | 'ricochet' | 'penetration' | 'deflection' | 'impact' | 'miss';
+  objectId: string | null;
+  material: string;
+  distance: number;
+  point: [number, number, number];
+  normal: [number, number, number];
+  angleDeg: number;
+  incomingEnergy: number;
+  outgoingEnergy: number;
 }
 
 
@@ -94,6 +107,7 @@ export interface ShotFeedback {
     criticalModifier: number;
   };
   isDadaistTrigger?: boolean;
+  simulationEvents?: ShotSimulationEvent[];
 }
 
 
