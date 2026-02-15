@@ -14,12 +14,11 @@
     "build:artifact": "bash ../bundle-artifact.sh",
     "release:stage": "bash scripts/stage-release-artifacts.sh",
     "build:canonical": "pnpm run assets:check && pnpm run build:web && pnpm run build:artifact && pnpm run release:stage",
-    "tauri:build": "pnpm tauri build --config src-tauri/tauri.conf.json",
-    "desktop:bundle:beta": "pnpm run assets:check && pnpm run build:canonical && pnpm run tauri:build",
-    "desktop:bundle:beta:linux": "pnpm run assets:check && pnpm run build:canonical && pnpm tauri build --config src-tauri/tauri.conf.json --target x86_64-unknown-linux-gnu",
-    "desktop:bundle:beta:windows": "pnpm run assets:check && pnpm run build:canonical && pnpm tauri build --config src-tauri/tauri.conf.json --target x86_64-pc-windows-msvc",
-    "desktop:bundle:beta:macos": "pnpm run assets:check && pnpm run build:canonical && pnpm tauri build --config src-tauri/tauri.conf.json --target universal-apple-darwin",
-    "smoke:packaged": "node scripts/smoke-packaged-mode.mjs"
+    "typecheck": "tsc -p tsconfig.core.json --noEmit",
+    "test:core": "node --test --experimental-strip-types tests/runState.test.ts tests/store-shot-resolution.test.ts tests/scenario-contract.test.ts",
+    "scenarios:check": "node --experimental-strip-types scripts/check-scenario-integrity.mjs",
+    "ci:fast": "pnpm run lint && pnpm run typecheck && pnpm run test:core && pnpm run scenarios:check",
+    "ci:full": "pnpm run lint && pnpm run typecheck && pnpm test && pnpm run assets:check && pnpm run scenarios:check"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
