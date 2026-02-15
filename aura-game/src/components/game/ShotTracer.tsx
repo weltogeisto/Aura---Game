@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
@@ -10,7 +10,7 @@ export function ShotTracer() {
   const materialRef = useRef<THREE.LineBasicMaterial | null>(null);
   const attributeRef = useRef<THREE.BufferAttribute | null>(null);
 
-  const basePositions = useMemo(() => new Float32Array(6), []);
+  const basePositionsRef = useRef(new Float32Array(6));
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback?.traceEnd || !geometryRef.current) {
@@ -31,6 +31,7 @@ export function ShotTracer() {
     );
     const currentEnd = start.clone().lerp(end, progress);
 
+    const basePositions = basePositionsRef.current;
     basePositions[0] = start.x;
     basePositions[1] = start.y;
     basePositions[2] = start.z;
