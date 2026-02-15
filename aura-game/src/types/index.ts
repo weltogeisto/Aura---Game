@@ -42,8 +42,11 @@ export interface Scenario {
 export interface ShotResult {
   hitTargetId: string | null;
   hitTargetName: string | null;
+  hitTargetType: Target['type'] | null;
+  hitLocationLabel: string;
   damageAmount: number;
   totalDamage: number;
+  totalScore: number;
   breakdown: {
     targetId: string;
     targetName: string;
@@ -51,6 +54,7 @@ export interface ShotResult {
     percentage: number;
   }[];
   specialEffects: string[];
+  criticLine: string;
 }
 
 export interface ShotFeedback {
@@ -74,4 +78,7 @@ export interface GameState {
   lastShotResult: ShotResult | null;
   shotFeedback: ShotFeedback | null;
   ammoRemaining: number;
+  totalScore: number;
+  criticOutput: string | null;
+  shotLocked: boolean;
 }

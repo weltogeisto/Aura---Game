@@ -4,6 +4,7 @@ import { useGameStore } from '@/stores/gameStore';
 export function ScenarioSelect() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
   const setSelectedScenario = useGameStore((state) => state.setSelectedScenario);
+  const resetRunState = useGameStore((state) => state.resetRunState);
 
   const scenarios = getScenariosList().filter((scenario) => scenario.isMvp);
 
@@ -11,6 +12,7 @@ export function ScenarioSelect() {
     const scenario = scenarios.find(s => s.id === scenarioId);
     if (scenario) {
       setSelectedScenario(scenario);
+      resetRunState();
       setGamePhase('aiming');
     }
   };

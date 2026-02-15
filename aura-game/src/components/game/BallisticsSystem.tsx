@@ -2,13 +2,66 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
-import type { ShotResult } from '@/types';
+import type { Scenario, ShotResult, Target } from '@/types';
+
+const DADAIST_SCORE = 1917000001;
+
+const buildHitLocationLabel = (
+  hitPoint: THREE.Vector3,
+  target: Target | undefined,
+  scenario: Scenario
+): string => {
+  if (!target) {
+    return 'Unknown contact';
+  }
+
+  const localPoint = hitPoint.clone().sub(new THREE.Vector3(...target.position));
+  const horizontal = localPoint.x < -target.radius * 0.35
+    ? 'Left'
+    : localPoint.x > target.radius * 0.35
+      ? 'Right'
+      : 'Center';
+  const vertical = localPoint.y > target.radius * 0.35
+    ? 'Upper'
+    : localPoint.y < -target.radius * 0.35
+      ? 'Lower'
+      : 'Midline';
+
+  return `${scenario.name} — ${target.name} (${vertical} ${horizontal})`;
+};
+
+const deterministicCriticLine = (
+  scenario: Scenario,
+  totalScore: number,
+  hitTargetId: string | null,
+  hitTargetType: Target['type'] | null,
+  hitLocationLabel: string
+): string => {
+  if (hitTargetType === 'easter-egg-dadaist') {
+    return 'Dadaist inversion confirmed: valuation collapses into pure gesture. The market applauds the void.';
+  }
+
+  const criticLines = scenario.criticLines;
+  if (!criticLines) {
+    return 'The critic is still taking notes.';
+  }
+
+  const ratio = scenario.totalMaxValue ? totalScore / scenario.totalMaxValue : 0;
+  const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
+  const seedInput = `${scenario.id}|${hitTargetId ?? 'miss'}|${totalScore}|${hitLocationLabel}`;
+  const hash = seedInput
+    .split('')
+    .reduce((acc, char, index) => acc + char.charCodeAt(0) * (index + 1), 0);
+
+  return pool[hash % pool.length] ?? 'The critic is still taking notes.';
+};
 
 export function BallisticsSystem() {
   const { scene, camera } = useThree();
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
+  const shotLocked = useGameStore((state) => state.shotLocked);
   const fireShotResult = useGameStore((state) => state.fireShotResult);
   const finalizeShot = useGameStore((state) => state.finalizeShot);
   const timeoutRef = useRef<number | null>(null);
@@ -17,9 +70,8 @@ export function BallisticsSystem() {
     if (gamePhase !== 'aiming') return;
 
     const handleClick = () => {
-      if (!scene || !camera || !selectedScenario) return;
+      if (!scene || !camera || !selectedScenario || shotLocked) return;
 
-      // Create raycaster
       const raycaster = new THREE.Raycaster();
       const sway = 0.008;
       const mouse = new THREE.Vector2(
@@ -27,10 +79,8 @@ export function BallisticsSystem() {
         -(crosshairPosition.y * 2 - 1) + (Math.random() - 0.5) * sway
       );
 
-      // Cast ray
       raycaster.setFromCamera(mouse, camera);
 
-      // Get all meshes in the scene
       const allObjects: THREE.Object3D[] = [];
       scene.traverse((obj) => {
         if (obj instanceof THREE.Mesh && obj.userData.targetId) {
@@ -39,17 +89,13 @@ export function BallisticsSystem() {
       });
 
       const intersects = raycaster.intersectObjects(allObjects);
-
-      let hitTarget: string | null = null;
-      let hitValue = 0;
-      let totalDamage = 0;
       const missTraceDistance = 45;
 
       if (intersects.length > 0) {
         const firstIntersect = intersects[0];
         const hitMesh = firstIntersect.object as THREE.Mesh;
-        hitTarget = hitMesh.userData.targetId as string;
-        hitValue = hitMesh.userData.value || 0;
+        const hitTarget = hitMesh.userData.targetId as string;
+        const hitValue = hitMesh.userData.value || 0;
         const hitPoint = firstIntersect.point.clone();
         const hitNormal = firstIntersect.face?.normal
           ? firstIntersect.face.normal.clone()
@@ -62,27 +108,24 @@ export function BallisticsSystem() {
         const impactOffset = hitNormal.clone().multiplyScalar(0.06);
         const traceEnd = hitPoint.clone().add(impactOffset);
 
-        // Calculate damage based on hit + simple distance attenuation
         const attenuation = THREE.MathUtils.clamp(1 - firstIntersect.distance * 0.15, 0.6, 1);
         const adjustedDamage = Math.round(hitValue * attenuation);
-        totalDamage = adjustedDamage;
         const damageScale = THREE.MathUtils.clamp(
           adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1),
           0.1,
           1
         );
-        const travelTimeMs = THREE.MathUtils.clamp(
-          (firstIntersect.distance / 45) * 1000,
-          140,
-          480
-        );
+        const travelTimeMs = THREE.MathUtils.clamp((firstIntersect.distance / 45) * 1000, 140, 480);
 
         const hitTargetData = selectedScenario.targets.find((target) => target.id === hitTarget);
+        const hitTargetType = (hitMesh.userData.targetType as Target['type'] | undefined)
+          ?? hitTargetData?.type
+          ?? null;
         const specialEffects = hitTargetData?.specialEffects ? [...hitTargetData.specialEffects] : [];
-        totalDamage = hitTargetData?.overrideTotalDamage ?? adjustedDamage;
+        const totalDamage = hitTargetData?.overrideTotalDamage ?? adjustedDamage;
+        const totalScore = hitTargetType === 'easter-egg-dadaist' ? DADAIST_SCORE : totalDamage;
         const breakdownMode = hitTargetData?.breakdownMode ?? 'hit-target';
 
-        // Create breakdown
         const breakdownTargets = (() => {
           switch (breakdownMode) {
             case 'none':
@@ -99,27 +142,36 @@ export function BallisticsSystem() {
           }
         })();
 
-        const breakdown = breakdownTargets.map((target) => {
-          const damage =
-            breakdownMode === 'hit-target'
-              ? adjustedDamage
-              : target.value;
+        const breakdown = breakdownTargets.map((target) => ({
+          targetId: target.id,
+          targetName: target.name,
+          damage: breakdownMode === 'hit-target' ? adjustedDamage : target.value,
+          percentage:
+            ((breakdownMode === 'hit-target' ? adjustedDamage : target.value)
+              / selectedScenario.totalMaxValue)
+            * 100,
+        }));
 
-          return {
-            targetId: target.id,
-            targetName: target.name,
-            damage,
-            percentage: (damage / selectedScenario.totalMaxValue) * 100,
-          };
-        });
+        const hitLocationLabel = buildHitLocationLabel(hitPoint, hitTargetData, selectedScenario);
+        const criticLine = deterministicCriticLine(
+          selectedScenario,
+          totalScore,
+          hitTarget,
+          hitTargetType,
+          hitLocationLabel
+        );
 
         const result: ShotResult = {
           hitTargetId: hitTarget,
           hitTargetName: hitMesh.userData.targetName,
+          hitTargetType,
+          hitLocationLabel,
           damageAmount: adjustedDamage,
           totalDamage,
+          totalScore,
           breakdown,
           specialEffects,
+          criticLine,
         };
 
         fireShotResult(result, {
@@ -138,15 +190,26 @@ export function BallisticsSystem() {
       } else {
         const missEnd = raycaster.ray.at(missTraceDistance, new THREE.Vector3());
         const travelTimeMs = THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420);
+        const missLocationLabel = `${selectedScenario.name} — No registered contact`;
+        const criticLine = deterministicCriticLine(
+          selectedScenario,
+          0,
+          null,
+          null,
+          missLocationLabel
+        );
 
-        // Miss
         const result: ShotResult = {
           hitTargetId: null,
           hitTargetName: null,
+          hitTargetType: null,
+          hitLocationLabel: missLocationLabel,
           damageAmount: 0,
           totalDamage: 0,
+          totalScore: 0,
           breakdown: [],
           specialEffects: ['Shot missed the target completely.'],
+          criticLine,
         };
 
         fireShotResult(result, {
@@ -170,7 +233,16 @@ export function BallisticsSystem() {
         window.clearTimeout(timeoutRef.current);
       }
     };
-  }, [gamePhase, selectedScenario, crosshairPosition, scene, camera, fireShotResult, finalizeShot]);
+  }, [
+    gamePhase,
+    selectedScenario,
+    crosshairPosition,
+    scene,
+    camera,
+    shotLocked,
+    fireShotResult,
+    finalizeShot,
+  ]);
 
   return null;
 }

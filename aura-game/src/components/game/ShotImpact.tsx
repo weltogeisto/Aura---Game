@@ -3,6 +3,18 @@ import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
 
+const buildParticleOffsets = () => {
+  const offsets = new Float32Array(24 * 3);
+  for (let i = 0; i < 24; i += 1) {
+    const angle = (i / 24) * Math.PI * 2;
+    const radialJitter = 0.08 + (i % 5) * 0.04;
+    offsets[i * 3] = Math.cos(angle) * radialJitter;
+    offsets[i * 3 + 1] = Math.sin(angle) * radialJitter;
+    offsets[i * 3 + 2] = ((i % 3) - 1) * 0.06;
+  }
+  return offsets;
+};
+
 export function ShotImpact() {
   const { camera } = useThree();
   const shotFeedback = useGameStore((state) => state.shotFeedback);
@@ -10,42 +22,20 @@ export function ShotImpact() {
   const meshRef = useRef<THREE.Mesh | null>(null);
   const particlesRef = useRef<THREE.Points | null>(null);
 
-  const particleOffsets = useMemo(() => {
-    const offsets = new Float32Array(24 * 3);
-    for (let i = 0; i < 24; i += 1) {
-      offsets[i * 3] = (Math.random() - 0.5) * 0.5;
-      offsets[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
-      offsets[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
-    }
-    return offsets;
-  }, []);
-
-  const hitPosition = useMemo(() => {
-    if (!shotFeedback?.hitPoint) return new THREE.Vector3();
-    return new THREE.Vector3(
-      shotFeedback.hitPoint[0],
-      shotFeedback.hitPoint[1],
-      shotFeedback.hitPoint[2]
-    );
-  }, [shotFeedback?.hitPoint]);
-
-  const hitNormal = useMemo(() => {
-    if (!shotFeedback?.hitNormal) return new THREE.Vector3(0, 0, 1);
-    return new THREE.Vector3(
-      shotFeedback.hitNormal[0],
-      shotFeedback.hitNormal[1],
-      shotFeedback.hitNormal[2]
-    );
-  }, [shotFeedback?.hitNormal]);
+  const particleOffsets = useMemo(() => buildParticleOffsets(), []);
 
   useEffect(() => {
-    if (!meshRef.current) return;
-    const offset = hitNormal.clone().multiplyScalar(0.06);
-    meshRef.current.position.copy(hitPosition.clone().add(offset));
-  }, [hitPosition, hitNormal]);
+    if (!meshRef.current || !shotFeedback?.hitPoint) return;
+    const hitPosition = new THREE.Vector3(...shotFeedback.hitPoint);
+    const hitNormal = shotFeedback.hitNormal
+      ? new THREE.Vector3(...shotFeedback.hitNormal)
+      : new THREE.Vector3(0, 0, 1);
+    const offset = hitNormal.multiplyScalar(0.06);
+    meshRef.current.position.copy(hitPosition.add(offset));
+  }, [shotFeedback]);
 
   useFrame(() => {
-    if (!shotFeedback?.active || !shotFeedback.hit) {
+    if (!shotFeedback?.active || !shotFeedback.hit || !shotFeedback.hitPoint) {
       if (materialRef.current) {
         materialRef.current.opacity = 0;
       }
@@ -54,6 +44,11 @@ export function ShotImpact() {
       }
       return;
     }
+
+    const hitPosition = new THREE.Vector3(...shotFeedback.hitPoint);
+    const hitNormal = shotFeedback.hitNormal
+      ? new THREE.Vector3(...shotFeedback.hitNormal)
+      : new THREE.Vector3(0, 0, 1);
 
     const elapsed = (Date.now() - shotFeedback.firedAt) / 1000;
     const duration = 0.45;
@@ -101,18 +96,9 @@ export function ShotImpact() {
       </mesh>
       <points ref={particlesRef} visible={false}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[particleOffsets, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[particleOffsets, 3]} />
         </bufferGeometry>
-        <pointsMaterial
-          color="#ffe7c6"
-          size={0.06}
-          transparent
-          opacity={0.7}
-          depthWrite={false}
-        />
+        <pointsMaterial color="#ffe7c6" size={0.06} transparent opacity={0.7} depthWrite={false} />
       </points>
     </group>
   );
