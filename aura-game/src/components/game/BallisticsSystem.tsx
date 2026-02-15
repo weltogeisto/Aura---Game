@@ -70,9 +70,8 @@ export function BallisticsSystem() {
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
   const shotLocked = useGameStore((state) => state.shotLocked);
-  const fireShotResult = useGameStore((state) => state.fireShotResult);
-  const finalizeShot = useGameStore((state) => state.finalizeShot);
-  const setFireBlocked = useGameStore((state) => state.setFireBlocked);
+  const commitShot = useGameStore((state) => state.commitShot);
+  const finalizeResults = useGameStore((state) => state.finalizeResults);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -183,7 +182,7 @@ export function BallisticsSystem() {
           criticLine,
         };
 
-        fireShotResult(result, {
+        commitShot(result, {
           active: true,
           hit: true,
           firedAt: Date.now(),
@@ -224,7 +223,7 @@ export function BallisticsSystem() {
           criticLine,
         };
 
-        fireShotResult(result, {
+        commitShot(result, {
           active: true,
           hit: false,
           firedAt: Date.now(),
@@ -237,7 +236,7 @@ export function BallisticsSystem() {
         });
       }
 
-      timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
+      timeoutRef.current = window.setTimeout(() => finalizeResults(), 700);
     };
 
     window.addEventListener('click', handleClick);
@@ -254,8 +253,8 @@ export function BallisticsSystem() {
     scene,
     camera,
     shotLocked,
-    fireShotResult,
-    finalizeShot,
+    commitShot,
+    finalizeResults,
   ]);
 
   return null;

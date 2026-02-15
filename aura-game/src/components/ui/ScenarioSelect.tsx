@@ -12,8 +12,7 @@ const parseLocation = (description: string): { location: string; detail: string 
 
 export function ScenarioSelect() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
-  const setSelectedScenario = useGameStore((state) => state.setSelectedScenario);
-  const resetRunState = useGameStore((state) => state.resetRunState);
+  const startRun = useGameStore((state) => state.startRun);
 
   const scenarios = getScenariosList().filter((scenario) => scenario.isMvp);
 
@@ -21,9 +20,7 @@ export function ScenarioSelect() {
     const scenario = scenarios.find((s) => s.id === scenarioId);
     if (!scenario) return;
 
-    resetRunState();
-    setSelectedScenario(scenario);
-    setGamePhase('aiming');
+    startRun(scenario);
   };
 
   return (

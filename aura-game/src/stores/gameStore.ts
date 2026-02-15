@@ -1,22 +1,19 @@
 import { create } from 'zustand';
 import type { GameState, GamePhase, Scenario, ShotResult, ShotFeedback } from '@/types';
 
-interface GameStore extends GameState {
-  setGamePhase: (phase: GamePhase) => void;
-  setSelectedScenario: (scenario: Scenario | null) => void;
-  setCrosshairPosition: (x: number, y: number) => void;
-  fireShotResult: (result: ShotResult, feedback: ShotFeedback) => void;
-  finalizeShot: () => void;
-  setFireBlocked: (blocked: boolean) => void;
-  clearShotFeedback: () => void;
-  resetRunState: () => void;
-  resetGame: () => void;
-}
-
-export const useGameStore = create<GameStore>((set) => ({
-  gamePhase: 'start',
-  selectedScenario: null,
-  crosshairPosition: { x: 0.5, y: 0.5 },
+const RUN_STATE_RESET: Pick<
+  GameState,
+  | 'shotFired'
+  | 'hasFired'
+  | 'shotTimestamp'
+  | 'fireBlocked'
+  | 'lastShotResult'
+  | 'shotFeedback'
+  | 'ammoRemaining'
+  | 'totalScore'
+  | 'criticOutput'
+  | 'shotLocked'
+> = {
   shotFired: false,
   hasFired: false,
   shotTimestamp: null,
@@ -27,6 +24,28 @@ export const useGameStore = create<GameStore>((set) => ({
   totalScore: 0,
   criticOutput: null,
   shotLocked: false,
+};
+
+interface GameStore extends GameState {
+  setGamePhase: (phase: GamePhase) => void;
+  setSelectedScenario: (scenario: Scenario | null) => void;
+  setCrosshairPosition: (x: number, y: number) => void;
+  startRun: (scenario: Scenario) => void;
+  enterAiming: () => void;
+  commitShot: (result: ShotResult, feedback: ShotFeedback) => void;
+  finalizeResults: () => void;
+  restartScenario: () => void;
+  setFireBlocked: (blocked: boolean) => void;
+  clearShotFeedback: () => void;
+  resetRunState: () => void;
+  resetGame: () => void;
+}
+
+export const useGameStore = create<GameStore>((set) => ({
+  gamePhase: 'start',
+  selectedScenario: null,
+  crosshairPosition: { x: 0.5, y: 0.5 },
+  ...RUN_STATE_RESET,
 
   setGamePhase: (phase: GamePhase) =>
     set({ gamePhase: phase }),
@@ -37,9 +56,33 @@ export const useGameStore = create<GameStore>((set) => ({
   setCrosshairPosition: (x: number, y: number) =>
     set({ crosshairPosition: { x, y } }),
 
-  fireShotResult: (result: ShotResult, feedback: ShotFeedback) =>
+  startRun: (scenario: Scenario) =>
+    set({
+      selectedScenario: scenario,
+      gamePhase: 'aiming',
+      ...RUN_STATE_RESET,
+    }),
+
+  enterAiming: () =>
     set((state) => {
-      if (state.shotLocked || state.hasFired || state.ammoRemaining <= 0) {
+      if (!state.selectedScenario) {
+        return state;
+      }
+
+      return {
+        gamePhase: 'aiming',
+        fireBlocked: false,
+      };
+    }),
+
+  commitShot: (result: ShotResult, feedback: ShotFeedback) =>
+    set((state) => {
+      if (
+        state.gamePhase !== 'aiming'
+        || state.shotLocked
+        || state.hasFired
+        || state.ammoRemaining <= 0
+      ) {
         return { fireBlocked: true };
       }
 
@@ -58,9 +101,27 @@ export const useGameStore = create<GameStore>((set) => ({
       };
     }),
 
-  finalizeShot: () =>
-    set({
-      gamePhase: 'results',
+  finalizeResults: () =>
+    set((state) => {
+      if (state.gamePhase !== 'shooting' || !state.lastShotResult) {
+        return state;
+      }
+
+      return {
+        gamePhase: 'results',
+      };
+    }),
+
+  restartScenario: () =>
+    set((state) => {
+      if (!state.selectedScenario) {
+        return state;
+      }
+
+      return {
+        gamePhase: 'aiming',
+        ...RUN_STATE_RESET,
+      };
     }),
 
   setFireBlocked: (blocked: boolean) =>
@@ -73,16 +134,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
   resetRunState: () =>
     set({
-      shotFired: false,
-      hasFired: false,
-      shotTimestamp: null,
-      fireBlocked: false,
-      lastShotResult: null,
-      shotFeedback: null,
-      ammoRemaining: 1,
-      totalScore: 0,
-      criticOutput: null,
-      shotLocked: false,
+      ...RUN_STATE_RESET,
     }),
 
   resetGame: () =>
@@ -90,15 +142,6 @@ export const useGameStore = create<GameStore>((set) => ({
       gamePhase: 'start',
       selectedScenario: null,
       crosshairPosition: { x: 0.5, y: 0.5 },
-      shotFired: false,
-      hasFired: false,
-      shotTimestamp: null,
-      fireBlocked: false,
-      lastShotResult: null,
-      shotFeedback: null,
-      ammoRemaining: 1,
-      totalScore: 0,
-      criticOutput: null,
-      shotLocked: false,
+      ...RUN_STATE_RESET,
     }),
 }));
