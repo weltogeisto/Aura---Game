@@ -17,6 +17,14 @@ export interface Target {
   breakdownMode?: 'hit-target' | 'masterpieces-and-sculptures' | 'all-targets' | 'none';
 }
 
+
+export interface ScenarioScoring {
+  fallbackSampleValue: number;
+  defaultZoneMultiplier: number;
+  defaultCriticalModifier: number;
+  dadaistScore: number;
+}
+
 export interface Scenario {
   id: string;
   name: string;
@@ -35,6 +43,7 @@ export interface Scenario {
   panoramaColor: string;
   targets: Target[];
   totalMaxValue: number;
+  scoring?: ScenarioScoring;
   criticLines?: {
     low: string[];
     mid: string[];
@@ -58,7 +67,11 @@ export interface ShotResult {
   }[];
   specialEffects: string[];
   criticLine: string;
+  scenarioId?: string;
+  scenarioName?: string;
+  resolvedWithOverride?: boolean;
 }
+
 
 export interface ShotFeedback {
   active: boolean;
@@ -75,6 +88,12 @@ export interface ShotFeedback {
   sampledValue?: number;
   usedFallbackSample?: boolean;
   ballisticsSeed?: number;
+  scoreBreakdown?: {
+    sampledValue: number;
+    zoneMultiplier: number;
+    criticalModifier: number;
+  };
+  isDadaistTrigger?: boolean;
 }
 
 
