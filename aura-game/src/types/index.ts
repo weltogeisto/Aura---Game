@@ -44,6 +44,7 @@ export interface Scenario {
   id: string;
   name: string;
   description: string;
+  isMvp?: boolean;
   metadata: ScenarioMetadata;
   panoramaAsset: {
     lowRes: string;

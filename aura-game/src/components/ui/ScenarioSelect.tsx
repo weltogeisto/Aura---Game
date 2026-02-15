@@ -1,6 +1,7 @@
 import { getScenariosList } from '@/data/scenarios';
 import { useGameStore } from '@/stores/gameStore';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
+import type { ScenarioStatus } from '@/types';
 
 const parseLocation = (description: string): { location: string; detail: string } => {
   const [location, ...rest] = description.split('. ');
@@ -10,7 +11,7 @@ const parseLocation = (description: string): { location: string; detail: string 
   };
 };
 
-const statusLabel: Record<ScenarioStatus, string> = {
+const STATUS_LABELS: Record<ScenarioStatus, string> = {
   playable: 'Playable',
   prototype: 'Prototype',
   locked: 'Locked',
@@ -61,9 +62,9 @@ export function ScenarioSelect() {
                 <p className="mt-2 text-sm leading-relaxed text-gray-400">{detail}</p>
                 {!playable && (
                   <p className="mt-2 text-xs text-orange-200/80">
-                    {locked
-                      ? 'Room locked — content staged for later release.'
-                      : 'Prototype room — visible for preview, not yet playable.'}
+                    {STATUS_LABELS[scenario.metadata.status]} — {locked
+                      ? 'content staged for later release.'
+                      : 'visible for preview, not yet playable.'}
                   </p>
                 )}
               </button>

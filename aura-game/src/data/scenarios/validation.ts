@@ -24,7 +24,9 @@ const hasScoring = (scenario: Pick<Scenario, 'scoring'>): boolean => {
 };
 
 export const validateScenarioDefinition = (
-  scenario: Pick<Scenario, 'id' | 'targets' | 'criticLines' | 'panoramaAsset' | 'scoring' | 'metadata'>
+  scenario: Pick<Scenario, 'id' | 'targets' | 'criticLines' | 'panoramaAsset' | 'scoring'> & {
+    metadata: Pick<Scenario['metadata'], 'status'>;
+  }
 ): ScenarioValidationResult => {
   const completeness: ScenarioContentCompleteness = {
     targets: scenario.targets.length > 0,

@@ -70,7 +70,7 @@ test('store + shot resolution: special effects and critic output propagate into 
     ),
   };
 
-  useGameStore.getState().fireShotResult(result, mockFeedback);
+  useGameStore.getState().commitShot(result, mockFeedback);
   const state = useGameStore.getState();
 
   assert.deepEqual(state.lastShotResult?.specialEffects, target.specialEffects);
@@ -100,14 +100,16 @@ test('store + shot resolution: replay and full reset clear lock state and output
     ),
   };
 
-  useGameStore.getState().fireShotResult(result, mockFeedback);
+  useGameStore.getState().commitShot(result, mockFeedback);
   assert.equal(useGameStore.getState().shotLocked, true);
 
   useGameStore.getState().resetRunState();
   assert.equal(useGameStore.getState().shotLocked, false);
   assert.equal(useGameStore.getState().criticOutput, null);
 
-  useGameStore.getState().fireShotResult(result, mockFeedback);
+  // Reset game phase to aiming so commitShot guard passes
+  useGameStore.setState({ gamePhase: 'aiming' });
+  useGameStore.getState().commitShot(result, mockFeedback);
   assert.equal(useGameStore.getState().shotLocked, true);
 
   useGameStore.getState().resetGame();
