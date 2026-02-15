@@ -1,4 +1,4 @@
-import type { Scenario } from '@/types';
+import type { Scenario } from '../types/index.ts';
 
 const ensureSentencePunctuation = (value: string): string => {
   const trimmed = value.trim();
@@ -15,7 +15,13 @@ export const MICROCOPY = {
   resultsHint: 'Run archived. Decide what to do with the next attempt.',
 } as const;
 
-export const normalizeScenarioCopy = (scenario: Omit<Scenario, 'totalMaxValue'>): Omit<Scenario, 'totalMaxValue'> => ({
+type ScenarioCopyShape = {
+  description: string;
+  targets: Scenario['targets'];
+  criticLines?: Scenario['criticLines'];
+};
+
+export const normalizeScenarioCopy = <T extends ScenarioCopyShape>(scenario: T): T => ({
   ...scenario,
   description: ensureSentencePunctuation(scenario.description),
   targets: scenario.targets.map((target) => ({
@@ -31,4 +37,3 @@ export const normalizeScenarioCopy = (scenario: Omit<Scenario, 'totalMaxValue'>)
       }
     : undefined,
 });
-
