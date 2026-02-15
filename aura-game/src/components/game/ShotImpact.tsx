@@ -29,12 +29,8 @@ export function ShotImpact() {
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback.hit) {
-      if (materialRef.current) {
-        materialRef.current.opacity = 0;
-      }
-      if (particlesRef.current) {
-        particlesRef.current.visible = false;
-      }
+      if (materialRef.current) materialRef.current.opacity = 0;
+      if (particlesRef.current) particlesRef.current.visible = false;
       return;
     }
 
@@ -66,9 +62,7 @@ export function ShotImpact() {
     }
   });
 
-  if (!shotFeedback?.hit || !shotFeedback?.hitPoint) {
-    return null;
-  }
+  if (!shotFeedback?.hit || !shotFeedback?.hitPoint) return null;
 
   return (
     <group>
@@ -86,18 +80,9 @@ export function ShotImpact() {
       </mesh>
       <points ref={particlesRef} visible={false}>
         <bufferGeometry>
-          <bufferAttribute
-            attach="attributes-position"
-            args={[particleOffsets, 3]}
-          />
+          <bufferAttribute attach="attributes-position" args={[particleOffsets, 3]} />
         </bufferGeometry>
-        <pointsMaterial
-          color="#ffe7c6"
-          size={0.06}
-          transparent
-          opacity={0.7}
-          depthWrite={false}
-        />
+        <pointsMaterial color="#ffe7c6" size={0.06} transparent opacity={0.7} depthWrite={false} />
       </points>
     </group>
   );
