@@ -14,3 +14,11 @@ Command outcomes:
 - `pnpm lint` — pass.
 - `pnpm exec tsc -b` — pass.
 - `pnpm build` — pass.
+
+## Tuning-Hebel (Scoring)
+
+- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.fallbackSampleValue`
+- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.defaultZoneMultiplier`
+- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.defaultCriticalModifier`
+- `aura-game/src/data/scenarios.ts` → `LOUVRE_SCORING.dadaistScore`
+- `aura-game/src/data/scenarios.ts` → `SCENARIOS.louvre.targets[*].zoneMultiplier` / `criticalModifier`

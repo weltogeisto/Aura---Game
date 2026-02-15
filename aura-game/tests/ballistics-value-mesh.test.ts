@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { buildTrajectory, resolveImpact } from '../src/lib/ballistics.ts';
 import { sampleValueMesh, scoreImpact } from '../src/lib/valueMesh.ts';
+import { SCENARIOS } from '../src/data/scenarios.ts';
 
 const config = {
   seed: 42,
@@ -84,4 +85,57 @@ test('UV boundary and fallback behavior', () => {
   const noUv = sampleValueMesh(grid, null, 77);
   assert.equal(noUv.value, 77);
   assert.equal(noUv.usedFallback, true);
+});
+
+
+test('edge hits on target rim still resolve impact', () => {
+  const edgeConfig = {
+    ...config,
+    seed: 7,
+    swayRadians: 0,
+    gravity: 0,
+    maxDistance: 80,
+  };
+
+  const camera = new THREE.PerspectiveCamera(70, 1, 0.1, 1000);
+  camera.position.set(0, 0, 5);
+  camera.lookAt(0, 0, 0);
+  camera.updateMatrixWorld();
+
+  const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.MeshBasicMaterial());
+  mesh.updateMatrixWorld();
+
+  const trajectory = buildTrajectory(camera, { x: 0.64, y: 0.5 }, edgeConfig);
+  const impact = resolveImpact(trajectory, [mesh], edgeConfig);
+
+  assert.ok(impact, 'an impact close to the mesh edge should still register');
+  assert.ok((impact?.uv?.x ?? 0) > 0.8, 'edge hit should map to high U coordinate');
+});
+
+test('zero-value zones produce zero score regardless of multipliers', () => {
+  const sample = sampleValueMesh(
+    [
+      [0, 12],
+      [5, 9],
+    ],
+    { u: 0, v: 1 },
+    99
+  );
+
+  assert.equal(sample.value, 0, 'top-left zone is explicitly zero-valued');
+  const score = scoreImpact({
+    sampledValue: sample.value,
+    zoneMultiplier: 10,
+    criticalModifier: 12,
+  });
+  assert.equal(score, 0);
+});
+
+test('louvre scenario exposes dadaist trigger tuning via data', () => {
+  const louvre = SCENARIOS.louvre;
+  const dadaistTarget = louvre.targets.find((target) => target.type === 'easter-egg-dadaist');
+
+  assert.ok(dadaistTarget, 'louvre must contain a dadaist trigger target');
+  assert.equal(louvre.scoring?.dadaistScore, 1917000001);
+  assert.equal(dadaistTarget?.id, 'louvre-hidden-dadaist-target');
 });
