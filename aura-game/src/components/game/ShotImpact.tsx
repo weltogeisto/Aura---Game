@@ -1,18 +1,11 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useGameStore } from '@/stores/gameStore';
 
-function getImpactVectors(shotFeedback: ReturnType<typeof useGameStore.getState>['shotFeedback']) {
-  const hitPosition = shotFeedback?.hitPoint
-    ? new THREE.Vector3(shotFeedback.hitPoint[0], shotFeedback.hitPoint[1], shotFeedback.hitPoint[2])
-    : new THREE.Vector3();
-
-  const hitNormal = shotFeedback?.hitNormal
-    ? new THREE.Vector3(shotFeedback.hitNormal[0], shotFeedback.hitNormal[1], shotFeedback.hitNormal[2])
-    : new THREE.Vector3(0, 0, 1);
-
-  return { hitPosition, hitNormal };
+function toVector3(point?: [number, number, number], fallback = new THREE.Vector3()) {
+  if (!point) return fallback;
+  return new THREE.Vector3(point[0], point[1], point[2]);
 }
 
 export function ShotImpact() {
@@ -25,20 +18,14 @@ export function ShotImpact() {
   const particleOffsets = useMemo(() => {
     const offsets = new Float32Array(24 * 3);
     for (let i = 0; i < 24; i += 1) {
-      const spread = 0.24;
-      offsets[i * 3] = Math.sin(i * 1.7) * spread;
-      offsets[i * 3 + 1] = Math.cos(i * 1.3) * spread;
-      offsets[i * 3 + 2] = Math.sin(i * 2.1) * Math.cos(i * 0.7) * spread;
+      const angle = (i / 24) * Math.PI * 2;
+      const radius = 0.08 + (i % 5) * 0.06;
+      offsets[i * 3] = Math.cos(angle) * radius;
+      offsets[i * 3 + 1] = Math.sin(angle) * radius;
+      offsets[i * 3 + 2] = ((i % 3) - 1) * 0.07;
     }
     return offsets;
   }, []);
-
-  useEffect(() => {
-    if (!meshRef.current) return;
-    const { hitPosition, hitNormal } = getImpactVectors(shotFeedback);
-    const offset = hitNormal.multiplyScalar(0.06);
-    meshRef.current.position.copy(hitPosition.add(offset));
-  }, [shotFeedback]);
 
   useFrame(() => {
     if (!shotFeedback?.active || !shotFeedback.hit) {
@@ -47,7 +34,8 @@ export function ShotImpact() {
       return;
     }
 
-    const { hitPosition, hitNormal } = getImpactVectors(shotFeedback);
+    const hitPosition = toVector3(shotFeedback.hitPoint);
+    const hitNormal = toVector3(shotFeedback.hitNormal, new THREE.Vector3(0, 0, 1));
     const elapsed = (Date.now() - shotFeedback.firedAt) / 1000;
     const duration = 0.45;
     const progress = Math.min(elapsed / duration, 1);

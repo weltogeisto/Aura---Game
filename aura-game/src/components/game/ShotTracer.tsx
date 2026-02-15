@@ -9,6 +9,7 @@ export function ShotTracer() {
   const geometryRef = useRef<THREE.BufferGeometry | null>(null);
   const materialRef = useRef<THREE.LineBasicMaterial | null>(null);
   const attributeRef = useRef<THREE.BufferAttribute | null>(null);
+
   const basePositionsRef = useRef(new Float32Array(6));
 
   useFrame(() => {
@@ -25,6 +26,7 @@ export function ShotTracer() {
     const currentEnd = start.clone().lerp(end, progress);
     const basePositions = basePositionsRef.current;
 
+    const basePositions = basePositionsRef.current;
     basePositions[0] = start.x;
     basePositions[1] = start.y;
     basePositions[2] = start.z;

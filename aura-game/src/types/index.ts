@@ -71,6 +71,9 @@ export interface GameState {
   selectedScenario: Scenario | null;
   crosshairPosition: { x: number; y: number };
   shotFired: boolean;
+  hasFired: boolean;
+  shotTimestamp: number | null;
+  fireBlocked: boolean;
   lastShotResult: ShotResult | null;
   shotFeedback: ShotFeedback | null;
   ammoRemaining: number;

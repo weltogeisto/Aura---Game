@@ -6,6 +6,7 @@ export function ResultsScreen() {
   const lastShotResult = useGameStore((state) => state.lastShotResult);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const resetGame = useGameStore((state) => state.resetGame);
+  const shotTimestamp = useGameStore((state) => state.shotTimestamp);
 
   const totalDamage = lastShotResult?.totalDamage ?? 0;
   const maxValue = selectedScenario?.totalMaxValue ?? totalDamage;
@@ -17,16 +18,9 @@ export function ResultsScreen() {
     }
 
     const pool = ratio >= 0.6 ? criticLines.high : ratio >= 0.25 ? criticLines.mid : criticLines.low;
-    if (!pool.length) {
-      return 'The critic is still taking notes.';
-    }
-
-    const stableIndex = Math.abs(Math.round(totalDamage)) % pool.length;
-    return pool[stableIndex] ?? 'The critic is still taking notes.';
-  }, [criticLines, ratio, totalDamage]);
-
-  if (!lastShotResult) {
-    return null;
+    const seed = shotTimestamp ?? 0;
+    const index = pool.length > 0 ? seed % pool.length : 0;
+    criticLine = pool[index] ?? criticLine;
   }
 
   return (
