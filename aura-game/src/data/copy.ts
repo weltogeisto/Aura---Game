@@ -10,7 +10,13 @@ const ensureSentencePunctuation = (value: string): string => {
 
 export const MICROCOPY = UI_COPY_MAP.hints;
 
-export const normalizeScenarioCopy = (scenario: Omit<Scenario, 'totalMaxValue'>): Omit<Scenario, 'totalMaxValue'> => ({
+type ScenarioCopyShape = {
+  description: string;
+  targets: Scenario['targets'];
+  criticLines?: Scenario['criticLines'];
+};
+
+export const normalizeScenarioCopy = <T extends ScenarioCopyShape>(scenario: T): T => ({
   ...scenario,
   description: ensureSentencePunctuation(scenario.description),
   targets: scenario.targets.map((target) => ({

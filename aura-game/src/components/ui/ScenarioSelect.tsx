@@ -10,10 +10,15 @@ const parseLocation = (description: string): { location: string; detail: string 
   };
 };
 
+const statusLabel: Record<ScenarioStatus, string> = {
+  playable: 'Playable',
+  prototype: 'Prototype',
+  locked: 'Locked',
+};
+
 export function ScenarioSelect() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
-  const setSelectedScenario = useGameStore((state) => state.setSelectedScenario);
-  const resetRunState = useGameStore((state) => state.resetRunState);
+  const startRun = useGameStore((state) => state.startRun);
 
   const scenarios = getScenariosList();
 
@@ -21,9 +26,7 @@ export function ScenarioSelect() {
     const scenario = scenarios.find((s) => s.id === scenarioId && s.isMvp);
     if (!scenario) return;
 
-    resetRunState();
-    setSelectedScenario(scenario);
-    setGamePhase('aiming');
+    startRun(scenario);
   };
 
   return (
@@ -38,6 +41,8 @@ export function ScenarioSelect() {
         <div className="mt-8 grid grid-cols-1 gap-4">
           {scenarios.map((scenario) => {
             const { location, detail } = parseLocation(scenario.description);
+            const locked = scenario.metadata.status === 'locked';
+            const playable = scenario.metadata.status === 'playable';
 
             return (
               <button
@@ -54,6 +59,13 @@ export function ScenarioSelect() {
                 </div>
                 <h3 className="mt-2 text-xl font-semibold text-white">{scenario.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-400">{detail}</p>
+                {!playable && (
+                  <p className="mt-2 text-xs text-orange-200/80">
+                    {locked
+                      ? 'Room locked — content staged for later release.'
+                      : 'Prototype room — visible for preview, not yet playable.'}
+                  </p>
+                )}
               </button>
             );
           })}

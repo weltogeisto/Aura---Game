@@ -18,3 +18,9 @@ Expected contents:
 
 - `dist/` (Vite production output)
 - `bundle.html` (single-file artifact, when generated)
+
+## Desktop beta packaging
+
+Tauri is configured to bundle the app from `release/web/current/dist` so desktop packaging always follows the canonical web build flow.
+
+See `docs/desktop-release.md` for platform-specific packaging commands, signing placeholders, and packaged-mode smoke checks.

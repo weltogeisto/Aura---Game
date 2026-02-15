@@ -1,4 +1,5 @@
 import { useGameStore } from '@/stores/gameStore';
+import { canReplay, hasResult } from '@/stores/gameSelectors';
 import { formatCurrency } from '@/lib/utils';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
 
@@ -7,25 +8,31 @@ export function ResultsScreen() {
   const lastShotResult = useGameStore((state) => state.lastShotResult);
   const totalScore = useGameStore((state) => state.totalScore);
   const criticOutput = useGameStore((state) => state.criticOutput);
-  const resetGame = useGameStore((state) => state.resetGame);
+  const restartScenario = useGameStore((state) => state.restartScenario);
   const resetRunState = useGameStore((state) => state.resetRunState);
   const setGamePhase = useGameStore((state) => state.setGamePhase);
+  const resetGame = useGameStore((state) => state.resetGame);
+  const replayAllowed = useGameStore(canReplay);
 
-  if (!lastShotResult) return null;
+  if (!useGameStore(hasResult) || !lastShotResult) return null;
 
   const isDadaistHit = lastShotResult.hitTargetType === 'easter-egg-dadaist';
 
   const replayScenario = () => {
+    if (!replayAllowed) {
+      resetGame();
+      return;
+    }
+
+    restartScenario();
+  };
+
+  const openScenarioPicker = () => {
     if (!selectedScenario) {
       resetGame();
       return;
     }
 
-    resetRunState();
-    setGamePhase('aiming');
-  };
-
-  const openScenarioPicker = () => {
     resetRunState();
     setGamePhase('scenario-select');
   };
@@ -99,7 +106,8 @@ export function ResultsScreen() {
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <button
             onClick={replayScenario}
-            className="rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700"
+            disabled={!replayAllowed}
+            className="rounded-full bg-red-600 px-6 py-3 font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {UI_COPY_MAP.results.replayCta}
           </button>
