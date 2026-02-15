@@ -1,0 +1,92 @@
+import type { ScenarioSeed } from './utils.ts';
+import { SCENARIO_ENVIRONMENT_ASSETS } from './utils.ts';
+
+export const FEDERAL_RESERVE_SCENARIO: ScenarioSeed = {
+    id: 'federal-reserve',
+    name: 'Federal Reserve - Gold Vault',
+    description: 'New York, USA. Fiat abstraction where value is pure hallucination.',
+    panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'],
+    colorGrading: {
+      tint: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tint,
+      tintStrength: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tintStrength,
+    },
+    panoramaColor: '#9f8b58',
+    targets: [
+      {
+        id: 'gold-bar',
+        name: 'Gold Bar',
+        value: 750000,
+        position: [1.5, 0, -11],
+        radius: 1.0,
+        type: 'other',
+        material: 'gold',
+        description: 'Soft metal that absorbs bullets without satisfying damage.',
+      },
+      {
+        id: 'tagged-gold-bar',
+        name: 'Tagged Gold Bar',
+        value: 0,
+        position: [-2, 0.5, -10.5],
+        radius: 1.0,
+        type: 'easter-egg-dadaist',
+        material: 'tungsten',
+        description: 'A QC-tagged bar that reveals a tungsten core.',
+        specialEffects: [
+          'Counterfeit core exposed.',
+          'Faith in reserves evaporates.',
+        ],
+        overrideTotalDamage: 0,
+        breakdownMode: 'none',
+      },
+      {
+        id: 'security-camera',
+        name: 'Security Camera',
+        value: 5000,
+        position: [4.5, 5, -8],
+        radius: 0.6,
+        type: 'other',
+        material: 'plastic',
+        description: 'A single camera guarding the ledger.',
+      },
+      {
+        id: 'computer-terminal',
+        name: 'Computer Terminal',
+        value: 10000,
+        position: [5.5, -0.2, -7.5],
+        radius: 0.9,
+        type: 'other',
+        material: 'electronics',
+        description: 'Beige terminal for ledger access.',
+      },
+      {
+        id: 'ethernet-cable',
+        name: 'Ethernet Cable',
+        value: 15,
+        position: [5, -0.4, -6],
+        radius: 0.4,
+        type: 'easter-egg-systemic',
+        description: 'Severing this collapses the digital ledger.',
+        specialEffects: [
+          'Ledger severed.',
+          'Digital trust network collapses.',
+        ],
+        overrideTotalDamage: 1000000000000,
+        breakdownMode: 'all-targets',
+      },
+      {
+        id: 'concrete-floor',
+        name: 'Concrete Floor',
+        value: 0,
+        position: [-5, -0.7, -5],
+        radius: 1.8,
+        type: 'other',
+        material: 'concrete',
+        description: 'Cold concrete with zero symbolic value.',
+      },
+    ],
+  
+  metadata: {
+    region: 'USA',
+    difficulty: 'hard',
+    status: 'locked',
+  },};
