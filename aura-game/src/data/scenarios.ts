@@ -1,4 +1,5 @@
 import type { Scenario } from '@/types';
+import { normalizeScenarioCopy } from '@/data/copy';
 
 const sumTargetValues = (targets: Scenario['targets']): number =>
   targets.reduce((total, target) => total + target.value, 0);
@@ -19,10 +20,11 @@ const normalizeTargetPosition = (targets: Scenario['targets']): Scenario['target
   }));
 
 const createScenario = (scenario: Omit<Scenario, 'totalMaxValue'>): Scenario => {
-  const targets = normalizeTargetPosition(scenario.targets);
+  const normalizedScenario = normalizeScenarioCopy(scenario);
+  const targets = normalizeTargetPosition(normalizedScenario.targets);
 
   return {
-    ...scenario,
+    ...normalizedScenario,
     targets,
     totalMaxValue: sumTargetValues(targets),
   };
