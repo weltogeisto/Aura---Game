@@ -13,7 +13,6 @@ export function ScenarioSelect() {
     if (scenario) {
       resetRunState();
       setSelectedScenario(scenario);
-      resetRunState();
       setGamePhase('aiming');
     }
   };
