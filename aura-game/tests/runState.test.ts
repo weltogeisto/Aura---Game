@@ -1,7 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { useGameStore } from '../src/stores/gameStore.ts';
-import type { GameState, ShotFeedback, ShotResult } from '../src/types/index.ts';
+import { canFire, canReplay, hasResult } from '../src/stores/gameSelectors.ts';
+import type { GameState, Scenario, ShotFeedback, ShotResult } from '../src/types/index.ts';
+
+const mockScenario: Scenario = {
+  id: 'scenario-1',
+  name: 'Test Scenario',
+  description: 'Gallery room. Testing transitions.',
+  isMvp: true,
+  panoramaAsset: {
+    lowRes: '/low.jpg',
+    highRes: '/high.jpg',
+  },
+  panoramaColor: '#000000',
+  targets: [],
+  totalMaxValue: 100,
+};
 
 const mockResult: ShotResult = {
   hitTargetId: 'target-1',
@@ -25,7 +40,7 @@ const mockFeedback: ShotFeedback = {
 
 const baseState: GameState = {
   gamePhase: 'aiming',
-  selectedScenario: null,
+  selectedScenario: mockScenario,
   crosshairPosition: { x: 0.5, y: 0.5 },
   shotFired: false,
   hasFired: false,
@@ -43,12 +58,12 @@ function resetStore() {
   useGameStore.setState(baseState);
 }
 
-test('fireShotResult only applies once (one bullet only lock)', () => {
+test('commitShot only applies once and blocks illegal re-fire while locked', () => {
   resetStore();
   const originalDateNow = Date.now;
 
   Date.now = () => 1234;
-  useGameStore.getState().fireShotResult(mockResult, mockFeedback);
+  useGameStore.getState().commitShot(mockResult, mockFeedback);
   const afterFirstFire = useGameStore.getState();
 
   assert.equal(afterFirstFire.gamePhase, 'shooting');
@@ -61,7 +76,7 @@ test('fireShotResult only applies once (one bullet only lock)', () => {
   assert.equal(afterFirstFire.lastShotResult?.totalDamage, 100);
 
   Date.now = () => 4567;
-  useGameStore.getState().fireShotResult(
+  useGameStore.getState().commitShot(
     { ...mockResult, totalDamage: 999, totalScore: 999 },
     { ...mockFeedback, firedAt: 999 }
   );
@@ -75,7 +90,23 @@ test('fireShotResult only applies once (one bullet only lock)', () => {
   Date.now = originalDateNow;
 });
 
-test('resetRunState clears run fields and keeps replay path consistent', () => {
+test('finalizeResults is guarded when no shot exists', () => {
+  resetStore();
+
+  useGameStore.setState({ gamePhase: 'aiming', lastShotResult: null, hasFired: false });
+  useGameStore.getState().finalizeResults();
+
+  const state = useGameStore.getState();
+  assert.equal(state.gamePhase, 'aiming');
+
+  useGameStore.getState().commitShot(mockResult, mockFeedback);
+  assert.equal(useGameStore.getState().gamePhase, 'shooting');
+
+  useGameStore.getState().finalizeResults();
+  assert.equal(useGameStore.getState().gamePhase, 'results');
+});
+
+test('restartScenario resets run fields and keeps selected scenario for replay', () => {
   resetStore();
 
   useGameStore.setState({
@@ -92,10 +123,11 @@ test('resetRunState clears run fields and keeps replay path consistent', () => {
     shotLocked: true,
   });
 
-  useGameStore.getState().resetRunState();
+  useGameStore.getState().restartScenario();
   const state = useGameStore.getState();
 
-  assert.equal(state.gamePhase, 'results');
+  assert.equal(state.gamePhase, 'aiming');
+  assert.equal(state.selectedScenario?.id, mockScenario.id);
   assert.equal(state.shotFired, false);
   assert.equal(state.hasFired, false);
   assert.equal(state.shotTimestamp, null);
@@ -108,24 +140,24 @@ test('resetRunState clears run fields and keeps replay path consistent', () => {
   assert.equal(state.shotLocked, false);
 });
 
-test('phase transition start -> aiming -> shooting -> results and replay reset', () => {
+test('selectors stay stable for future hook wrappers', () => {
+  resetStore();
+
+  assert.equal(canFire(useGameStore.getState()), true);
+  assert.equal(hasResult(useGameStore.getState()), false);
+  assert.equal(canReplay(useGameStore.getState()), false);
+
+  useGameStore.getState().commitShot(mockResult, mockFeedback);
+  assert.equal(canFire(useGameStore.getState()), false);
+
+  useGameStore.getState().finalizeResults();
+  const finishedState = useGameStore.getState();
+  assert.equal(hasResult(finishedState), true);
+  assert.equal(canReplay(finishedState), true);
+
   useGameStore.getState().resetGame();
-
-  assert.equal(useGameStore.getState().gamePhase, 'start');
-
-  useGameStore.getState().setGamePhase('aiming');
-  assert.equal(useGameStore.getState().gamePhase, 'aiming');
-
-  useGameStore.getState().fireShotResult(mockResult, mockFeedback);
-  assert.equal(useGameStore.getState().gamePhase, 'shooting');
-
-  useGameStore.getState().finalizeShot();
-  assert.equal(useGameStore.getState().gamePhase, 'results');
-
-  useGameStore.getState().resetGame();
-  const replayState = useGameStore.getState();
-  assert.equal(replayState.gamePhase, 'start');
-  assert.equal(replayState.hasFired, false);
-  assert.equal(replayState.ammoRemaining, 1);
-  assert.equal(replayState.shotLocked, false);
+  const resetState = useGameStore.getState();
+  assert.equal(canFire(resetState), false);
+  assert.equal(hasResult(resetState), false);
+  assert.equal(canReplay(resetState), false);
 });

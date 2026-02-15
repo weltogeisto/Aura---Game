@@ -23,8 +23,8 @@ export function BallisticsSystem() {
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
   const shotLocked = useGameStore((state) => state.shotLocked);
-  const fireShotResult = useGameStore((state) => state.fireShotResult);
-  const finalizeShot = useGameStore((state) => state.finalizeShot);
+  const commitShot = useGameStore((state) => state.commitShot);
+  const finalizeResults = useGameStore((state) => state.finalizeResults);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -44,43 +44,74 @@ export function BallisticsSystem() {
         ? selectedScenario.targets.find((target) => target.id === simulation.hitObject?.targetId)
         : undefined;
 
-      const scoreResolution = resolveShotScore(selectedScenario, simulation, hitTarget);
-      const travelTimeMs = THREE.MathUtils.clamp((simulation.hitDistance / 45) * 1000, 140, 520);
-      const damageScale = THREE.MathUtils.clamp(
-        scoreResolution.result.damageAmount / Math.max(selectedScenario.totalMaxValue, 1),
-        0.1,
-        1
-      );
+        const result: ShotResult = {
+          hitTargetId: hitTarget,
+          hitTargetName: hitMesh.userData.targetName,
+          hitTargetType,
+          hitLocationLabel,
+          damageAmount: adjustedDamage,
+          totalDamage,
+          totalScore,
+          breakdown,
+          specialEffects,
+          criticLine,
+        };
 
-      fireShotResult(scoreResolution.result, {
-        active: true,
-        hit: simulation.hit,
-        firedAt: Date.now(),
-        crosshairPosition,
-        hitDistance: simulation.hitDistance,
-        damageScale,
-        travelTimeMs,
-        traceEnd: [simulation.traceEnd.x, simulation.traceEnd.y, simulation.traceEnd.z],
-        hitPoint: simulation.hitPoint
-          ? [simulation.hitPoint.x, simulation.hitPoint.y, simulation.hitPoint.z]
-          : undefined,
-        hitNormal: simulation.hitNormal
-          ? [simulation.hitNormal.x, simulation.hitNormal.y, simulation.hitNormal.z]
-          : undefined,
-        impactUv: simulation.hitUv ? [simulation.hitUv.x, simulation.hitUv.y] : null,
-        sampledValue: scoreResolution.sampledValue,
-        usedFallbackSample: scoreResolution.usedFallbackSample,
-        ballisticsSeed,
-        scoreBreakdown: {
-          sampledValue: scoreResolution.sampledValue,
-          zoneMultiplier: scoreResolution.zoneMultiplier,
-          criticalModifier: scoreResolution.criticalModifier,
-        },
-        isDadaistTrigger: scoreResolution.isDadaistTrigger,
-        simulationEvents: simulation.events,
-      });
+        commitShot(result, {
+          active: true,
+          hit: true,
+          firedAt: Date.now(),
+          crosshairPosition,
+          hitDistance: impact.distance,
+          damageScale: THREE.MathUtils.clamp(adjustedDamage / Math.max(selectedScenario.totalMaxValue, 1), 0.1, 1),
+          travelTimeMs: THREE.MathUtils.clamp((impact.distance / 45) * 1000, 140, 480),
+          traceEnd: [traceEnd.x, traceEnd.y, traceEnd.z],
+          hitPoint: [impact.point.x, impact.point.y, impact.point.z],
+          hitNormal: [impact.normal.x, impact.normal.y, impact.normal.z],
+          impactUv: impact.uv ? [impact.uv.x, impact.uv.y] : null,
+          sampledValue: sampled.value,
+          usedFallbackSample: sampled.usedFallback,
+          ballisticsSeed,
+        });
+      } else {
+        const missEnd = raycaster.ray.at(missTraceDistance, new THREE.Vector3());
+        const travelTimeMs = THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420);
+        const missLocationLabel = `${selectedScenario.name} — No registered contact`;
+        const criticLine = deterministicCriticLine(
+          selectedScenario,
+          0,
+          null,
+          null,
+          missLocationLabel
+        );
 
-      timeoutRef.current = window.setTimeout(() => finalizeShot(), 700);
+        const result: ShotResult = {
+          hitTargetId: null,
+          hitTargetName: null,
+          hitTargetType: null,
+          hitLocationLabel: missLocationLabel,
+          damageAmount: 0,
+          totalDamage: 0,
+          totalScore: 0,
+          breakdown: [],
+          specialEffects: ['Shot missed the target completely.'],
+          criticLine,
+        };
+
+        commitShot(result, {
+          active: true,
+          hit: false,
+          firedAt: Date.now(),
+          crosshairPosition,
+          hitDistance: missTraceDistance,
+          damageScale: 0.15,
+          travelTimeMs: THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420),
+          traceEnd: [missEnd.x, missEnd.y, missEnd.z],
+          ballisticsSeed,
+        });
+      }
+
+      timeoutRef.current = window.setTimeout(() => finalizeResults(), 700);
     };
 
     window.addEventListener('click', handleClick);
@@ -97,8 +128,8 @@ export function BallisticsSystem() {
     scene,
     camera,
     shotLocked,
-    fireShotResult,
-    finalizeShot,
+    commitShot,
+    finalizeResults,
   ]);
 
   return null;

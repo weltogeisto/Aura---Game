@@ -20,8 +20,7 @@ const statusLabel: Record<ScenarioStatus, string> = {
 
 export function ScenarioSelect() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
-  const setSelectedScenario = useGameStore((state) => state.setSelectedScenario);
-  const resetRunState = useGameStore((state) => state.resetRunState);
+  const startRun = useGameStore((state) => state.startRun);
 
   const scenarios = sortScenariosByStatus(getScenariosList());
 
@@ -29,9 +28,7 @@ export function ScenarioSelect() {
     const scenario = scenarios.find((s) => s.id === scenarioId);
     if (!scenario || scenario.metadata.status !== 'playable') return;
 
-    resetRunState();
-    setSelectedScenario(scenario);
-    setGamePhase('aiming');
+    startRun(scenario);
   };
 
   return (
