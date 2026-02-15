@@ -17,7 +17,11 @@ import { ShotImpact } from './ShotImpact';
 import { ShotTracer } from './ShotTracer';
 import { ValueMesh } from './ValueMesh';
 import { RenderPerformanceMonitor } from './RenderPerformanceMonitor';
+import { RenderPostProcessing } from './RenderPostProcessing';
 import { MuseumLighting } from './lighting/MuseumLighting';
+
+const SHOW_RENDER_DEBUG_OVERLAY =
+  import.meta.env.DEV && import.meta.env.VITE_RENDER_DEBUG_OVERLAY === '1';
 
 function LoadingFallback() {
   return (
@@ -32,6 +36,7 @@ export function Scene() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const [renderTier, setRenderTier] = useState<RenderTier>(DEFAULT_RENDER_TIER);
+  const [sampledFps, setSampledFps] = useState<number | null>(null);
   const renderSettings = useMemo(
     () => RENDER_TIER_SETTINGS[renderTier],
     [renderTier]
@@ -44,10 +49,11 @@ export function Scene() {
   return (
     <>
       <Canvas
+        key={`scene-tier-${renderTier}`}
         camera={{ position: [0, 1.6, 0], fov: 75, near: 0.1, far: 200 }}
         dpr={renderSettings.dpr}
         gl={{
-          antialias: renderSettings.postprocessing,
+          antialias: renderSettings.antialias,
           toneMapping: ACESFilmicToneMapping,
           outputColorSpace: SRGBColorSpace,
         }}
@@ -60,7 +66,11 @@ export function Scene() {
         style={{ width: '100%', height: '100%' }}
       >
         <fog attach="fog" args={['#1b1416', 30, 180]} />
-        <RenderPerformanceMonitor tier={renderTier} onTierChange={setRenderTier} />
+        <RenderPerformanceMonitor
+          tier={renderTier}
+          onTierChange={setRenderTier}
+          onFpsSample={setSampledFps}
+        />
         <Suspense fallback={<LoadingFallback />}>
           <Panorama
             panoramaAsset={selectedScenario.panoramaAsset}
@@ -73,6 +83,7 @@ export function Scene() {
         </Suspense>
         <MuseumLighting scenarioId={selectedScenario.id} />
         <RoomShell textureSize={renderSettings.textureSize} renderTier={renderTier} />
+        <RenderPostProcessing settings={renderSettings.postprocessing} />
         <ValueMesh scenario={selectedScenario} />
         <TargetObjects targets={selectedScenario.targets} />
         <BallisticsSystem />
@@ -81,6 +92,12 @@ export function Scene() {
         <ShotTracer />
       </Canvas>
       <Crosshair />
+      {SHOW_RENDER_DEBUG_OVERLAY && (
+        <div className="pointer-events-none absolute left-4 top-4 rounded bg-black/70 px-3 py-2 font-mono text-xs text-white">
+          <div>Tier: {renderTier}</div>
+          <div>FPS: {sampledFps ? sampledFps.toFixed(1) : '...'}</div>
+        </div>
+      )}
     </>
   );
 }
