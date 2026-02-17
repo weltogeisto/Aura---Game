@@ -12,8 +12,8 @@ pnpm run build:canonical
 
 This must produce and stage:
 
-- `release/web/current/dist`
-- `release/web/current/bundle.html` (optional)
+- `release/web/current/dist` (authoritative output from Vite build)
+- `release/web/current/bundle.html` (optional artifact generated from that Vite output)
 
 Tauri is configured to load only `release/web/current/dist`, so packaging always follows canonical web output.
 
