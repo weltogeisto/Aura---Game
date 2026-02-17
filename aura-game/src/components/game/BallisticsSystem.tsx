@@ -6,6 +6,7 @@ import type { Scenario, Target } from '@/types';
 import { simulateShot, type SimulationObject } from '@/lib/ballistics/simulation';
 import type { BallisticsConfig } from '@/lib/ballistics/trajectory';
 import { resolveShotScore } from '@/lib/scoring/shotScoring';
+import { resolveShotCommitPayload } from '@/lib/ballistics/shotFeedback';
 
 
 const DEFAULT_BALLISTICS: BallisticsConfig = {
@@ -32,11 +33,15 @@ function collectSimulationObjects(
   scenario: Scenario
 ): SimulationObject[] {
   const objects: SimulationObject[] = [];
+  const unmappedTargetIds = new Set<string>();
   scene.traverse((child) => {
     if (!(child instanceof THREE.Mesh)) return;
     const targetId = child.userData.targetId as string | undefined;
     if (!targetId) return;
     const target = scenario.targets.find((t) => t.id === targetId);
+    if (!target) {
+      unmappedTargetIds.add(targetId);
+    }
     objects.push({
       object: child,
       targetId: targetId ?? null,
@@ -45,6 +50,13 @@ function collectSimulationObjects(
       material: target?.material,
     });
   });
+
+  if (unmappedTargetIds.size > 0) {
+    console.warn(
+      `[BallisticsSystem] Unmapped target mesh ids in scenario "${scenario.id}": ${Array.from(unmappedTargetIds).join(', ')}`
+    );
+  }
+
   return objects;
 }
 
@@ -71,60 +83,21 @@ export function BallisticsSystem() {
         seed: ballisticsSeed,
       });
 
-      const missTraceDistance = 45;
       const hitTargetData = simulation.hitObject?.targetId
         ? selectedScenario.targets.find((target) => target.id === simulation.hitObject?.targetId)
         : undefined;
       const scoreResolution = resolveShotScore(selectedScenario, simulation, hitTargetData);
-      const result = scoreResolution.result;
+      const { result, feedback } = resolveShotCommitPayload({
+        scenario: selectedScenario,
+        simulation,
+        scoreResolution,
+        hitTargetData,
+        crosshairPosition,
+        ballisticsSeed,
+        firedAt: Date.now(),
+      });
 
-      if (simulation.hit && simulation.hitObject?.targetId && simulation.hitPoint) {
-        const hitPoint = simulation.hitPoint!;
-        const hitNormal = simulation.hitNormal ?? new THREE.Vector3(0, 0, 1);
-        const hitDistance = simulation.hitDistance;
-        const hitUv = simulation.hitUv;
-
-        const impactOffset = hitNormal.clone().multiplyScalar(0.06);
-        const traceEnd = hitPoint.clone().add(impactOffset);
-
-        commitShot(result, {
-          active: true,
-          hit: true,
-          firedAt: Date.now(),
-          crosshairPosition,
-          hitDistance,
-          damageScale: THREE.MathUtils.clamp(result.damageAmount / Math.max(selectedScenario.totalMaxValue, 1), 0.1, 1),
-          travelTimeMs: THREE.MathUtils.clamp((hitDistance / 45) * 1000, 140, 480),
-          traceEnd: [traceEnd.x, traceEnd.y, traceEnd.z],
-          hitPoint: [hitPoint.x, hitPoint.y, hitPoint.z],
-          hitNormal: [hitNormal.x, hitNormal.y, hitNormal.z],
-          impactUv: hitUv ? [hitUv.x, hitUv.y] : null,
-          sampledValue: scoreResolution.sampledValue,
-          usedFallbackSample: scoreResolution.usedFallbackSample,
-          ballisticsSeed,
-          scoreBreakdown: {
-            sampledValue: scoreResolution.sampledValue,
-            zoneMultiplier: scoreResolution.zoneMultiplier,
-            criticalModifier: scoreResolution.criticalModifier,
-          },
-          isDadaistTrigger: scoreResolution.isDadaistTrigger,
-          simulationEvents: simulation.events,
-        });
-      } else {
-        const missEnd = simulation.traceEnd;
-        commitShot(result, {
-          active: true,
-          hit: false,
-          firedAt: Date.now(),
-          crosshairPosition,
-          hitDistance: missTraceDistance,
-          damageScale: 0.15,
-          travelTimeMs: THREE.MathUtils.clamp((missTraceDistance / 45) * 1000, 160, 420),
-          traceEnd: [missEnd.x, missEnd.y, missEnd.z],
-          ballisticsSeed,
-          simulationEvents: simulation.events,
-        });
-      }
+      commitShot(result, feedback);
 
       timeoutRef.current = window.setTimeout(() => finalizeResults(), 700);
     };
