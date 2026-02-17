@@ -17,6 +17,8 @@ This must produce and stage:
 
 Tauri is configured to load only `release/web/current/dist`, so packaging always follows canonical web output.
 
+Canonical build tooling (Parcel + html-inline) is declared in `aura-game/package.json` and must be installed before build execution. Build scripts do not install or modify dependencies at runtime, so canonical packaging is reproducible offline after install.
+
 ## Beta Packaging Commands
 
 From `aura-game/`:

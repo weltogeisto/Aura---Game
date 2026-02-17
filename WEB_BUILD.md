@@ -15,10 +15,12 @@ pnpm run build:canonical
 
 This runs the offline asset audit, builds the web app, creates `bundle.html`, and stages release-ready artifacts in `release/web/`.
 
+> Invariant: `bundle-artifact.sh` is build-only. It never installs or mutates dependencies at runtime. Canonical web builds must be reproducible offline after a single `pnpm install --frozen-lockfile`.
+
 ## Prerequisites
 
 - Node.js 18+ 
-- pnpm (auto-installed if missing)
+- pnpm
 
 ## Quick Start
 
@@ -163,6 +165,7 @@ pnpm install -D @types/three
 
 ### Parcel Build Fails
 ```bash
+pnpm install --frozen-lockfile
 rm -rf dist .parcel-cache
 pnpm exec parcel build index.html --dist-dir dist --no-source-maps
 ```

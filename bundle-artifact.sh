@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -euo pipefail
 
 echo "📦 Bundling React app to single HTML artifact..."
 
@@ -16,19 +16,22 @@ if [ ! -f "index.html" ]; then
   exit 1
 fi
 
-# Install bundling dependencies
-echo "📦 Installing bundling dependencies..."
-pnpm add -D parcel @parcel/config-default parcel-resolver-tspaths html-inline
+REQUIRED_BINARIES=(parcel html-inline)
 
-# Create Parcel config with tspaths resolver
+echo "🔎 Preflight: checking required build tooling..."
+for binary in "${REQUIRED_BINARIES[@]}"; do
+  if ! pnpm exec "$binary" --version >/dev/null 2>&1; then
+    echo "❌ Error: Required binary '$binary' is not available via pnpm exec."
+    echo "   Install dependencies first (for reproducible offline builds):"
+    echo "   pnpm install --frozen-lockfile"
+    exit 1
+  fi
+done
+
 if [ ! -f ".parcelrc" ]; then
-  echo "🔧 Creating Parcel configuration with path alias support..."
-  cat > .parcelrc << 'EOF'
-{
-  "extends": "@parcel/config-default",
-  "resolvers": ["parcel-resolver-tspaths", "..."]
-}
-EOF
+  echo "❌ Error: Missing .parcelrc in project root."
+  echo "   This file is committed and required for canonical artifact builds."
+  exit 1
 fi
 
 # Clean previous build
