@@ -34,7 +34,7 @@ export function resolve(specifier, context, nextResolve) {
   }
 
   // For relative imports within src/, try extension resolution too
-  if (context.parentURL && context.parentURL.includes('/src/') && specifier.startsWith('./') || specifier.startsWith('../')) {
+  if (context.parentURL && context.parentURL.includes('/src/') && (specifier.startsWith('./') || specifier.startsWith('../'))) {
     try {
       return nextResolve(specifier, context);
     } catch (err) {
