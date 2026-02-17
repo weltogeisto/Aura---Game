@@ -17,8 +17,8 @@
     "typecheck": "tsc -p tsconfig.core.json --noEmit",
     "test:core": "node --test --experimental-strip-types --import ./tests/register-loader.mjs tests/runState.test.ts tests/store-shot-resolution.test.ts tests/scenario-contract.test.ts",
     "scenarios:check": "node --experimental-strip-types scripts/check-scenario-integrity.mjs",
-    "ci:fast": "pnpm run lint && pnpm run typecheck && pnpm run test:core && pnpm run scenarios:check",
-    "ci:full": "pnpm run lint && pnpm run typecheck && pnpm test && pnpm run assets:check && pnpm run scenarios:check"
+    "ci:fast": "pnpm run lint && pnpm run typecheck && pnpm run test:core && pnpm run build && pnpm run scenarios:check",
+    "ci:full": "pnpm run lint && pnpm run typecheck && pnpm test && pnpm run build && pnpm run assets:check && pnpm run scenarios:check"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

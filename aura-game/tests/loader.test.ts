@@ -5,7 +5,8 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-import { resolve as loaderResolve } from './loader.mjs';
+// @ts-expect-error -- Node ESM loader is authored in .mjs for runtime compatibility
+const { resolve: loaderResolve } = await import('./loader.mjs');
 
 test('relative imports from /src/ fall back to extension resolution', () => {
   const root = mkdtempSync(join(tmpdir(), 'loader-src-'));
