@@ -13,7 +13,7 @@ cd aura-game
 pnpm run build:canonical
 ```
 
-This runs the offline asset audit, builds the web app, creates `bundle.html`, and stages release-ready artifacts in `release/web/`.
+This runs the offline asset audit, builds the web app, creates `bundle.html` from the Vite build output, and stages release-ready artifacts in `release/web/`. The authoritative web build is `release/web/current/dist` from Vite.
 
 ## Prerequisites
 
@@ -55,7 +55,7 @@ Opens at http://localhost:5173
 bash ../scripts/bundle-artifact.sh
 ```
 
-Creates `bundle.html` — a single self-contained file.
+Creates `bundle.html` — a single self-contained file generated from the existing Vite output in `dist/` (without rewriting `dist/`).
 
 ## Project Setup After Init
 
@@ -138,7 +138,9 @@ function Panorama({ src }: { src: string }) {
 
 The `bundle-artifact.sh` script produces:
 
-- **bundle.html** — Single file, all JS/CSS inlined
+- **bundle.html** — Single file, all JS/CSS inlined from the Vite `dist/` output
+- **dist/** — Remains untouched and authoritative for staged releases
+- **dist-bundle/** — Optional isolated workspace used only for artifact inlining
 - Works offline
 - Can be hosted on GitHub Pages
 - Can be shared directly in chat
@@ -161,10 +163,14 @@ npm install -g pnpm
 pnpm install -D @types/three
 ```
 
-### Parcel Build Fails
+### Missing `dist/index.html`
 ```bash
-rm -rf dist .parcel-cache
-pnpm exec parcel build index.html --dist-dir dist --no-source-maps
+pnpm run build:web
+```
+
+### `html-inline` Not Found
+```bash
+pnpm add -D html-inline
 ```
 
 ## GitHub Pages Deployment

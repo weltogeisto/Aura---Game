@@ -43,8 +43,8 @@ pnpm run build:canonical
 
 This single command now performs the full canonical flow:
 1. `assets:check` verifies that `public/**` and scenario config do not introduce runtime network fetches.
-2. `build:web` generates the Vite production build (`dist/`).
-3. `build:artifact` creates `bundle.html` via `../bundle-artifact.sh`.
+2. `build:web` generates the Vite production build (`dist/`), which is the authoritative source staged to `release/web/current/dist`.
+3. `build:artifact` creates `bundle.html` from the existing Vite output via `../bundle-artifact.sh`.
 4. `release:stage` stages outputs under `release/web/current` and `release/web/v<version>`.
 
 For local iteration, keep using `pnpm dev`.

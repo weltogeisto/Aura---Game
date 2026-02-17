@@ -9,39 +9,49 @@ if [ ! -f "package.json" ]; then
   exit 1
 fi
 
-# Check if index.html exists
-if [ ! -f "index.html" ]; then
-  echo "❌ Error: No index.html found in project root."
-  echo "   This script requires an index.html entry point."
+# Check if Vite build output exists
+if [ ! -f "dist/index.html" ]; then
+  echo "❌ Error: No dist/index.html found."
+  echo "   Run the Vite production build first (for example: pnpm run build:web)."
   exit 1
 fi
 
-# Install bundling dependencies
-echo "📦 Installing bundling dependencies..."
-pnpm add -D parcel @parcel/config-default parcel-resolver-tspaths html-inline
-
-# Create Parcel config with tspaths resolver
-if [ ! -f ".parcelrc" ]; then
-  echo "🔧 Creating Parcel configuration with path alias support..."
-  cat > .parcelrc << 'EOF'
-{
-  "extends": "@parcel/config-default",
-  "resolvers": ["parcel-resolver-tspaths", "..."]
-}
-EOF
+# Ensure html-inline is available
+if ! pnpm exec html-inline --version >/dev/null 2>&1; then
+  echo "📦 Installing html-inline dependency..."
+  pnpm add -D html-inline
 fi
 
-# Clean previous build
-echo "🧹 Cleaning previous build..."
-rm -rf dist bundle.html
+# Prepare isolated working output (keeps dist/ authoritative and untouched)
+BUNDLE_WORK_DIR="dist-bundle"
+echo "🧹 Preparing bundle workspace: ${BUNDLE_WORK_DIR}/"
+rm -rf "${BUNDLE_WORK_DIR}" bundle.html
+mkdir -p "${BUNDLE_WORK_DIR}"
+cp -R dist/. "${BUNDLE_WORK_DIR}/"
 
-# Build with Parcel
-echo "🔨 Building with Parcel..."
-pnpm exec parcel build index.html --dist-dir dist --no-source-maps
+# Normalize root-relative local asset paths for inlining in isolated workspace
+echo "🔧 Normalizing asset paths for inlining..."
+python3 - <<'PY'
+from pathlib import Path
+import re
+
+index_path = Path("dist-bundle/index.html")
+content = index_path.read_text(encoding="utf-8")
+
+# Convert root-relative local references ("/assets/...", "/favicon.ico", etc.)
+# to workspace-relative paths while preserving protocol URLs and fragment links.
+content = re.sub(
+    r'((?:src|href)=)(["\'])/(?!/|#|[a-zA-Z][a-zA-Z0-9+.-]*:)',
+    r'\1\2./',
+    content,
+)
+
+index_path.write_text(content, encoding="utf-8")
+PY
 
 # Inline everything into single HTML
 echo "🎯 Inlining all assets into single HTML file..."
-pnpm exec html-inline dist/index.html > bundle.html
+pnpm exec html-inline "${BUNDLE_WORK_DIR}/index.html" > bundle.html
 
 # Get file size
 FILE_SIZE=$(du -h bundle.html | cut -f1)
