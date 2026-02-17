@@ -25,14 +25,18 @@ From `aura-game/`:
 
 ```bash
 pnpm run desktop:bundle:beta
+# => pnpm run assets:check && pnpm tauri build
 ```
 
 Platform-specific targets:
 
 ```bash
 pnpm run desktop:bundle:beta:linux
+# => pnpm run assets:check && pnpm tauri build --target x86_64-unknown-linux-gnu
 pnpm run desktop:bundle:beta:windows
+# => pnpm run assets:check && pnpm tauri build --target x86_64-pc-windows-msvc
 pnpm run desktop:bundle:beta:macos
+# => pnpm run assets:check && pnpm tauri build --target universal-apple-darwin
 ```
 
 All bundle commands run `assets:check` first to keep offline assets as a hard gate before packaging.
@@ -43,6 +47,7 @@ After canonical build (and ideally after bundle generation), run:
 
 ```bash
 pnpm run smoke:packaged
+# => node scripts/smoke-packaged-mode.mjs
 ```
 
 The smoke script verifies:
@@ -52,6 +57,17 @@ The smoke script verifies:
 3. Shot-flow phases are present (`aiming`, `shooting`)
 4. Missing-asset guard string is compiled (`Asset path must resolve offline`)
 5. Compiled static assets directory exists
+
+
+## Docs ↔ package.json Consistency Check
+
+From `aura-game/`:
+
+```bash
+pnpm run docs:check:desktop-release-scripts
+```
+
+This check fails if any script referenced as `pnpm run ...` in this document is missing from `aura-game/package.json`.
 
 ## Signing Placeholders
 
