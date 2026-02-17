@@ -4,7 +4,11 @@ import assert from 'node:assert/strict';
 import { SCENARIOS } from '../src/data/scenarios.ts';
 import { useGameStore } from '../src/stores/gameStore.ts';
 import { DADAIST_SCORE, deterministicCriticLine } from '../src/lib/shotResolution.ts';
+import { resolveShotScore } from '../src/lib/scoring/shotScoring.ts';
+import { resolveShotCommitPayload } from '../src/lib/ballistics/shotFeedback.ts';
 import type { GameState, ShotFeedback, ShotResult } from '../src/types/index.ts';
+import type { ShotSimulationResult } from '../src/lib/ballistics/simulation.ts';
+import * as THREE from 'three';
 
 const baseState: GameState = {
   gamePhase: 'aiming',
@@ -117,4 +121,44 @@ test('store + shot resolution: replay and full reset clear lock state and output
   assert.equal(state.shotLocked, false);
   assert.equal(state.lastShotResult, null);
   assert.equal(state.selectedScenario, null);
+});
+
+test('store + shot resolution: unknown simulation targetId resolves to miss score and miss feedback', () => {
+  const scenario = SCENARIOS.louvre;
+  const simulation: ShotSimulationResult = {
+    events: [],
+    hit: true,
+    hitObject: {
+      object: new THREE.Mesh(),
+      targetId: 'unknown-target-id',
+      targetName: 'Ghost Target',
+      targetType: 'other',
+    },
+    hitPoint: new THREE.Vector3(1, 1, 1),
+    hitNormal: new THREE.Vector3(0, 1, 0),
+    hitDistance: 20,
+    hitUv: null,
+    traceEnd: new THREE.Vector3(1, 1, 1),
+    energyLeft: 1,
+  };
+
+  const scoreResolution = resolveShotScore(scenario, simulation, undefined);
+  const resolved = resolveShotCommitPayload({
+    scenario,
+    simulation,
+    scoreResolution,
+    hitTargetData: undefined,
+    crosshairPosition: { x: 0.5, y: 0.5 },
+    ballisticsSeed: 1337,
+    firedAt: 123,
+  });
+
+  assert.equal(resolved.resolvedTargetHit, false);
+  assert.equal(resolved.result.totalScore, 0);
+  assert.equal(resolved.result.hitTargetId, null);
+  assert.equal(resolved.feedback.hit, false);
+  assert.match(
+    resolved.result.specialEffects.join(' | '),
+    /physics impact target could not be mapped to scenario target metadata/i
+  );
 });
