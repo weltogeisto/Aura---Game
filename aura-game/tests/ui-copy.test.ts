@@ -27,16 +27,16 @@ test('ui copy map snapshot for release positioning and core actions', () => {
       release: {
         badge: 'Desktop Beta Vertical Slice',
         title: 'Aura of the 21st Century',
-        subtitle: 'Louvre operations are live. One polished scenario, one shot, one verdict.',
+        subtitle: 'Louvre ist live: ein fertiger Raum, ein Schuss, ein klarer Score-Pfad.',
       },
       startView: {
         overline: 'Aura / Desktop Beta',
         title: 'Louvre Entry Hall',
-        ctaPrimary: 'Enter Louvre Slice',
+        ctaPrimary: 'Run starten (Louvre)',
       },
       mainMenu: {
         overline: 'Desktop Beta',
-        ctaScenarioSelect: 'Select Scenario',
+        ctaScenarioSelect: 'Szenario wählen',
       },
       results: {
         overline: 'Run complete',

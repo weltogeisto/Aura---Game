@@ -6,6 +6,7 @@ import { ResultsScreen } from '@/components/ui/ResultsScreen';
 import { Scene } from '@/components/game/Scene';
 import { HUD } from '@/components/game/HUD';
 import { ShotEffects } from '@/components/game/ShotEffects';
+import { GameAudioDirector } from '@/components/game/GameAudioDirector';
 import { StartView } from '@/components/ui/StartView';
 import { hasResult } from '@/stores/gameSelectors';
 
@@ -13,9 +14,10 @@ function App() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const showResults = useGameStore((state) => state.gamePhase === 'results' && hasResult(state));
   const showRunView = useGameStore((state) => state.gamePhase === 'aiming' || state.gamePhase === 'shooting');
+  const highContrast = useGameStore((state) => state.accessibility.highContrast);
 
   return (
-    <div className="w-screen h-screen bg-black overflow-hidden">
+    <div className={`w-screen h-screen overflow-hidden ${highContrast ? 'accessibility-high-contrast bg-black' : 'bg-black'}`}>
       {gamePhase === 'start' && <StartView />}
       {gamePhase === 'menu' && <MainMenu />}
       {gamePhase === 'scenario-select' && <ScenarioSelect />}

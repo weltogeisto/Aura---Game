@@ -1,5 +1,18 @@
 import { create } from 'zustand';
-import type { GameState, GamePhase, Scenario, ShotResult, ShotFeedback } from '@/types';
+import type { AccessibilityFlags, GameState, GamePhase, Scenario, ShotResult, ShotFeedback } from '@/types';
+
+const DEFAULT_ACCESSIBILITY: AccessibilityFlags = {
+  reducedMotion: false,
+  highContrast: false,
+  aimAssist: false,
+};
+
+const TELEMETRY_RESET: GameState['runTelemetry'] = {
+  runStartedAt: null,
+  firstShotAt: null,
+  scoreBreakdownViewed: false,
+  replayUsed: false,
+};
 
 const RUN_STATE_RESET: Pick<
   GameState,
@@ -37,6 +50,8 @@ interface GameStore extends GameState {
   restartScenario: () => void;
   setFireBlocked: (blocked: boolean) => void;
   clearShotFeedback: () => void;
+  setAccessibilityFlag: (key: keyof AccessibilityFlags, value: boolean) => void;
+  markScoreBreakdownViewed: () => void;
   resetRunState: () => void;
   resetGame: () => void;
 }
@@ -45,6 +60,8 @@ export const useGameStore = create<GameStore>((set) => ({
   gamePhase: 'start',
   selectedScenario: null,
   crosshairPosition: { x: 0.5, y: 0.5 },
+  accessibility: DEFAULT_ACCESSIBILITY,
+  runTelemetry: TELEMETRY_RESET,
   ...RUN_STATE_RESET,
 
   setGamePhase: (phase: GamePhase) =>
@@ -107,6 +124,10 @@ export const useGameStore = create<GameStore>((set) => ({
         totalScore: result.totalScore,
         criticOutput: result.criticLine,
         shotLocked: true,
+        runTelemetry: {
+          ...state.runTelemetry,
+          firstShotAt: state.runTelemetry.firstShotAt ?? Date.now(),
+        },
       };
     }),
 
@@ -129,6 +150,11 @@ export const useGameStore = create<GameStore>((set) => ({
 
       return {
         gamePhase: 'aiming',
+        runTelemetry: {
+          ...TELEMETRY_RESET,
+          runStartedAt: Date.now(),
+          replayUsed: true,
+        },
         ...RUN_STATE_RESET,
       };
     }),
@@ -141,9 +167,26 @@ export const useGameStore = create<GameStore>((set) => ({
       shotFeedback: null,
     }),
 
+  setAccessibilityFlag: (key, value) =>
+    set((state) => ({
+      accessibility: {
+        ...state.accessibility,
+        [key]: value,
+      },
+    })),
+
+  markScoreBreakdownViewed: () =>
+    set((state) => ({
+      runTelemetry: {
+        ...state.runTelemetry,
+        scoreBreakdownViewed: true,
+      },
+    })),
+
   resetRunState: () =>
     set({
       ...RUN_STATE_RESET,
+      runTelemetry: TELEMETRY_RESET,
     }),
 
   resetGame: () =>
@@ -151,6 +194,8 @@ export const useGameStore = create<GameStore>((set) => ({
       gamePhase: 'start',
       selectedScenario: null,
       crosshairPosition: { x: 0.5, y: 0.5 },
+      accessibility: DEFAULT_ACCESSIBILITY,
+      runTelemetry: TELEMETRY_RESET,
       ...RUN_STATE_RESET,
     }),
 }));

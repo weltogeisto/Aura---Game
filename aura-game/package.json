@@ -1,7 +1,7 @@
 {
   "name": "aura-game",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0-beta.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -17,14 +17,16 @@
     "typecheck": "tsc -p tsconfig.core.json --noEmit",
     "test:core": "node --test --experimental-strip-types --import ./tests/register-loader.mjs tests/runState.test.ts tests/store-shot-resolution.test.ts tests/scenario-contract.test.ts",
     "scenarios:check": "node --experimental-strip-types scripts/check-scenario-integrity.mjs",
-    "ci:fast": "pnpm run lint && pnpm run typecheck && pnpm run test:core && pnpm run build && pnpm run scenarios:check && pnpm run docs:check:desktop-release-scripts",
-    "ci:full": "pnpm run lint && pnpm run typecheck && pnpm test && pnpm run build && pnpm run assets:check && pnpm run scenarios:check && pnpm run docs:check:desktop-release-scripts",
+    "ci:fast": "pnpm run lint && pnpm run typecheck && pnpm run test:core && pnpm run build:canonical && pnpm run release:artifacts:validate && pnpm run scenarios:check && pnpm run docs:check:desktop-release-scripts",
+    "ci:full": "pnpm run lint && pnpm run typecheck && pnpm test && pnpm run build:canonical && pnpm run release:artifacts:validate && pnpm run assets:check && pnpm run scenarios:check && pnpm run docs:check:desktop-release-scripts",
     "desktop:bundle:beta": "pnpm run assets:check && pnpm tauri build",
     "desktop:bundle:beta:linux": "pnpm run assets:check && pnpm tauri build --target x86_64-unknown-linux-gnu",
     "desktop:bundle:beta:windows": "pnpm run assets:check && pnpm tauri build --target x86_64-pc-windows-msvc",
     "desktop:bundle:beta:macos": "pnpm run assets:check && pnpm tauri build --target universal-apple-darwin",
     "smoke:packaged": "node scripts/smoke-packaged-mode.mjs",
-    "docs:check:desktop-release-scripts": "node scripts/check-desktop-release-scripts.mjs"
+    "docs:check:desktop-release-scripts": "node scripts/check-desktop-release-scripts.mjs",
+    "release:tag:check": "node scripts/check-release-tag.mjs",
+    "release:artifacts:validate": "node scripts/validate-release-artifacts.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -41,7 +43,6 @@
     "zustand": "^5.0.10"
   },
   "devDependencies": {
-    "@parcel/config-default": "^2.16.1",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tauri-apps/cli": "^1.6.3",
@@ -56,8 +57,6 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "html-inline": "^1.2.0",
-    "parcel": "^2.16.1",
-    "parcel-resolver-tspaths": "^0.3.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",

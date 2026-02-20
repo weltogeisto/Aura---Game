@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { SCENARIOS } from '../src/data/scenarios.ts';
+import { SCENARIO_SEEDS } from '../src/data/scenarios/registry.ts';
 
 const scenarioEntries = Object.entries(SCENARIOS);
 
@@ -28,4 +29,11 @@ test('scenario contract: required scoring and critic fields are present', () => 
     assert.ok((scenario.criticLines?.mid.length ?? 0) > 0, `${id} criticLines.mid must not be empty`);
     assert.ok((scenario.criticLines?.high.length ?? 0) > 0, `${id} criticLines.high must not be empty`);
   }
+});
+
+test('scenario contract: registry seeds stay in sync with built scenario map', () => {
+  const seedIds = SCENARIO_SEEDS.map((seed) => seed.id).sort();
+  const mapIds = Object.keys(SCENARIOS).sort();
+
+  assert.deepEqual(seedIds, mapIds, 'SCENARIO_SEEDS and SCENARIOS must expose same IDs');
 });

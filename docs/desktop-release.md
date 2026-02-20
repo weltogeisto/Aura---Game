@@ -2,6 +2,18 @@
 
 This guide documents the **beta desktop release flow** (Tauri wrapper + canonical web artifacts).
 
+## Versioning & Release Tag Convention
+
+- `aura-game/package.json` is the canonical product version (`MAJOR.MINOR.PATCH[-channel.N]`), currently `0.2.0-beta.1`.
+- Every release must be tagged as `v${package.json version}` (example: `v0.2.0-beta.1`).
+- Allowed prerelease channels: `alpha`, `beta`, `rc`.
+
+From `aura-game/`:
+
+```bash
+pnpm run release:tag:check v0.2.0-beta.1
+```
+
 ## Canonical Build Input (single source of truth)
 
 From `aura-game/`:
@@ -14,10 +26,11 @@ This must produce and stage:
 
 - `release/web/current/dist` (authoritative output from Vite build)
 - `release/web/current/bundle.html` (optional artifact generated from that Vite output)
+- `release/web/current/checksums.sha256` (SHA-256 for all staged release files)
 
 Tauri is configured to load only `release/web/current/dist`, so packaging always follows canonical web output.
 
-Canonical build tooling (Parcel + html-inline) is declared in `aura-game/package.json` and must be installed before build execution. Build scripts do not install or modify dependencies at runtime, so canonical packaging is reproducible offline after install.
+Canonical build tooling (`html-inline`) is declared in `aura-game/package.json` and must be installed before build execution. Build scripts do not install or modify dependencies at runtime, so canonical packaging is reproducible offline after install.
 
 ## Beta Packaging Commands
 
@@ -41,6 +54,20 @@ pnpm run desktop:bundle:beta:macos
 
 All bundle commands run `assets:check` first to keep offline assets as a hard gate before packaging.
 
+
+## Asset Budget (Desktop Beta)
+
+Hard budget for ship-ready offline bundles:
+
+- **Panorama resolution**: one equirectangular source per scenario, target `4096x2048` (fallback `2048x1024` only for low-tier machines).
+- **Panorama compression**: prefer `webp` (quality 80-88) for photo assets; `svg` only for stylized/vector panoramas.
+- **Panorama size budget**: `<= 1.8 MB` per scenario (`<= 16 MB` for all active scenarios combined in package).
+- **Ambient audio**: loop stems in `wav` during production; release as `ogg`/`mp3` where artifact quality is acceptable. Current beta uses offline-embedded ambient clips (no binary asset files in repo).
+- **Audio size budget**: ambient `<= 450 KB` per loop, impact/UI `<= 120 KB` per file, total audio payload `<= 8 MB`.
+- **Load-time budget**: first playable frame in packaged desktop build should stay under **2.5s** on baseline target hardware (cold start), with all scenario references resolved locally.
+
+If a new asset exceeds budget, either downscale/recompress it or explicitly document why the exception is accepted for the release.
+
 ## Smoke Checklist (packaged mode)
 
 After canonical build (and ideally after bundle generation), run:
@@ -53,11 +80,25 @@ pnpm run smoke:packaged
 The smoke script verifies:
 
 1. App boot entry (`index.html` + compiled script)
-2. Scene-load entry phase is present (`scenario-select`)
-3. Shot-flow phases are present (`aiming`, `shooting`)
+2. Critical user path states are compiled (`scenario-select` → `aiming` → `shooting` → `results`)
+3. Critical shot CTA copy is bundled
 4. Missing-asset guard string is compiled (`Asset path must resolve offline`)
-5. Compiled static assets directory exists
+5. Referenced static assets resolve and assets directory is non-empty
 
+## Release Artifact Validation (CI Gate)
+
+From `aura-game/`:
+
+```bash
+pnpm run release:artifacts:validate
+```
+
+Validation checks:
+
+- expected release structure under `release/web/current`
+- `index.html` refs resolve to real staged files
+- checksum manifest (`checksums.sha256`) matches staged artifact contents
+- key phase strings exist in the production JS bundle
 
 ## Docs ↔ package.json Consistency Check
 
@@ -92,27 +133,29 @@ Record pass/fail plus issue links in the RC note before promotion.
 
 ## Signing Placeholders
 
-> Fill these before public distribution.
+### Required GitHub Secrets
 
-### macOS
+- `APPLE_CERTIFICATE_P12_BASE64` (Developer ID Application cert in base64)
+- `APPLE_CERTIFICATE_PASSWORD`
+- `APPLE_SIGNING_IDENTITY` (example: `Developer ID Application: Team Name (TEAMID)`)
+- `APPLE_TEAM_ID`
+- `APPLE_ID`
+- `APPLE_APP_SPECIFIC_PASSWORD`
+- `KEYCHAIN_PASSWORD` (temporary CI keychain password)
 
-- [ ] `APPLE_TEAM_ID=...`
-- [ ] `APPLE_ID=...`
-- [ ] `APPLE_APP_SPECIFIC_PASSWORD=...`
-- [ ] `APPLE_SIGNING_IDENTITY=Developer ID Application: ...`
-- [ ] Notarization pipeline wired in CI
+### Required GitHub Variables
 
-### Windows
+- `APPLE_SIGNING_ENABLED=true`
 
-- [ ] `WINDOWS_CERTIFICATE_THUMBPRINT=...`
-- [ ] `WINDOWS_CERTIFICATE_PATH=...`
-- [ ] `WINDOWS_CERTIFICATE_PASSWORD=...`
-- [ ] Timestamp server configured
+### Pipeline Behavior
 
-### Linux (optional for beta)
+On tags matching `v*`:
 
-- [ ] Package signing key configured (if distributing signed packages)
-- [ ] Repository metadata signing process defined
+1. tag/version consistency is validated (`pnpm run release:tag:check`)
+2. canonical artifacts are built and validated
+3. macOS keychain + certificate import runs in CI
+4. Tauri build runs for `universal-apple-darwin` with signing + notarization env vars
+5. generated DMG/app bundles are uploaded as workflow artifacts
 
 ## Offline Runtime Policy
 

@@ -24,6 +24,17 @@ const baseState: GameState = {
   totalScore: 0,
   criticOutput: null,
   shotLocked: false,
+  accessibility: {
+    reducedMotion: false,
+    highContrast: false,
+    aimAssist: false,
+  },
+  runTelemetry: {
+    runStartedAt: null,
+    firstShotAt: null,
+    scoreBreakdownViewed: false,
+    replayUsed: false,
+  },
 };
 
 const mockFeedback: ShotFeedback = {

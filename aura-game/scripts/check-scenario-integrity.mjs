@@ -3,11 +3,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { SCENARIOS } from '../src/data/scenarios.ts';
+import { SCENARIO_SEEDS } from '../src/data/scenarios/registry.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
 const scenarioDataDir = path.join(projectRoot, 'src', 'data');
+const scenarioModulesDir = path.join(scenarioDataDir, 'scenarios');
 
 const MIN_CRITIC_POOL_SIZE = 1;
 const FORBIDDEN_PLACEHOLDER_PATTERN = /(todo|tbd|placeholder|lorem ipsum|coming soon|fixme)/i;
@@ -35,8 +37,18 @@ const scenarioIds = new Set();
 const isNonEmptyString = (value) => typeof value === 'string' && value.trim().length > 0;
 
 for (const [key, scenario] of Object.entries(SCENARIOS)) {
+  const maturity = SCENARIO_MATURITY_MATRIX[key];
+  if (!maturity) {
+    findings.push(`Scenario "${key}" is missing a maturity matrix entry.`);
+    continue;
+  }
+
   if (scenario.id !== key) {
     findings.push(`Scenario key "${key}" does not match scenario.id "${scenario.id}".`);
+  }
+
+  if (scenario.metadata.status !== maturity.status) {
+    findings.push(`Scenario "${key}" metadata.status (${scenario.metadata.status}) must match maturity matrix (${maturity.status}).`);
   }
 
   if (scenarioIds.has(scenario.id)) {
@@ -111,6 +123,55 @@ for (const [key, scenario] of Object.entries(SCENARIOS)) {
     ) {
       findings.push(`Scenario "${scenario.id}" has non-offline panorama asset (${variant}): ${assetPath}`);
     }
+  }
+
+  if (scenario.metadata.status === 'playable') {
+    const completeness = Object.values(scenario.metadata.contentCompleteness).every(Boolean);
+    if (!completeness) {
+      findings.push(`Scenario "${key}" is playable but content completeness gates are not all true.`);
+    }
+
+    const incompleteGates = Object.entries(maturity.exitCriteria)
+      .filter(([, criterion]) => !criterion.done)
+      .map(([criterionName]) => criterionName);
+    if (incompleteGates.length > 0) {
+      findings.push(`Scenario "${key}" is playable but has open exit criteria: ${incompleteGates.join(', ')}.`);
+    }
+  }
+}
+
+const waveOne = SCENARIO_ROLLOUT_WAVES[1] ?? [];
+if (waveOne.length !== 3 || !waveOne.includes('louvre')) {
+  findings.push('Rollout wave 1 must include exactly three scenarios and contain "louvre".');
+}
+
+const registryIds = new Set(SCENARIO_SEEDS.map((seed) => seed.id));
+if (registryIds.size !== SCENARIO_SEEDS.length) {
+  findings.push('Scenario registry contains duplicate IDs in SCENARIO_SEEDS.');
+}
+
+for (const scenarioId of registryIds) {
+  if (!SCENARIOS[scenarioId]) {
+    findings.push(`Scenario registry ID "${scenarioId}" is missing in SCENARIOS map.`);
+  }
+}
+
+const scenarioModuleFiles = await readdir(scenarioModulesDir, { withFileTypes: true });
+const moduleIds = scenarioModuleFiles
+  .filter((entry) => entry.isFile() && entry.name.endsWith('.ts'))
+  .map((entry) => entry.name)
+  .filter((fileName) => !['registry.ts', 'utils.ts', 'validation.ts'].includes(fileName))
+  .map((fileName) => fileName.replace(/\.ts$/, ''));
+
+for (const moduleId of moduleIds) {
+  if (!registryIds.has(moduleId)) {
+    findings.push(`Scenario module "${moduleId}.ts" exists but is not listed in SCENARIO_SEEDS.`);
+  }
+}
+
+for (const scenarioId of registryIds) {
+  if (!moduleIds.includes(scenarioId)) {
+    findings.push(`Scenario ID "${scenarioId}" is listed in SCENARIO_SEEDS but module file is missing.`);
   }
 }
 
