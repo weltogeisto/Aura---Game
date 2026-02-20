@@ -14,6 +14,10 @@ const TEXT_EXTENSIONS = new Set([
   '.html', '.css', '.js', '.mjs', '.cjs', '.ts', '.tsx', '.json', '.svg', '.txt', '.md', '.yaml', '.yml'
 ]);
 
+const OFFLINE_PREFIXES = ['/', './', '../', 'data:'];
+const PANORAMA_EXTENSIONS = new Set(['.webp', '.png', '.jpg', '.jpeg', '.svg']);
+const AUDIO_EXTENSIONS = new Set(['.wav', '.ogg', '.mp3']);
+
 const isTextLikeFile = (filePath) => TEXT_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 
 const isUnexpectedRemoteUrl = (value) => {
@@ -51,7 +55,33 @@ for (const scenarioFile of scenarioFiles) {
   if (scenarioRemoteUrls.length > 0) {
     findings.push({
       file: path.relative(projectRoot, scenarioFile),
-      urls: scenarioRemoteUrls,
+      errors: scenarioRemoteUrls.map((url) => `Unexpected remote URL: ${url}`),
+    });
+  }
+
+  const assetMatches = [...content.matchAll(/['"]((?:\/|\.\.\/|\.\/)[^'"]+)['"]/g)].map((match) => match[1]);
+  const localAssets = assetMatches.filter((asset) => asset.includes('/assets/'));
+
+  const assetErrors = [];
+  for (const assetPath of localAssets) {
+    if (!OFFLINE_PREFIXES.some((prefix) => assetPath.startsWith(prefix))) {
+      assetErrors.push(`Asset path is not offline-compatible: ${assetPath}`);
+    }
+
+    const extension = path.extname(assetPath).toLowerCase();
+    if (assetPath.includes('/panoramas/') && !PANORAMA_EXTENSIONS.has(extension)) {
+      assetErrors.push(`Panorama extension not allowed (${extension || 'none'}): ${assetPath}`);
+    }
+
+    if (assetPath.includes('/audio/') && !AUDIO_EXTENSIONS.has(extension)) {
+      assetErrors.push(`Audio extension not allowed (${extension || 'none'}): ${assetPath}`);
+    }
+  }
+
+  if (assetErrors.length > 0) {
+    findings.push({
+      file: path.relative(projectRoot, scenarioFile),
+      errors: assetErrors,
     });
   }
 }
@@ -68,7 +98,7 @@ for (const publicFile of await walkFiles(publicDir)) {
     if (remoteUrls.length > 0) {
       findings.push({
         file: path.relative(projectRoot, publicFile),
-        urls: remoteUrls,
+        errors: remoteUrls.map((url) => `Unexpected remote URL: ${url}`),
       });
     }
   } catch {
@@ -77,11 +107,11 @@ for (const publicFile of await walkFiles(publicDir)) {
 }
 
 if (findings.length > 0) {
-  console.error('❌ Offline asset audit failed. Unexpected remote URLs found:');
+  console.error('❌ Offline asset audit failed. Unexpected or non-offline-safe assets found:');
   for (const finding of findings) {
     console.error(`- ${finding.file}`);
-    for (const url of finding.urls) {
-      console.error(`  • ${url}`);
+    for (const error of finding.errors) {
+      console.error(`  • ${error}`);
     }
   }
   process.exit(1);
@@ -91,4 +121,4 @@ if (skippedBinary.length > 0) {
   console.log(`ℹ️ Offline asset audit skipped ${skippedBinary.length} non-text public assets.`);
 }
 
-console.log('✅ Offline asset audit passed (scenario data + text public assets have no runtime remote fetch URLs).');
+console.log('✅ Offline asset audit passed (scenario data + text public assets are offline-safe, incl. audio/panorama asset rules).');

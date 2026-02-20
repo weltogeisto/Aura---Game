@@ -6,6 +6,7 @@ import { ResultsScreen } from '@/components/ui/ResultsScreen';
 import { Scene } from '@/components/game/Scene';
 import { HUD } from '@/components/game/HUD';
 import { ShotEffects } from '@/components/game/ShotEffects';
+import { GameAudioDirector } from '@/components/game/GameAudioDirector';
 import { StartView } from '@/components/ui/StartView';
 import { hasResult } from '@/stores/gameSelectors';
 

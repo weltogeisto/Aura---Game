@@ -1,5 +1,5 @@
 import { getScenariosList } from '@/data/scenarios';
-import { isScenarioPlayable, sortScenariosByStatus } from './scenarioSelectModel';
+import { getScenarioStatusMessage, isScenarioPlayable, sortScenariosByStatus } from './scenarioSelectModel';
 import { useGameStore } from '@/stores/gameStore';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
 import type { ScenarioStatus } from '@/types';

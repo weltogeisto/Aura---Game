@@ -33,7 +33,7 @@ This is the release entrypoint aligned with `WEB_BUILD.md` and `DESKTOP_BETA_PLA
 - **Frontend:** React 19 + TypeScript + Vite
 - **3D Runtime:** Three.js via `@react-three/fiber` and `@react-three/drei`
 - **State:** Zustand (`src/stores/gameStore.ts`) for game phase, shot lock, score, critic output
-- **Data-driven scenarios:** `src/data/scenarios.ts` (targets, value maps, critic lines, MVP gating)
+- **Data-driven scenarios:** `src/data/scenarios.ts` builds runtime scenarios from modular seeds in `src/data/scenarios/*.ts` via `src/data/scenarios/registry.ts`
 - **Copy system:**
   - `src/data/uiCopyMap.ts` for centralized screen copy, CTA labels, hints, score/critic framing, and beta limitation language
   - `src/data/copy.ts` for normalized scenario text and gameplay microcopy export
@@ -52,3 +52,14 @@ This is the release entrypoint aligned with `WEB_BUILD.md` and `DESKTOP_BETA_PLA
 - One shot is hard-locked per run (no in-run reload).
 - Scenario maturity is uneven (Louvre polished first, other rooms still iterating).
 - Performance tiers may auto-step down visual fidelity to preserve responsive input under sustained FPS pressure.
+
+
+## Scenario Content Workflow (verbindlich)
+
+1. **Neues Szenario immer als Modul anlegen:** `src/data/scenarios/<scenario-id>.ts` (Dateiname = `scenario.id`).
+2. **Registry aktualisieren:** Modul in `src/data/scenarios/registry.ts` importieren und in `SCENARIO_SEEDS` eintragen.
+3. **Nicht in `src/data/scenarios.ts` editieren:** Diese Datei ist nur die Runtime-Aggregation (`SCENARIO_SEEDS -> SCENARIOS`).
+4. **Konsistenz-Guard ausführen:** `pnpm run scenarios:check` erkennt Drift zwischen Moduldateien, Registry und Laufzeit-Map.
+5. **Vor Merge mindestens Core-Checks:** `pnpm run test:core` und `pnpm run scenarios:check`.
+
+Damit bleibt die Szenario-Pipeline eindeutig: **Quelle = Moduldatei**, **Freigabe = Registry**, **Verwendung = SCENARIOS**.

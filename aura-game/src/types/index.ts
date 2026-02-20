@@ -51,6 +51,11 @@ export interface Scenario {
     mediumRes?: string;
     highRes: string;
   };
+  audioAsset?: {
+    ambient: string;
+    ambientGain?: number;
+    impactProfile?: 'stone' | 'metal' | 'glass' | 'wood' | 'fabric';
+  };
   colorGrading?: {
     lutAsset?: string;
     tint?: string;
