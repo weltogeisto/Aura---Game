@@ -41,3 +41,12 @@ test('scenario interactivity is strictly status-driven', () => {
     assert.equal(isScenarioPlayable(scenario), scenario.metadata.status === 'playable');
   });
 });
+
+test('scenario select lock coverage includes prototype and locked entries', () => {
+  const scenarios = getScenariosList();
+  const nonPlayable = scenarios.filter((scenario) => !isScenarioPlayable(scenario));
+
+  assert.equal(nonPlayable.length > 0, true);
+  assert.equal(nonPlayable.some((scenario) => scenario.metadata.status === 'prototype'), true);
+  assert.equal(nonPlayable.some((scenario) => scenario.metadata.status === 'locked'), true);
+});

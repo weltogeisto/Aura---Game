@@ -57,10 +57,19 @@ export const useGameStore = create<GameStore>((set) => ({
     set({ crosshairPosition: { x, y } }),
 
   startRun: (scenario: Scenario) =>
-    set({
-      selectedScenario: scenario,
-      gamePhase: 'aiming',
-      ...RUN_STATE_RESET,
+    set((state) => {
+      if (scenario.metadata.status !== 'playable') {
+        return {
+          ...state,
+          fireBlocked: true,
+        };
+      }
+
+      return {
+        selectedScenario: scenario,
+        gamePhase: 'aiming',
+        ...RUN_STATE_RESET,
+      };
     }),
 
   enterAiming: () =>

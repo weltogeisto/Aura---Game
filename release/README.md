@@ -24,3 +24,7 @@ Expected contents:
 Tauri is configured to bundle the app from `release/web/current/dist` so desktop packaging always follows the canonical web build flow.
 
 See `docs/desktop-release.md` for platform-specific packaging commands, signing placeholders, and packaged-mode smoke checks.
+
+## Release branch gate
+
+For `release/*` branches, `pnpm run ci:full` is a hard gate for both merge and release promotion. If it fails, the branch is not releasable.

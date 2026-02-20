@@ -47,6 +47,24 @@ test('store + shot resolution: critic line is deterministic for same payload', (
   assert.equal(a, b);
 });
 
+test('store + shot resolution: deterministic critic selection stays stable for repeated seeds', () => {
+  const scenario = SCENARIOS.louvre;
+
+  const pickCriticBySeed = (seed: number) => {
+    const target = scenario.targets[seed % scenario.targets.length];
+    const score = 20 + (seed % 70);
+    const label = `${scenario.name} — ${target.name} (Seed ${seed})`;
+    return deterministicCriticLine(scenario, score, target.id, target.type, label);
+  };
+
+  const seedSequence = [11, 42, 1337, 4242, 9001];
+  const firstPass = seedSequence.map((seed) => pickCriticBySeed(seed));
+  const secondPass = seedSequence.map((seed) => pickCriticBySeed(seed));
+
+  assert.deepEqual(firstPass, secondPass);
+});
+
+
 test('store + shot resolution: special effects and critic output propagate into run state', () => {
   resetStore();
   const scenario = SCENARIOS.louvre;
