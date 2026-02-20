@@ -8,7 +8,6 @@ import type { BallisticsConfig } from '@/lib/ballistics/trajectory';
 import { resolveShotScore } from '@/lib/scoring/shotScoring';
 import { resolveShotCommitPayload } from '@/lib/ballistics/shotFeedback';
 
-
 const DEFAULT_BALLISTICS: BallisticsConfig = {
   seed: 0,
   swayRadians: 0.003,
@@ -18,6 +17,8 @@ const DEFAULT_BALLISTICS: BallisticsConfig = {
   timeStep: 0.001,
   maxInteractions: 6,
 };
+
+const AIM_ASSIST_RADIUS_PX = 72;
 
 function hashSeed(input: string): number {
   let hash = 0x811c9dc5;
@@ -60,12 +61,43 @@ function collectSimulationObjects(
   return objects;
 }
 
+function resolveAimAssistCrosshair(
+  scenario: Scenario,
+  camera: THREE.Camera,
+  crosshair: { x: number; y: number }
+): { x: number; y: number } {
+  const centerX = crosshair.x * window.innerWidth;
+  const centerY = crosshair.y * window.innerHeight;
+
+  let best: { x: number; y: number; distance: number } | null = null;
+  const projected = new THREE.Vector3();
+
+  for (const target of scenario.targets) {
+    projected.set(target.position[0], target.position[1], target.position[2]).project(camera);
+    if (projected.z < -1 || projected.z > 1) continue;
+
+    const screenX = (projected.x * 0.5 + 0.5) * window.innerWidth;
+    const screenY = (-projected.y * 0.5 + 0.5) * window.innerHeight;
+    const dx = screenX - centerX;
+    const dy = screenY - centerY;
+    const distance = Math.hypot(dx, dy);
+    if (distance > AIM_ASSIST_RADIUS_PX) continue;
+
+    if (!best || distance < best.distance) {
+      best = { x: screenX / window.innerWidth, y: screenY / window.innerHeight, distance };
+    }
+  }
+
+  return best ? { x: best.x, y: best.y } : crosshair;
+}
+
 export function BallisticsSystem() {
   const { scene, camera } = useThree();
   const gamePhase = useGameStore((state) => state.gamePhase);
   const selectedScenario = useGameStore((state) => state.selectedScenario);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
   const shotLocked = useGameStore((state) => state.shotLocked);
+  const aimAssist = useGameStore((state) => state.accessibility.aimAssist);
   const commitShot = useGameStore((state) => state.commitShot);
   const finalizeResults = useGameStore((state) => state.finalizeResults);
   const timeoutRef = useRef<number | null>(null);
@@ -76,9 +108,13 @@ export function BallisticsSystem() {
     const handleClick = () => {
       if (!scene || !camera || !selectedScenario || shotLocked) return;
 
-      const ballisticsSeed = hashSeed(`${selectedScenario.id}|${crosshairPosition.x.toFixed(4)}|${crosshairPosition.y.toFixed(4)}`);
+      const effectiveCrosshair = aimAssist
+        ? resolveAimAssistCrosshair(selectedScenario, camera, crosshairPosition)
+        : crosshairPosition;
+
+      const ballisticsSeed = hashSeed(`${selectedScenario.id}|${effectiveCrosshair.x.toFixed(4)}|${effectiveCrosshair.y.toFixed(4)}`);
       const simulationObjects = collectSimulationObjects(scene, selectedScenario);
-      const simulation = simulateShot(camera, crosshairPosition, simulationObjects, {
+      const simulation = simulateShot(camera, effectiveCrosshair, simulationObjects, {
         ...DEFAULT_BALLISTICS,
         seed: ballisticsSeed,
       });
@@ -92,13 +128,12 @@ export function BallisticsSystem() {
         simulation,
         scoreResolution,
         hitTargetData,
-        crosshairPosition,
+        crosshairPosition: effectiveCrosshair,
         ballisticsSeed,
         firedAt: Date.now(),
       });
 
       commitShot(result, feedback);
-
       timeoutRef.current = window.setTimeout(() => finalizeResults(), 700);
     };
 
@@ -116,6 +151,7 @@ export function BallisticsSystem() {
     scene,
     camera,
     shotLocked,
+    aimAssist,
     commitShot,
     finalizeResults,
   ]);

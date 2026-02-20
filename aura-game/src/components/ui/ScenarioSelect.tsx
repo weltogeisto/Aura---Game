@@ -40,35 +40,38 @@ export function ScenarioSelect() {
         </h1>
         <p className="mt-3 text-sm text-gray-300">{UI_COPY_MAP.hints.scenarioPickerHint}</p>
 
-        <div className="mt-8 grid grid-cols-1 gap-4">
+        <div className="mt-6 space-y-3">
           {scenarios.map((scenario) => {
+            const playable = isScenarioPlayable(scenario);
+            const locked = scenario.metadata.status === 'locked';
             const { location, detail } = parseLocation(scenario.description);
-            const playable = scenario.metadata.status === 'playable';
-            const statusMessage = getScenarioStatusMessage(scenario);
+            const statusExplain = scenario.metadata.status === 'locked'
+              ? UI_COPY_MAP.scenarioSelect.statusLocked
+              : scenario.metadata.status === 'prototype'
+                ? UI_COPY_MAP.scenarioSelect.statusPrototype
+                : UI_COPY_MAP.scenarioSelect.statusPlayable;
 
             return (
               <button
                 key={scenario.id}
                 onClick={() => handleSelectScenario(scenario.id)}
-                disabled={!isScenarioPlayable(scenario)}
-                className="rounded-xl border border-white/10 bg-gray-900 p-5 text-left transition enabled:hover:border-orange-400/50 enabled:hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-55"
+                disabled={!playable}
+                className={`w-full rounded-xl border p-4 text-left transition ${playable
+                  ? 'border-orange-500/40 bg-orange-900/10 hover:border-orange-400 hover:bg-orange-900/20'
+                  : 'cursor-not-allowed border-white/10 bg-gray-900/30 opacity-75'}`}
               >
-                <div className="flex items-center justify-between gap-3">
-                  <p className="text-xs uppercase tracking-[0.2em] text-orange-300/90">{location}</p>
-                  <p className="text-xs uppercase tracking-[0.15em] text-gray-400">
-                    {isScenarioPlayable(scenario) ? UI_COPY_MAP.scenarioSelect.availableNowLabel : UI_COPY_MAP.scenarioSelect.availableSoonLabel}
-                  </p>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <h2 className="text-xl font-semibold text-white">{scenario.name}</h2>
+                    <p className="mt-1 text-sm text-gray-300">{location}</p>
+                  </div>
+                  <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] ${playable ? 'bg-orange-500/20 text-orange-200' : 'bg-gray-700/50 text-gray-300'}`}>
+                    {STATUS_LABELS[scenario.metadata.status]}
+                  </span>
                 </div>
-                <h3 className="mt-2 text-xl font-semibold text-white">{scenario.name}</h3>
+
                 <p className="mt-2 text-sm leading-relaxed text-gray-400">{detail}</p>
-                <p className="mt-3 text-xs text-orange-200/85">
-                  {STATUS_LABELS[scenario.metadata.status]} · {statusMessage}
-                </p>
-                {!playable && (
-                  <p className="mt-2 text-xs text-gray-400">
-                    This scenario is visible for roadmap transparency and will unlock once all release gates pass.
-                  </p>
-                )}
+                <p className="mt-2 text-xs text-orange-200/80">{statusExplain}</p>
               </button>
             );
           })}

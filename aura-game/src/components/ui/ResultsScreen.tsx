@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 import { canReplay, hasResult } from '@/stores/gameSelectors';
 import { formatCurrency } from '@/lib/utils';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
+import { UX_GOALS } from '@/data/uxGoals';
 
 export function ResultsScreen() {
   const selectedScenario = useGameStore((state) => state.selectedScenario);
@@ -13,10 +15,24 @@ export function ResultsScreen() {
   const setGamePhase = useGameStore((state) => state.setGamePhase);
   const resetGame = useGameStore((state) => state.resetGame);
   const replayAllowed = useGameStore(canReplay);
+  const shotFeedback = useGameStore((state) => state.shotFeedback);
+  const runTelemetry = useGameStore((state) => state.runTelemetry);
+  const markScoreBreakdownViewed = useGameStore((state) => state.markScoreBreakdownViewed);
+
+  useEffect(() => {
+    markScoreBreakdownViewed();
+  }, [markScoreBreakdownViewed]);
 
   if (!useGameStore(hasResult) || !lastShotResult) return null;
 
   const isDadaistHit = lastShotResult.hitTargetType === 'easter-egg-dadaist';
+  const sampledValue = shotFeedback?.scoreBreakdown?.sampledValue ?? 0;
+  const zoneMultiplier = shotFeedback?.scoreBreakdown?.zoneMultiplier ?? 1;
+  const criticalModifier = shotFeedback?.scoreBreakdown?.criticalModifier ?? 1;
+  const explainedFinal = Math.round(sampledValue * zoneMultiplier * criticalModifier);
+  const timeToFirstShot = runTelemetry.firstShotAt && runTelemetry.runStartedAt
+    ? runTelemetry.firstShotAt - runTelemetry.runStartedAt
+    : null;
 
   const replayScenario = () => {
     if (!replayAllowed) {
@@ -46,13 +62,35 @@ export function ResultsScreen() {
         </h1>
         <p className="mt-3 text-sm text-gray-300">{UI_COPY_MAP.hints.resultsHint}</p>
 
-        <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="mt-7 rounded-xl border border-orange-500/30 bg-black/30 p-5">
+          <p className="text-xs uppercase tracking-[0.2em] text-orange-200">{UI_COPY_MAP.results.causeEffectHeading}</p>
+          <div className="mt-3 grid gap-2 text-sm md:grid-cols-4">
+            <div className="rounded-lg bg-gray-900/80 p-3">
+              <p className="text-gray-400">Treffer</p>
+              <p className="font-semibold text-white">{sampledValue.toFixed(1)}</p>
+            </div>
+            <div className="rounded-lg bg-gray-900/80 p-3">
+              <p className="text-gray-400">Zone Modifier</p>
+              <p className="font-semibold text-white">x{zoneMultiplier.toFixed(2)}</p>
+            </div>
+            <div className="rounded-lg bg-gray-900/80 p-3">
+              <p className="text-gray-400">Critic Modifier</p>
+              <p className="font-semibold text-white">x{criticalModifier.toFixed(2)}</p>
+            </div>
+            <div className="rounded-lg bg-orange-950/80 p-3">
+              <p className="text-orange-200">Final Score</p>
+              <p className="font-semibold text-orange-300">{formatCurrency(explainedFinal || totalScore)}</p>
+            </div>
+          </div>
+          <p className="mt-2 text-xs text-gray-400">{UI_COPY_MAP.results.scoreFraming}</p>
+        </div>
+
+        <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
           <div className="rounded-xl bg-gray-900 p-4">
             <p className="text-xs uppercase tracking-[0.2em] text-gray-400">{UI_COPY_MAP.results.scoreLabel}</p>
             <p className={`mt-2 text-2xl font-bold ${isDadaistHit ? 'text-fuchsia-400' : 'text-red-500'}`}>
               {formatCurrency(totalScore)}
             </p>
-            <p className="mt-2 text-xs text-gray-400">{UI_COPY_MAP.results.scoreFraming}</p>
           </div>
           <div className="rounded-xl bg-gray-900 p-4 md:col-span-2">
             <p className="text-xs uppercase tracking-[0.2em] text-gray-400">{UI_COPY_MAP.results.impactLabel}</p>
@@ -65,43 +103,19 @@ export function ResultsScreen() {
           <p className="mt-2 text-xl font-semibold text-white">{lastShotResult.hitTargetName || 'No registered target'}</p>
         </div>
 
-        <div className="mt-4 rounded-xl bg-gray-900 p-6">
-          <h2 className="text-lg font-semibold text-white">{UI_COPY_MAP.results.damageHeading}</h2>
-          <div className="mt-3 space-y-3">
-            {lastShotResult.breakdown.length === 0 && (
-              <p className="text-sm text-gray-400">No conventional damage accounting available for this hit.</p>
-            )}
-            {lastShotResult.breakdown.map((item) => (
-              <div key={item.targetId} className="flex items-center justify-between gap-4 text-sm text-gray-300">
-                <span>{item.targetName}</span>
-                <span className="font-semibold text-orange-400">
-                  {formatCurrency(item.damage)} ({item.percentage.toFixed(1)}%)
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <div className="mt-4 rounded-xl border border-orange-500/30 bg-black/40 p-5">
           <p className="text-xs uppercase tracking-[0.2em] text-orange-200">{UI_COPY_MAP.results.criticLabel}</p>
           <p className="mt-2 text-sm italic text-orange-100">“{criticOutput ?? lastShotResult.criticLine}”</p>
         </div>
 
-        {lastShotResult.specialEffects.length > 0 && (
-          <div className="mt-4 rounded-xl border border-blue-500/40 bg-blue-900/20 p-5">
-            <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-300">Triggered effects</h3>
-            <ul className="mt-3 space-y-1 text-sm text-blue-200">
-              {lastShotResult.specialEffects.map((effect, i) => (
-                <li key={i}>• {effect}</li>
-              ))}
-            </ul>
+        {timeToFirstShot !== null && (
+          <div className="mt-4 rounded-xl border border-white/10 bg-black/25 p-4 text-sm text-gray-300">
+            <p>{UI_COPY_MAP.results.metricsLabel}</p>
+            <p className="mt-1">Time-to-first-shot: {(timeToFirstShot / 1000).toFixed(1)}s (goal ≤ {(UX_GOALS.timeToFirstShotMs / 1000).toFixed(0)}s)</p>
+            <p>Score-logic viewed: {runTelemetry.scoreBreakdownViewed ? 'yes' : 'no'} (goal ≥ {(UX_GOALS.scoreLogicComprehensionRate * 100).toFixed(0)}%)</p>
+            <p>Replay intent tracked: {runTelemetry.replayUsed ? 'yes' : 'no'} (goal ≥ {(UX_GOALS.replayRate * 100).toFixed(0)}%)</p>
           </div>
         )}
-
-        <div className="mt-4 rounded-xl border border-white/10 bg-black/25 p-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-orange-200">{UI_COPY_MAP.limitations.heading}</p>
-          <p className="mt-2 text-sm text-gray-300">{UI_COPY_MAP.limitations.items[2]}</p>
-        </div>
 
         <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <button
