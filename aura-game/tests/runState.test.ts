@@ -74,6 +74,17 @@ const baseState: GameState = {
   totalScore: 0,
   criticOutput: null,
   shotLocked: false,
+  accessibility: {
+    reducedMotion: false,
+    highContrast: false,
+    aimAssist: false,
+  },
+  runTelemetry: {
+    runStartedAt: null,
+    firstShotAt: null,
+    scoreBreakdownViewed: false,
+    replayUsed: false,
+  },
 };
 
 function resetStore() {
@@ -96,6 +107,7 @@ test('commitShot only applies once and blocks illegal re-fire while locked', () 
   assert.equal(afterFirstFire.ammoRemaining, 0);
   assert.equal(afterFirstFire.shotTimestamp, 1234);
   assert.equal(afterFirstFire.lastShotResult?.totalDamage, 100);
+  assert.equal(afterFirstFire.runTelemetry.firstShotAt, 1234);
 
   Date.now = () => 4567;
   useGameStore.getState().commitShot(
@@ -160,6 +172,7 @@ test('restartScenario resets run fields and keeps selected scenario for replay',
   assert.equal(state.totalScore, 0);
   assert.equal(state.criticOutput, null);
   assert.equal(state.shotLocked, false);
+  assert.equal(state.runTelemetry.replayUsed, true);
 });
 
 test('selectors stay stable for future hook wrappers', () => {
@@ -182,4 +195,5 @@ test('selectors stay stable for future hook wrappers', () => {
   assert.equal(canFire(resetState), false);
   assert.equal(hasResult(resetState), false);
   assert.equal(canReplay(resetState), false);
+  assert.equal(resetState.accessibility.highContrast, false);
 });

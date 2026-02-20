@@ -5,6 +5,7 @@ import { useGameStore } from '@/stores/gameStore';
 export function CameraShake() {
   const { camera } = useThree();
   const shotFeedback = useGameStore((state) => state.shotFeedback);
+  const reducedMotion = useGameStore((state) => state.accessibility.reducedMotion);
   const baseRotation = useRef({ x: 0, y: 0, z: 0 });
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export function CameraShake() {
   }, [camera]);
 
   useFrame(() => {
-    if (!shotFeedback?.active) {
+    if (reducedMotion || !shotFeedback?.active) {
       camera.rotation.set(
         baseRotation.current.x,
         baseRotation.current.y,

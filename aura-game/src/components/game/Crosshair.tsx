@@ -1,7 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useGameStore } from '@/stores/gameStore';
 
 const FINE_ADJUST_STEP = 0.008;
+const SWAY_X = 0.004;
+const SWAY_Y = 0.006;
+const SWAY_FREQ_HZ = 0.22;
 
 const clamp01 = (value: number) => Math.min(1, Math.max(0, value));
 
@@ -9,14 +12,39 @@ export function Crosshair() {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const crosshairPosition = useGameStore((state) => state.crosshairPosition);
   const setCrosshairPosition = useGameStore((state) => state.setCrosshairPosition);
+  const { reducedMotion, highContrast, aimAssist } = useGameStore((state) => state.accessibility);
+  const [breathOffset, setBreathOffset] = useState({ x: 0, y: 0 });
 
   const style = useMemo(
     () => ({
-      left: `${crosshairPosition.x * window.innerWidth}px`,
-      top: `${crosshairPosition.y * window.innerHeight}px`,
+      left: `${(crosshairPosition.x + breathOffset.x) * window.innerWidth}px`,
+      top: `${(crosshairPosition.y + breathOffset.y) * window.innerHeight}px`,
     }),
-    [crosshairPosition]
+    [crosshairPosition, breathOffset]
   );
+
+  useEffect(() => {
+    if (gamePhase !== 'aiming' || reducedMotion) {
+      setBreathOffset({ x: 0, y: 0 });
+      return;
+    }
+
+    let raf = 0;
+    const start = performance.now();
+
+    const tick = () => {
+      const elapsedSec = (performance.now() - start) / 1000;
+      const phase = elapsedSec * SWAY_FREQ_HZ * Math.PI * 2;
+      const assistDamping = aimAssist ? 0.55 : 1;
+      const offsetX = Math.sin(phase) * SWAY_X * assistDamping;
+      const offsetY = Math.cos(phase * 0.8 + Math.PI / 6) * SWAY_Y * assistDamping;
+      setBreathOffset({ x: offsetX, y: offsetY });
+      raf = window.requestAnimationFrame(tick);
+    };
+
+    raf = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(raf);
+  }, [gamePhase, reducedMotion, aimAssist]);
 
   useEffect(() => {
     if (gamePhase !== 'aiming') {
@@ -57,12 +85,12 @@ export function Crosshair() {
     <div className="fixed z-40 h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform pointer-events-none" style={style}>
       {gamePhase === 'aiming' ? (
         <>
-          <div className="absolute inset-0 rounded-full border-2 border-red-500 opacity-70" />
-          <div className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 transform rounded-full bg-red-500" />
-          <div className="absolute left-1/2 top-0 h-2 w-0.5 -translate-x-1/2 -translate-y-2 transform bg-red-500" />
-          <div className="absolute bottom-0 left-1/2 h-2 w-0.5 -translate-x-1/2 translate-y-2 transform bg-red-500" />
-          <div className="absolute left-0 top-1/2 h-0.5 w-2 -translate-x-2 -translate-y-1/2 transform bg-red-500" />
-          <div className="absolute right-0 top-1/2 h-0.5 w-2 translate-x-2 -translate-y-1/2 transform bg-red-500" />
+          <div className={`absolute inset-0 rounded-full border-2 ${highContrast ? 'border-yellow-200 opacity-100' : 'border-red-500 opacity-70'}`} />
+          <div className={`absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 transform rounded-full ${highContrast ? 'bg-yellow-100' : 'bg-red-500'}`} />
+          <div className={`absolute left-1/2 top-0 h-2 w-0.5 -translate-x-1/2 -translate-y-2 transform ${highContrast ? 'bg-yellow-100' : 'bg-red-500'}`} />
+          <div className={`absolute bottom-0 left-1/2 h-2 w-0.5 -translate-x-1/2 translate-y-2 transform ${highContrast ? 'bg-yellow-100' : 'bg-red-500'}`} />
+          <div className={`absolute left-0 top-1/2 h-0.5 w-2 -translate-x-2 -translate-y-1/2 transform ${highContrast ? 'bg-yellow-100' : 'bg-red-500'}`} />
+          <div className={`absolute right-0 top-1/2 h-0.5 w-2 translate-x-2 -translate-y-1/2 transform ${highContrast ? 'bg-yellow-100' : 'bg-red-500'}`} />
         </>
       ) : (
         <div className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange-300/70 shadow-[0_0_10px_rgba(253,186,116,0.65)]" />

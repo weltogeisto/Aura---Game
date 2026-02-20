@@ -10,6 +10,12 @@ const ensureSentencePunctuation = (value: string): string => {
 
 export const MICROCOPY = UI_COPY_MAP.hints;
 
+export const STATUS_MICROCOPY = {
+  playable: UI_COPY_MAP.scenarioSelect.statusPlayable,
+  prototype: UI_COPY_MAP.scenarioSelect.statusPrototype,
+  locked: UI_COPY_MAP.scenarioSelect.statusLocked,
+} as const;
+
 type ScenarioCopyShape = {
   description: string;
   targets: Scenario['targets'];

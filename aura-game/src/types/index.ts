@@ -125,6 +125,19 @@ export interface ShotFeedback {
   simulationEvents?: ShotSimulationEvent[];
 }
 
+export interface AccessibilityFlags {
+  reducedMotion: boolean;
+  highContrast: boolean;
+  aimAssist: boolean;
+}
+
+export interface RunTelemetry {
+  runStartedAt: number | null;
+  firstShotAt: number | null;
+  scoreBreakdownViewed: boolean;
+  replayUsed: boolean;
+}
+
 export interface GameState {
   gamePhase: GamePhase;
   selectedScenario: Scenario | null;
@@ -139,4 +152,6 @@ export interface GameState {
   totalScore: number;
   criticOutput: string | null;
   shotLocked: boolean;
+  accessibility: AccessibilityFlags;
+  runTelemetry: RunTelemetry;
 }
