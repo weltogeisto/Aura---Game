@@ -85,8 +85,33 @@ export const BORGES_LIBRARY_SCENARIO: ScenarioSeed = {
       },
     ],
   
+  scoring: {
+    fallbackSampleValue: 5,
+    defaultZoneMultiplier: 1.0,
+    defaultCriticalModifier: 1.0,
+    dadaistScore: 1917000001,
+  },
+
+  criticLines: {
+    low: [
+      'The commodity form survives the bullet. It was printed in five billion copies.',
+      'Ideas already loose in the world. The book was the last thing holding them.',
+      'Paper absorbs kinetic energy with characteristic humility.',
+    ],
+    mid: [
+      'The catalog does not update. It never did.',
+      'An argument, interrupted mid-sentence. The sentence continues elsewhere.',
+      'The idea outlives the medium. This was known. It remains known.',
+    ],
+    high: [
+      'Stirner. The book was waiting for someone who understood the gesture.',
+      'A trillion-dollar premise, struck. The argument was never in the binding.',
+      'The library has no outside. The shot has not left.',
+    ],
+  },
+
   metadata: {
     region: 'Impossible Archive',
     difficulty: 'hard',
-    status: 'prototype',
+    status: 'playable',
   },};

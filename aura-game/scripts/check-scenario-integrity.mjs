@@ -2,7 +2,7 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { SCENARIOS } from '../src/data/scenarios.ts';
+import { SCENARIOS, SCENARIO_MATURITY_MATRIX, SCENARIO_ROLLOUT_WAVES } from '../src/data/scenarios.ts';
 import { SCENARIO_SEEDS } from '../src/data/scenarios/registry.ts';
 
 const __filename = fileURLToPath(import.meta.url);

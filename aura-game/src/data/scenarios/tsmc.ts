@@ -95,8 +95,33 @@ export const TSMC_SCENARIO: ScenarioSeed = {
       },
     ],
   
+  scoring: {
+    fallbackSampleValue: 6,
+    defaultZoneMultiplier: 1.0,
+    defaultCriticalModifier: 1.6,
+    dadaistScore: 1917000001,
+  },
+
+  criticLines: {
+    low: [
+      'Glass partition. The particle count shifts. The yield does not recover for weeks.',
+      'Silicon does not forgive contamination. The cascade begins at the molecular level.',
+      'A small disruption. The supply chain will locate the source of its anxiety later.',
+    ],
+    mid: [
+      'The optics are gone. The lead time for replacement: six to eight months.',
+      'Clean room integrity: compromised. Somewhere, a smartphone misses its deadline.',
+      'Precision requires conditions. The conditions are no longer what they were.',
+    ],
+    high: [
+      'The EUV machine. The flattest mirrors on Earth, now redistributed across the floor.',
+      'Thirty billion dollars of production capacity. The bullet cost considerably less.',
+      'The atoms were always tungsten. The confidence was always misplaced.',
+    ],
+  },
+
   metadata: {
     region: 'Taiwan',
     difficulty: 'hard',
-    status: 'prototype',
+    status: 'playable',
   },};

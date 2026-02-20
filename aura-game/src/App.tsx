@@ -26,6 +26,7 @@ function App() {
           <Scene />
           <HUD />
           <ShotEffects />
+          <GameAudioDirector />
         </>
       )}
       {showResults && <ResultsScreen />}

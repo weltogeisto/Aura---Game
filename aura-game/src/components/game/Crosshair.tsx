@@ -15,19 +15,18 @@ export function Crosshair() {
   const { reducedMotion, highContrast, aimAssist } = useGameStore((state) => state.accessibility);
   const [breathOffset, setBreathOffset] = useState({ x: 0, y: 0 });
 
+  // Apply sway only while actively aiming without reduced-motion; zero it out otherwise at render time.
+  const swayActive = gamePhase === 'aiming' && !reducedMotion;
   const style = useMemo(
     () => ({
-      left: `${(crosshairPosition.x + breathOffset.x) * window.innerWidth}px`,
-      top: `${(crosshairPosition.y + breathOffset.y) * window.innerHeight}px`,
+      left: `${(crosshairPosition.x + (swayActive ? breathOffset.x : 0)) * window.innerWidth}px`,
+      top: `${(crosshairPosition.y + (swayActive ? breathOffset.y : 0)) * window.innerHeight}px`,
     }),
-    [crosshairPosition, breathOffset]
+    [crosshairPosition, breathOffset, swayActive]
   );
 
   useEffect(() => {
-    if (gamePhase !== 'aiming' || reducedMotion) {
-      setBreathOffset({ x: 0, y: 0 });
-      return;
-    }
+    if (!swayActive) return;
 
     let raf = 0;
     const start = performance.now();
@@ -44,7 +43,7 @@ export function Crosshair() {
 
     raf = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(raf);
-  }, [gamePhase, reducedMotion, aimAssist]);
+  }, [swayActive, aimAssist]);
 
   useEffect(() => {
     if (gamePhase !== 'aiming') {

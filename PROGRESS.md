@@ -1,5 +1,45 @@
 # Progress
 
+## Milestone 6 — Scenario Promotion & UX Polish
+
+Completed (2026-02-20):
+
+### Build Fixes
+- **scenarios.ts**: Defined and exported `SCENARIO_MATURITY_MATRIX` (`ScenarioMaturityEntry` interface) for all 9 scenarios, fixing `ReferenceError` that crashed module load and caused 11+ TypeScript errors. Added `SCENARIO_ROLLOUT_WAVES` derived export.
+- **check-scenario-integrity.mjs**: Added missing `SCENARIO_MATURITY_MATRIX` and `SCENARIO_ROLLOUT_WAVES` imports.
+- **@types/howler**: Installed as devDependency; removes `TS7016` declaration-file error for Howler.js.
+
+### Scenario Promotion (5 new playable scenarios)
+All five scenarios received: scoring block, three-tier critic line pools (3 lines each), `status: 'playable'` in metadata and maturity matrix. Critic lines follow CRITIC_VOICE.md spec (≤30 words, no exclamation points, world-weary register).
+- **St. Peter's Basilica** — stone/bronze/sacred-atmosphere register
+- **Topkapi Palace** — Ottoman gem/gold-leaf register
+- **TSMC Clean Room** — silicon/precision-optics/yield register
+- **MoMA** — contemporary-art meta-commentary register
+- **Borges Library** — philosophical/text-as-commodity register
+
+### Scenario Status (updated)
+- **Playable (6)**: Louvre, St. Peter's, Topkapi, TSMC, MoMA, Borges Library
+- **Locked (3)**: Hermitage, Forbidden City, Federal Reserve
+
+### Lint Fixes (pre-existing, react-hooks v7 rule `set-state-in-effect`)
+- **useTypewriter.ts**: Replaced synchronous `setVisibleChars` calls inside effect body with a closure-local `counter` variable in `setInterval`; disabled case derived at render time via `effectiveChars`.
+- **Crosshair.tsx**: Replaced synchronous `setBreathOffset({ x: 0, y: 0 })` in early-return branch with `swayActive` boolean derived from `gamePhase`; sway applied conditionally at render time.
+- **ScenarioSelect.tsx**: Removed unused `getScenarioStatusMessage` import and unused `locked` variable.
+- **App.tsx**: Rendered `<GameAudioDirector />` component that was imported but never used (restores audio lifecycle).
+
+### UX Polish
+- **ResultsScreen.tsx**: Wired `useTypewriter` hook for critic output (22ms/char, respects `reducedMotion` accessibility flag). Cursor `|` blinks during reveal, disappears on completion.
+- **uiCopyMap.ts**: Updated all scenario-agnostic UI strings — subtitle, startView title/cta, mainMenu summary, limitations copy — to reflect 6 playable scenarios.
+
+## CI Status
+
+- `pnpm lint` — pass (0 errors)
+- `pnpm typecheck` — pass (0 errors)
+- `pnpm test:core` — pass (13/13 tests)
+- `pnpm build` — pass (tsc + vite build)
+
+---
+
 ## Milestone 5 — Build Stabilization & Full Game Loop
 
 Completed (2026-02-15):
@@ -48,15 +88,12 @@ Completed:
 
 ## What Remains
 
-### Tier 1 — Required for playable release
-- Real panorama assets (currently using procedural SVG gradients)
-- Audio (Howler.js configured, no audio files)
-- Complete critic line pools for 7 prototype scenarios (Louvre is complete)
-- Promote prototype scenarios to playable after content review
+### Tier 1 — Required for public release
+- Real panorama assets for all 6 playable scenarios (currently procedural SVG gradients)
+- Audio files (Howler.js wired, no .ogg/.mp3 assets on disk)
+- Promote remaining 3 locked scenarios (Hermitage, Forbidden City, Federal Reserve): panorama assets + critic lines + content review
 
 ### Tier 2 — Quality and polish
-- Breath sway crosshair animation
-- Typewriter effect for critic reviews
 - Material-specific impact sounds
 - Ambient room audio per scenario
 - Mobile responsive layout

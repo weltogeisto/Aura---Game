@@ -4,6 +4,7 @@ import { canReplay, hasResult } from '@/stores/gameSelectors';
 import { formatCurrency } from '@/lib/utils';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
 import { UX_GOALS } from '@/data/uxGoals';
+import { useTypewriter } from '@/lib/useTypewriter';
 
 export function ResultsScreen() {
   const selectedScenario = useGameStore((state) => state.selectedScenario);
@@ -18,6 +19,11 @@ export function ResultsScreen() {
   const shotFeedback = useGameStore((state) => state.shotFeedback);
   const runTelemetry = useGameStore((state) => state.runTelemetry);
   const markScoreBreakdownViewed = useGameStore((state) => state.markScoreBreakdownViewed);
+  const reducedMotion = useGameStore((state) => state.accessibility.reducedMotion);
+
+  // Hook must be called before any conditional returns.
+  const rawCriticText = criticOutput ?? lastShotResult?.criticLine ?? '';
+  const typedCritic = useTypewriter(rawCriticText, { disabled: reducedMotion, speedMs: 22 });
 
   useEffect(() => {
     markScoreBreakdownViewed();
@@ -105,15 +111,17 @@ export function ResultsScreen() {
 
         <div className="mt-4 rounded-xl border border-orange-500/30 bg-black/40 p-5">
           <p className="text-xs uppercase tracking-[0.2em] text-orange-200">{UI_COPY_MAP.results.criticLabel}</p>
-          <p className="mt-2 text-sm italic text-orange-100">“{criticOutput ?? lastShotResult.criticLine}”</p>
+          <p className="mt-2 text-sm italic text-orange-100">
+            {'"'}{typedCritic.text}{typedCritic.done ? '' : '|'}{'"'}
+          </p>
         </div>
 
         {timeToFirstShot !== null && (
           <div className="mt-4 rounded-xl border border-white/10 bg-black/25 p-4 text-sm text-gray-300">
             <p>{UI_COPY_MAP.results.metricsLabel}</p>
-            <p className="mt-1">Time-to-first-shot: {(timeToFirstShot / 1000).toFixed(1)}s (goal ≤ {(UX_GOALS.timeToFirstShotMs / 1000).toFixed(0)}s)</p>
-            <p>Score-logic viewed: {runTelemetry.scoreBreakdownViewed ? 'yes' : 'no'} (goal ≥ {(UX_GOALS.scoreLogicComprehensionRate * 100).toFixed(0)}%)</p>
-            <p>Replay intent tracked: {runTelemetry.replayUsed ? 'yes' : 'no'} (goal ≥ {(UX_GOALS.replayRate * 100).toFixed(0)}%)</p>
+            <p className="mt-1">Time-to-first-shot: {(timeToFirstShot / 1000).toFixed(1)}s (goal &le; {(UX_GOALS.timeToFirstShotMs / 1000).toFixed(0)}s)</p>
+            <p>Score-logic viewed: {runTelemetry.scoreBreakdownViewed ? 'yes' : 'no'} (goal &ge; {(UX_GOALS.scoreLogicComprehensionRate * 100).toFixed(0)}%)</p>
+            <p>Replay intent tracked: {runTelemetry.replayUsed ? 'yes' : 'no'} (goal &ge; {(UX_GOALS.replayRate * 100).toFixed(0)}%)</p>
           </div>
         )}
 

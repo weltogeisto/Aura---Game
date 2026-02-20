@@ -8,32 +8,33 @@ interface TypewriterOptions {
 export function useTypewriter(text: string, options: TypewriterOptions = {}) {
   const { speedMs = 18, disabled = false } = options;
   const stableText = useMemo(() => text ?? '', [text]);
-  const [visibleChars, setVisibleChars] = useState(disabled ? stableText.length : 0);
+  // Animation progress counter; only mutated inside setInterval callbacks.
+  const [visibleChars, setVisibleChars] = useState(0);
 
   useEffect(() => {
-    if (disabled) {
-      setVisibleChars(stableText.length);
-      return;
-    }
+    // When disabled or there is no text, bail — the effective count is derived at
+    // render time for the disabled case so no synchronous setState is needed.
+    if (disabled || !stableText) return;
 
-    setVisibleChars(0);
-    if (!stableText) return;
-
+    // Track position in a closure-local variable so the first setInterval tick
+    // naturally starts the sequence from 1, avoiding a synchronous setState(0).
+    let counter = 0;
     const interval = window.setInterval(() => {
-      setVisibleChars((current) => {
-        if (current >= stableText.length) {
-          window.clearInterval(interval);
-          return current;
-        }
-        return current + 1;
-      });
+      counter += 1;
+      setVisibleChars(counter);
+      if (counter >= stableText.length) {
+        window.clearInterval(interval);
+      }
     }, speedMs);
 
     return () => window.clearInterval(interval);
   }, [stableText, speedMs, disabled]);
 
+  // When disabled, reveal full text immediately without a synchronous setState.
+  const effectiveChars = disabled ? stableText.length : visibleChars;
+
   return {
-    text: stableText.slice(0, visibleChars),
-    done: visibleChars >= stableText.length,
+    text: stableText.slice(0, effectiveChars),
+    done: effectiveChars >= stableText.length,
   };
 }
