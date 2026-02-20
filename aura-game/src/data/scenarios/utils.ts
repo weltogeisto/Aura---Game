@@ -50,55 +50,25 @@ const ensureOfflineAssetPath = (assetPath: string): string => {
   return assetPath;
 };
 
-const toPanoramaDataUri = (
-  scenarioId: string,
-  palette: { sky: string; wall: string; accent: string },
-  detailLevel: 'low' | 'high'
-): string => {
-  const stripeCount = detailLevel === 'high' ? 40 : 20;
-  const lineCount = detailLevel === 'high' ? 80 : 28;
-
-  const stripes = Array.from({ length: stripeCount }, (_, index) => {
-    const x = (index / stripeCount) * 100;
-    const width = detailLevel === 'high' ? 1.5 : 2.8;
-    const opacity = detailLevel === 'high' ? 0.17 : 0.11;
-    return `<rect x='${x}' y='26' width='${width}' height='54' fill='${palette.accent}' opacity='${opacity}' />`;
-  }).join('');
-
-  const lines = Array.from({ length: lineCount }, (_, index) => {
-    const y = 25 + index * (55 / lineCount);
-    const opacity = detailLevel === 'high' ? 0.07 : 0.045;
-    return `<line x1='0' y1='${y}' x2='100' y2='${y}' stroke='${palette.accent}' stroke-opacity='${opacity}' stroke-width='0.22' />`;
-  }).join('');
-
-  const svg = `
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 50' preserveAspectRatio='none'>
-      <defs>
-        <linearGradient id='g-${scenarioId}' x1='0' y1='0' x2='0' y2='1'>
-          <stop offset='0%' stop-color='${palette.sky}' />
-          <stop offset='55%' stop-color='${palette.wall}' />
-          <stop offset='100%' stop-color='${palette.accent}' />
-        </linearGradient>
-      </defs>
-      <rect width='100' height='50' fill='url(#g-${scenarioId})' />
-      <ellipse cx='50' cy='27' rx='58' ry='20' fill='${palette.wall}' opacity='0.22' />
-      ${stripes}
-      ${lines}
-    </svg>
-  `;
-
-  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
-};
-
 const createScenarioPanoramaAsset = (
   scenarioId: string,
-  palette: { sky: string; wall: string; accent: string; tint: string; tintStrength: number }
+  palette: { tint: string; tintStrength: number }
 ) => ({
-  lowRes: ensureOfflineAssetPath(toPanoramaDataUri(scenarioId, palette, 'low')),
-  mediumRes: ensureOfflineAssetPath(toPanoramaDataUri(scenarioId, palette, 'high')),
-  highRes: ensureOfflineAssetPath(toPanoramaDataUri(scenarioId, palette, 'high')),
+  lowRes: ensureOfflineAssetPath(`/assets/panoramas/${scenarioId}.svg`),
+  mediumRes: ensureOfflineAssetPath(`/assets/panoramas/${scenarioId}.svg`),
+  highRes: ensureOfflineAssetPath(`/assets/panoramas/${scenarioId}.svg`),
   tint: palette.tint,
   tintStrength: palette.tintStrength,
+});
+
+const createScenarioAudioAsset = (
+  ambient: string,
+  impactProfile: 'stone' | 'metal' | 'glass' | 'wood' | 'fabric',
+  ambientGain: number
+) => ({
+  ambient: ensureOfflineAssetPath(ambient),
+  impactProfile,
+  ambientGain,
 });
 
 export const SCENARIO_ENVIRONMENT_ASSETS: Record<
@@ -106,69 +76,54 @@ export const SCENARIO_ENVIRONMENT_ASSETS: Record<
   ReturnType<typeof createScenarioPanoramaAsset>
 > = {
   louvre: createScenarioPanoramaAsset('louvre', {
-    sky: '#f2d8b2',
-    wall: '#c99564',
-    accent: '#825735',
     tint: '#fff4dc',
     tintStrength: 0.22,
   }),
   'st-peters': createScenarioPanoramaAsset('st-peters', {
-    sky: '#efe2cd',
-    wall: '#ceb898',
-    accent: '#8f7a5f',
     tint: '#f6efdf',
     tintStrength: 0.2,
   }),
   topkapi: createScenarioPanoramaAsset('topkapi', {
-    sky: '#5a4332',
-    wall: '#7d5b43',
-    accent: '#2f2117',
     tint: '#f8d29f',
     tintStrength: 0.25,
   }),
   'forbidden-city': createScenarioPanoramaAsset('forbidden-city', {
-    sky: '#cf5757',
-    wall: '#a11c1c',
-    accent: '#560f0f',
     tint: '#ffc8af',
     tintStrength: 0.26,
   }),
   tsmc: createScenarioPanoramaAsset('tsmc', {
-    sky: '#ecedd8',
-    wall: '#bec1b0',
-    accent: '#66798a',
     tint: '#e6fbff',
     tintStrength: 0.16,
   }),
   hermitage: createScenarioPanoramaAsset('hermitage', {
-    sky: '#d3e8f6',
-    wall: '#a9c8de',
-    accent: '#5d778a',
     tint: '#e5f5ff',
     tintStrength: 0.18,
   }),
   'federal-reserve': createScenarioPanoramaAsset('federal-reserve', {
-    sky: '#ddcda0',
-    wall: '#9f8b58',
-    accent: '#584927',
     tint: '#fff7d0',
     tintStrength: 0.22,
   }),
   moma: createScenarioPanoramaAsset('moma', {
-    sky: '#fdfdfd',
-    wall: '#ebebeb',
-    accent: '#919191',
     tint: '#ffffff',
     tintStrength: 0.08,
   }),
   'borges-library': createScenarioPanoramaAsset('borges-library', {
-    sky: '#d8b98f',
-    wall: '#b48a5a',
-    accent: '#513521',
     tint: '#f6d1a1',
     tintStrength: 0.2,
   }),
 };
+
+export const SCENARIO_AUDIO_ASSETS = {
+  louvre: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'glass', 0.2),
+  'st-peters': createScenarioAudioAsset('data:audio/x-aura-ambient,cathedral', 'stone', 0.26),
+  topkapi: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'metal', 0.22),
+  'forbidden-city': createScenarioAudioAsset('data:audio/x-aura-ambient,cathedral', 'wood', 0.2),
+  tsmc: createScenarioAudioAsset('data:audio/x-aura-ambient,industrial', 'metal', 0.18),
+  hermitage: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'stone', 0.21),
+  'federal-reserve': createScenarioAudioAsset('data:audio/x-aura-ambient,vault', 'metal', 0.24),
+  moma: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'glass', 0.18),
+  'borges-library': createScenarioAudioAsset('data:audio/x-aura-ambient,library', 'wood', 0.24),
+} as const;
 
 export const createScenario = (scenario: ScenarioSeed): Scenario => {
   const normalizedScenario = normalizeScenarioCopy(scenario);

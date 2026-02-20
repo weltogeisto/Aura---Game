@@ -1,5 +1,5 @@
 import type { Scenario } from '../types';
-import { createScenario, SCENARIO_ENVIRONMENT_ASSETS } from './scenarios/utils.ts';
+import { createScenario, SCENARIO_AUDIO_ASSETS, SCENARIO_ENVIRONMENT_ASSETS } from './scenarios/utils.ts';
 
 type ExitCriterion = {
   done: boolean;
@@ -147,6 +147,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     isMvp: true,
     metadata: { region: 'Europe', difficulty: 'easy', status: SCENARIO_MATURITY_MATRIX.louvre.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.louvre,
+    audioAsset: SCENARIO_AUDIO_ASSETS['louvre'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.louvre.tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.louvre.tintStrength,
@@ -251,6 +252,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'Vatican City. Sacred architecture where atmosphere outvalues material.',
     metadata: { region: 'Europe', difficulty: 'medium', status: SCENARIO_MATURITY_MATRIX['st-peters'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['st-peters'],
+    audioAsset: SCENARIO_AUDIO_ASSETS['st-peters'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['st-peters'].tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS['st-peters'].tintStrength,
@@ -366,6 +368,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'Istanbul, Turkey. Ottoman opulence where display wars with authenticity.',
     metadata: { region: 'Middle East', difficulty: 'medium', status: SCENARIO_MATURITY_MATRIX.topkapi.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.topkapi,
+    audioAsset: SCENARIO_AUDIO_ASSETS['topkapi'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.topkapi.tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.topkapi.tintStrength,
@@ -481,6 +484,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'Beijing, China. Imperial power and cultural contamination collide.',
     metadata: { region: 'Asia', difficulty: 'hard', status: SCENARIO_MATURITY_MATRIX['forbidden-city'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'],
+    audioAsset: SCENARIO_AUDIO_ASSETS['forbidden-city'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'].tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'].tintStrength,
@@ -575,6 +579,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'Tainan, Taiwan. Technological value balanced on a dust particle.',
     metadata: { region: 'Asia', difficulty: 'hard', status: SCENARIO_MATURITY_MATRIX.tsmc.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.tsmc,
+    audioAsset: SCENARIO_AUDIO_ASSETS['tsmc'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.tsmc.tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.tsmc.tintStrength,
@@ -670,6 +675,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'St. Petersburg, Russia. Mechanical complexity and political economy.',
     metadata: { region: 'Europe', difficulty: 'medium', status: SCENARIO_MATURITY_MATRIX.hermitage.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.hermitage,
+    audioAsset: SCENARIO_AUDIO_ASSETS['hermitage'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.hermitage.tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.hermitage.tintStrength,
@@ -764,6 +770,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'New York, USA. Fiat abstraction where value is pure hallucination.',
     metadata: { region: 'Americas', difficulty: 'easy', status: SCENARIO_MATURITY_MATRIX['federal-reserve'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'],
+    audioAsset: SCENARIO_AUDIO_ASSETS['federal-reserve'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tintStrength,
@@ -849,6 +856,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'New York, USA. Modern art where destruction becomes creation.',
     metadata: { region: 'Americas', difficulty: 'easy', status: SCENARIO_MATURITY_MATRIX.moma.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.moma,
+    audioAsset: SCENARIO_AUDIO_ASSETS['moma'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.moma.tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.moma.tintStrength,
@@ -944,6 +952,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     description: 'Impossible hexagonal chamber where ideas outweigh objects.',
     metadata: { region: 'Americas', difficulty: 'hard', status: SCENARIO_MATURITY_MATRIX['borges-library'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['borges-library'],
+    audioAsset: SCENARIO_AUDIO_ASSETS['borges-library'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['borges-library'].tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS['borges-library'].tintStrength,
