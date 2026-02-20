@@ -6,6 +6,7 @@ import { ResultsScreen } from '@/components/ui/ResultsScreen';
 import { Scene } from '@/components/game/Scene';
 import { HUD } from '@/components/game/HUD';
 import { ShotEffects } from '@/components/game/ShotEffects';
+import { GameAudioDirector } from '@/components/game/GameAudioDirector';
 import { StartView } from '@/components/ui/StartView';
 import { hasResult } from '@/stores/gameSelectors';
 
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <div className="w-screen h-screen bg-black overflow-hidden">
+      <GameAudioDirector />
       {gamePhase === 'start' && <StartView />}
       {gamePhase === 'menu' && <MainMenu />}
       {gamePhase === 'scenario-select' && <ScenarioSelect />}

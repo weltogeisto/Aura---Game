@@ -41,6 +41,20 @@ pnpm run desktop:bundle:beta:macos
 
 All bundle commands run `assets:check` first to keep offline assets as a hard gate before packaging.
 
+
+## Asset Budget (Desktop Beta)
+
+Hard budget for ship-ready offline bundles:
+
+- **Panorama resolution**: one equirectangular source per scenario, target `4096x2048` (fallback `2048x1024` only for low-tier machines).
+- **Panorama compression**: prefer `webp` (quality 80-88) for photo assets; `svg` only for stylized/vector panoramas.
+- **Panorama size budget**: `<= 1.8 MB` per scenario (`<= 16 MB` for all active scenarios combined in package).
+- **Ambient audio**: loop stems in `wav` during production; release as `ogg`/`mp3` where artifact quality is acceptable. Current beta uses offline-embedded ambient clips (no binary asset files in repo).
+- **Audio size budget**: ambient `<= 450 KB` per loop, impact/UI `<= 120 KB` per file, total audio payload `<= 8 MB`.
+- **Load-time budget**: first playable frame in packaged desktop build should stay under **2.5s** on baseline target hardware (cold start), with all scenario references resolved locally.
+
+If a new asset exceeds budget, either downscale/recompress it or explicitly document why the exception is accepted for the release.
+
 ## Smoke Checklist (packaged mode)
 
 After canonical build (and ideally after bundle generation), run:
