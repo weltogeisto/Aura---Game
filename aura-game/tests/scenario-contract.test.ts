@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SCENARIOS } from '../src/data/scenarios.ts';
+import { SCENARIOS, SCENARIO_MATURITY_MATRIX, SCENARIO_ROLLOUT_WAVES } from '../src/data/scenarios.ts';
 
 const scenarioEntries = Object.entries(SCENARIOS);
 
@@ -28,4 +28,35 @@ test('scenario contract: required scoring and critic fields are present', () => 
     assert.ok((scenario.criticLines?.mid.length ?? 0) > 0, `${id} criticLines.mid must not be empty`);
     assert.ok((scenario.criticLines?.high.length ?? 0) > 0, `${id} criticLines.high must not be empty`);
   }
+});
+
+test('scenario contract: maturity matrix gates playable scenarios', () => {
+  for (const [id, scenario] of scenarioEntries) {
+    const maturity = SCENARIO_MATURITY_MATRIX[id];
+    assert.ok(maturity, `${id} must define maturity metadata`);
+    assert.equal(scenario.metadata.status, maturity.status, `${id} status must match maturity matrix`);
+
+    if (scenario.metadata.status !== 'playable') continue;
+
+    assert.equal(
+      Object.values(scenario.metadata.contentCompleteness).every(Boolean),
+      true,
+      `${id} playable scenarios require full content completeness`
+    );
+    assert.equal(
+      Object.values(maturity.exitCriteria).every((criterion) => criterion.done),
+      true,
+      `${id} playable scenarios require all exit criteria done`
+    );
+  }
+});
+
+test('scenario contract: rollout wave 1 ships three playable scenarios including louvre', () => {
+  const waveOne = SCENARIO_ROLLOUT_WAVES[1] ?? [];
+  assert.equal(waveOne.length, 3, 'wave 1 must include exactly three scenarios');
+  assert.equal(waveOne.includes('louvre'), true, 'wave 1 must include louvre');
+
+  waveOne.forEach((scenarioId) => {
+    assert.equal(SCENARIOS[scenarioId]?.metadata.status, 'playable', `${scenarioId} in wave 1 must be playable`);
+  });
 });
