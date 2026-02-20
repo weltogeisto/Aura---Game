@@ -32,8 +32,18 @@ const findings = [];
 const scenarioIds = new Set();
 
 for (const [key, scenario] of Object.entries(SCENARIOS)) {
+  const maturity = SCENARIO_MATURITY_MATRIX[key];
+  if (!maturity) {
+    findings.push(`Scenario "${key}" is missing a maturity matrix entry.`);
+    continue;
+  }
+
   if (scenario.id !== key) {
     findings.push(`Scenario key "${key}" does not match scenario.id "${scenario.id}".`);
+  }
+
+  if (scenario.metadata.status !== maturity.status) {
+    findings.push(`Scenario "${key}" metadata.status (${scenario.metadata.status}) must match maturity matrix (${maturity.status}).`);
   }
 
   if (scenarioIds.has(scenario.id)) {
@@ -54,6 +64,25 @@ for (const [key, scenario] of Object.entries(SCENARIOS)) {
       findings.push(`Scenario "${scenario.id}" has non-offline panorama asset (${variant}): ${assetPath}`);
     }
   }
+
+  if (scenario.metadata.status === 'playable') {
+    const completeness = Object.values(scenario.metadata.contentCompleteness).every(Boolean);
+    if (!completeness) {
+      findings.push(`Scenario "${key}" is playable but content completeness gates are not all true.`);
+    }
+
+    const incompleteGates = Object.entries(maturity.exitCriteria)
+      .filter(([, criterion]) => !criterion.done)
+      .map(([criterionName]) => criterionName);
+    if (incompleteGates.length > 0) {
+      findings.push(`Scenario "${key}" is playable but has open exit criteria: ${incompleteGates.join(', ')}.`);
+    }
+  }
+}
+
+const waveOne = SCENARIO_ROLLOUT_WAVES[1] ?? [];
+if (waveOne.length !== 3 || !waveOne.includes('louvre')) {
+  findings.push('Rollout wave 1 must include exactly three scenarios and contain "louvre".');
 }
 
 const registryIds = new Set(SCENARIO_SEEDS.map((seed) => seed.id));

@@ -1,5 +1,5 @@
 import { getScenariosList } from '@/data/scenarios';
-import { isScenarioPlayable, sortScenariosByStatus } from './scenarioSelectModel';
+import { getScenarioStatusMessage, isScenarioPlayable, sortScenariosByStatus } from './scenarioSelectModel';
 import { useGameStore } from '@/stores/gameStore';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
 import type { ScenarioStatus } from '@/types';
@@ -43,8 +43,8 @@ export function ScenarioSelect() {
         <div className="mt-8 grid grid-cols-1 gap-4">
           {scenarios.map((scenario) => {
             const { location, detail } = parseLocation(scenario.description);
-            const locked = scenario.metadata.status === 'locked';
             const playable = scenario.metadata.status === 'playable';
+            const statusMessage = getScenarioStatusMessage(scenario);
 
             return (
               <button
@@ -61,11 +61,12 @@ export function ScenarioSelect() {
                 </div>
                 <h3 className="mt-2 text-xl font-semibold text-white">{scenario.name}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-gray-400">{detail}</p>
+                <p className="mt-3 text-xs text-orange-200/85">
+                  {STATUS_LABELS[scenario.metadata.status]} · {statusMessage}
+                </p>
                 {!playable && (
-                  <p className="mt-2 text-xs text-orange-200/80">
-                    {STATUS_LABELS[scenario.metadata.status]} — {locked
-                      ? 'content staged for later release.'
-                      : 'visible for preview, not yet playable.'}
+                  <p className="mt-2 text-xs text-gray-400">
+                    This scenario is visible for roadmap transparency and will unlock once all release gates pass.
                   </p>
                 )}
               </button>
