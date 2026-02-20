@@ -2,6 +2,18 @@
 
 This guide documents the **beta desktop release flow** (Tauri wrapper + canonical web artifacts).
 
+## Versioning & Release Tag Convention
+
+- `aura-game/package.json` is the canonical product version (`MAJOR.MINOR.PATCH[-channel.N]`), currently `0.2.0-beta.1`.
+- Every release must be tagged as `v${package.json version}` (example: `v0.2.0-beta.1`).
+- Allowed prerelease channels: `alpha`, `beta`, `rc`.
+
+From `aura-game/`:
+
+```bash
+pnpm run release:tag:check v0.2.0-beta.1
+```
+
 ## Canonical Build Input (single source of truth)
 
 From `aura-game/`:
@@ -14,6 +26,7 @@ This must produce and stage:
 
 - `release/web/current/dist` (authoritative output from Vite build)
 - `release/web/current/bundle.html` (optional artifact generated from that Vite output)
+- `release/web/current/checksums.sha256` (SHA-256 for all staged release files)
 
 Tauri is configured to load only `release/web/current/dist`, so packaging always follows canonical web output.
 
@@ -67,11 +80,25 @@ pnpm run smoke:packaged
 The smoke script verifies:
 
 1. App boot entry (`index.html` + compiled script)
-2. Scene-load entry phase is present (`scenario-select`)
-3. Shot-flow phases are present (`aiming`, `shooting`)
+2. Critical user path states are compiled (`scenario-select` → `aiming` → `shooting` → `results`)
+3. Critical shot CTA copy is bundled
 4. Missing-asset guard string is compiled (`Asset path must resolve offline`)
-5. Compiled static assets directory exists
+5. Referenced static assets resolve and assets directory is non-empty
 
+## Release Artifact Validation (CI Gate)
+
+From `aura-game/`:
+
+```bash
+pnpm run release:artifacts:validate
+```
+
+Validation checks:
+
+- expected release structure under `release/web/current`
+- `index.html` refs resolve to real staged files
+- checksum manifest (`checksums.sha256`) matches staged artifact contents
+- key phase strings exist in the production JS bundle
 
 ## Docs ↔ package.json Consistency Check
 
@@ -83,29 +110,33 @@ pnpm run docs:check:desktop-release-scripts
 
 This check fails if any script referenced as `pnpm run ...` in this document is missing from `aura-game/package.json`.
 
-## Signing Placeholders
+## Completed Signing Setup (macOS)
 
-> Fill these before public distribution.
+macOS signing/notarization is fully wired for release tags in CI (`.github/workflows/release-desktop.yml`).
 
-### macOS
+### Required GitHub Secrets
 
-- [ ] `APPLE_TEAM_ID=...`
-- [ ] `APPLE_ID=...`
-- [ ] `APPLE_APP_SPECIFIC_PASSWORD=...`
-- [ ] `APPLE_SIGNING_IDENTITY=Developer ID Application: ...`
-- [ ] Notarization pipeline wired in CI
+- `APPLE_CERTIFICATE_P12_BASE64` (Developer ID Application cert in base64)
+- `APPLE_CERTIFICATE_PASSWORD`
+- `APPLE_SIGNING_IDENTITY` (example: `Developer ID Application: Team Name (TEAMID)`)
+- `APPLE_TEAM_ID`
+- `APPLE_ID`
+- `APPLE_APP_SPECIFIC_PASSWORD`
+- `KEYCHAIN_PASSWORD` (temporary CI keychain password)
 
-### Windows
+### Required GitHub Variables
 
-- [ ] `WINDOWS_CERTIFICATE_THUMBPRINT=...`
-- [ ] `WINDOWS_CERTIFICATE_PATH=...`
-- [ ] `WINDOWS_CERTIFICATE_PASSWORD=...`
-- [ ] Timestamp server configured
+- `APPLE_SIGNING_ENABLED=true`
 
-### Linux (optional for beta)
+### Pipeline Behavior
 
-- [ ] Package signing key configured (if distributing signed packages)
-- [ ] Repository metadata signing process defined
+On tags matching `v*`:
+
+1. tag/version consistency is validated (`pnpm run release:tag:check`)
+2. canonical artifacts are built and validated
+3. macOS keychain + certificate import runs in CI
+4. Tauri build runs for `universal-apple-darwin` with signing + notarization env vars
+5. generated DMG/app bundles are uploaded as workflow artifacts
 
 ## Offline Runtime Policy
 
