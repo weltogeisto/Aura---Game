@@ -110,9 +110,28 @@ pnpm run docs:check:desktop-release-scripts
 
 This check fails if any script referenced as `pnpm run ...` in this document is missing from `aura-game/package.json`.
 
-## Completed Signing Setup (macOS)
 
-macOS signing/notarization is fully wired for release tags in CI (`.github/workflows/release-desktop.yml`).
+## Manual QA Protocol (Release Candidate)
+
+For every RC (`rc-*` or equivalent), run this lightweight manual pass on desktop packaging output:
+
+1. **Boot + Navigation**
+   - Launch packaged app and confirm start menu, scenario select, and first playable scenario can be entered.
+   - Verify locked/prototype scenarios stay non-interactive.
+2. **Single-shot core loop**
+   - Fire one shot, validate transition `aiming -> shooting -> results`.
+   - Use replay/reset actions and confirm state returns to `aiming` with ammo restored and no stale critic output.
+3. **Determinism spot-check**
+   - Repeat same shot setup (same scenario + same visual aim alignment) and verify critic/score output remains stable.
+4. **Desktop-specific display checks**
+   - Validate UI readability at 100%, 125%, and 150% OS scale (DPI).
+   - Resize window through minimum/medium/fullscreen and verify no critical overlap/clipping for HUD and results screen.
+5. **Offline + asset confidence**
+   - Run with network disabled (or blocked) and verify boot + scenario load still works.
+
+Record pass/fail plus issue links in the RC note before promotion.
+
+## Signing Placeholders
 
 ### Required GitHub Secrets
 

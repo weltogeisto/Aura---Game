@@ -175,6 +175,27 @@ test('restartScenario resets run fields and keeps selected scenario for replay',
   assert.equal(state.runTelemetry.replayUsed, true);
 });
 
+test('startRun rejects non-playable scenarios to enforce scenario-select locks', () => {
+  resetStore();
+
+  const lockedScenario: Scenario = {
+    ...mockScenario,
+    id: 'scenario-locked',
+    metadata: {
+      ...mockScenario.metadata,
+      status: 'locked',
+    },
+  };
+
+  useGameStore.getState().startRun(lockedScenario);
+  const state = useGameStore.getState();
+
+  assert.equal(state.gamePhase, 'aiming');
+  assert.equal(state.selectedScenario?.id, mockScenario.id);
+  assert.equal(state.fireBlocked, true);
+});
+
+
 test('selectors stay stable for future hook wrappers', () => {
   resetStore();
 

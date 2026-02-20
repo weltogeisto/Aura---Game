@@ -21,6 +21,17 @@ Use this level before tagging a release candidate.
 - Offline asset constraints are verified.
 - CI requirement: `ci:full` must pass.
 
+## Release-blocking defect classes (hard stop)
+
+A release candidate is blocked if any of these classes are detected:
+
+| Defect class | Definition | CI gate(s) |
+| --- | --- | --- |
+| Crash / boot failure | App does not start, runtime exception kills game loop, or packaged shell cannot enter core flow. | `pnpm run ci:full` (build + tests), `pnpm run smoke:packaged` |
+| Score error | `totalScore`, damage breakdown, or deterministic score-critical paths diverge from expected contract. | `pnpm run ci:full` (full tests incl. shot/store integration) |
+| Wrong scenario status | Locked/prototype scenario becomes playable through state regression, or scenario-select order/lock behavior regresses. | `pnpm run ci:full` (scenario-select + run-state tests) |
+| Asset miss | Missing panorama/static asset or invalid offline references break runtime content loading. | `pnpm run ci:full` (`assets:check` + `scenarios:check`) |
+
 ## CI profiles
 
 Run from `aura-game/`.
@@ -32,6 +43,11 @@ Run from `aura-game/`.
   - `pnpm run ci:full`
   - Includes fast checks plus full tests and offline asset checks.
 
+## Release branch policy
+
+- `release/*` branches have one hard quality bar: **`ci:full` must be green before merge and before any release tag/candidate promotion**.
+- Failed `ci:full` runs are release-blocking by default; no exception path without explicit maintainer sign-off documented in release notes.
+
 ## Test matrix
 
 - **Contract tests**
@@ -39,12 +55,14 @@ Run from `aura-game/`.
   - Required scoring and critic pools.
 - **Integration-like tests**
   - Store + shot resolution behavior.
-  - Single-shot lock and reset paths.
+  - Scenario lock behavior and run start constraints.
+  - Single-shot lock and reset/replay paths.
   - Special effect and critic output propagation.
   - Critic output determinism.
 - **Static checks**
   - Scenario key/id consistency.
   - Asset/path references in scenario data.
+  - Content quality checks (required fields, critic pool size, forbidden placeholders).
 
 ## Definition of done
 
