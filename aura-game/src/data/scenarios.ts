@@ -1,6 +1,137 @@
 import type { Scenario } from '../types';
 import { createScenario, SCENARIO_ENVIRONMENT_ASSETS } from './scenarios/utils.ts';
 
+type ExitCriterion = {
+  done: boolean;
+  requirement: string;
+};
+
+type ScenarioMaturityGate = {
+  gameplay: ExitCriterion;
+  copy: ExitCriterion;
+  art: ExitCriterion;
+  audio: ExitCriterion;
+  qa: ExitCriterion;
+};
+
+type ScenarioMaturityPlan = {
+  status: Scenario['metadata']['status'];
+  releaseWave: number;
+  contentReadiness: number;
+  exitCriteria: ScenarioMaturityGate;
+};
+
+export const SCENARIO_MATURITY_MATRIX: Record<string, ScenarioMaturityPlan> = {
+  louvre: {
+    status: 'playable',
+    releaseWave: 1,
+    contentReadiness: 1,
+    exitCriteria: {
+      gameplay: { done: true, requirement: 'Hit feedback, scoring, and one-shot flow are shippable.' },
+      copy: { done: true, requirement: 'Scenario copy and critic lines are final quality.' },
+      art: { done: true, requirement: 'Panorama, grading, and readable target silhouettes are production-ready.' },
+      audio: { done: true, requirement: 'Shot/impact/SFX mix is validated for desktop release.' },
+      qa: { done: true, requirement: 'Scenario contract + regression checks pass consistently.' },
+    },
+  },
+  'st-peters': {
+    status: 'playable',
+    releaseWave: 1,
+    contentReadiness: 2,
+    exitCriteria: {
+      gameplay: { done: true, requirement: 'Target economy, score spread, and one-shot pacing are balanced.' },
+      copy: { done: true, requirement: 'Critic lines and location framing feel coherent and polished.' },
+      art: { done: true, requirement: 'Nave panorama readability and target staging are approved.' },
+      audio: { done: true, requirement: 'Ambient reverb and impact readability are validated.' },
+      qa: { done: true, requirement: 'Scenario integrity + contract tests gate the status as playable.' },
+    },
+  },
+  topkapi: {
+    status: 'playable',
+    releaseWave: 1,
+    contentReadiness: 3,
+    exitCriteria: {
+      gameplay: { done: true, requirement: 'Treasury risk/reward profile is tuned for replay value.' },
+      copy: { done: true, requirement: 'Narrative copy and critic responses are finalized.' },
+      art: { done: true, requirement: 'Treasury composition, tinting, and target contrast are locked.' },
+      audio: { done: true, requirement: 'Impacts and ambient cues are checked for clarity.' },
+      qa: { done: true, requirement: 'Playable contract checks pass in CI and local scenario check.' },
+    },
+  },
+  tsmc: {
+    status: 'prototype',
+    releaseWave: 2,
+    contentReadiness: 4,
+    exitCriteria: {
+      gameplay: { done: false, requirement: 'Finalize high-tech systemic target interactions.' },
+      copy: { done: false, requirement: 'Ship final critic lines with anti-value framing.' },
+      art: { done: true, requirement: 'Factory panorama base is available for iteration.' },
+      audio: { done: false, requirement: 'Needs bespoke ambience and machine-layer mix.' },
+      qa: { done: false, requirement: 'Awaits full balancing and edge-case validation.' },
+    },
+  },
+  hermitage: {
+    status: 'prototype',
+    releaseWave: 2,
+    contentReadiness: 5,
+    exitCriteria: {
+      gameplay: { done: false, requirement: 'Tune multi-target value spread for consistent scoring.' },
+      copy: { done: false, requirement: 'Finalize critic voice and scenario flavor copy.' },
+      art: { done: true, requirement: 'Panorama and grading base pass visual review.' },
+      audio: { done: false, requirement: 'Needs finalized room tone and impact blend.' },
+      qa: { done: false, requirement: 'Requires regression run after score balancing.' },
+    },
+  },
+  moma: {
+    status: 'prototype',
+    releaseWave: 2,
+    contentReadiness: 6,
+    exitCriteria: {
+      gameplay: { done: false, requirement: 'Validate joke targets without breaking score fairness.' },
+      copy: { done: false, requirement: 'Critic lines need final quality pass.' },
+      art: { done: true, requirement: 'White-cube panorama and composition are in place.' },
+      audio: { done: false, requirement: 'Needs modern-gallery ambience and feedback polish.' },
+      qa: { done: false, requirement: 'Easter-egg permutations still need deterministic tests.' },
+    },
+  },
+  'forbidden-city': {
+    status: 'locked',
+    releaseWave: 3,
+    contentReadiness: 7,
+    exitCriteria: {
+      gameplay: { done: false, requirement: 'Core balancing and systemic trigger checks pending.' },
+      copy: { done: false, requirement: 'Location and critic copy still placeholder-level.' },
+      art: { done: true, requirement: 'Baseline panorama exists for content production.' },
+      audio: { done: false, requirement: 'No final ambience pass yet.' },
+      qa: { done: false, requirement: 'Blocked until prototype-to-playable migration.' },
+    },
+  },
+  'federal-reserve': {
+    status: 'locked',
+    releaseWave: 3,
+    contentReadiness: 8,
+    exitCriteria: {
+      gameplay: { done: false, requirement: 'Needs gameplay pass on vault interaction economy.' },
+      copy: { done: false, requirement: 'Critic and scenario copy still under development.' },
+      art: { done: true, requirement: 'Visual shell exists for internal testing.' },
+      audio: { done: false, requirement: 'Audio layering not integrated.' },
+      qa: { done: false, requirement: 'Awaits contract-ready content completeness.' },
+    },
+  },
+  'borges-library': {
+    status: 'locked',
+    releaseWave: 3,
+    contentReadiness: 9,
+    exitCriteria: {
+      gameplay: { done: false, requirement: 'Extreme-value design needs balancing envelope.' },
+      copy: { done: false, requirement: 'Critic voice and literary references need final pass.' },
+      art: { done: true, requirement: 'Library scene base is available for expansion.' },
+      audio: { done: false, requirement: 'Ambient composition and FX need implementation.' },
+      qa: { done: false, requirement: 'Blocked until deterministic score and egg checks land.' },
+    },
+  },
+};
+
 const LOUVRE_SCORING: NonNullable<Scenario['scoring']> = {
   fallbackSampleValue: 5,
   defaultZoneMultiplier: 1.2,
@@ -14,7 +145,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     name: 'The Louvre - Salle des États',
     description: 'Paris, France. One shot to maximize cultural damage in the most visited museum.',
     isMvp: true,
-    metadata: { region: 'Europe', difficulty: 'easy', status: 'playable' },
+    metadata: { region: 'Europe', difficulty: 'easy', status: SCENARIO_MATURITY_MATRIX.louvre.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.louvre,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.louvre.tint,
@@ -118,13 +249,19 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'st-peters',
     name: "St. Peter's Basilica - Nave",
     description: 'Vatican City. Sacred architecture where atmosphere outvalues material.',
-    metadata: { region: 'Europe', difficulty: 'medium', status: 'prototype' },
+    metadata: { region: 'Europe', difficulty: 'medium', status: SCENARIO_MATURITY_MATRIX['st-peters'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['st-peters'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['st-peters'].tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS['st-peters'].tintStrength,
     },
     panoramaColor: '#cbb89a',
+    scoring: {
+      fallbackSampleValue: 6,
+      defaultZoneMultiplier: 1.15,
+      defaultCriticalModifier: 1.45,
+      dadaistScore: 1718000007,
+    },
     targets: [
       {
         id: 'pieta',
@@ -208,18 +345,38 @@ export const SCENARIOS: Record<string, Scenario> = {
         breakdownMode: 'none',
       },
     ],
+    criticLines: {
+      low: [
+        'The nave absorbs the hit and returns only a cold echo.',
+        'A glancing strike. Ritual persists, barely disturbed.',
+      ],
+      mid: [
+        'Stone, bronze, and faith all register the impact.',
+        'Measured damage. Enough to bend devotion into anxiety.',
+      ],
+      high: [
+        'Cathedral-scale shock. Reverence fractures into debris.',
+        'A ruinous sermon in one shot.',
+      ],
+    },
   }),
   topkapi: createScenario({
     id: 'topkapi',
     name: 'Topkapi Palace - Imperial Treasury',
     description: 'Istanbul, Turkey. Ottoman opulence where display wars with authenticity.',
-    metadata: { region: 'Middle East', difficulty: 'medium', status: 'prototype' },
+    metadata: { region: 'Middle East', difficulty: 'medium', status: SCENARIO_MATURITY_MATRIX.topkapi.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.topkapi,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.topkapi.tint,
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.topkapi.tintStrength,
     },
     panoramaColor: '#3b2a1f',
+    scoring: {
+      fallbackSampleValue: 5,
+      defaultZoneMultiplier: 1.12,
+      defaultCriticalModifier: 1.4,
+      dadaistScore: 1659000021,
+    },
     targets: [
       {
         id: 'spoonmakers-diamond',
@@ -303,12 +460,26 @@ export const SCENARIOS: Record<string, Scenario> = {
         breakdownMode: 'all-targets',
       },
     ],
+    criticLines: {
+      low: [
+        'The treasury shrugs. Display cases survive the gesture.',
+        'A polite scratch on imperial abundance.',
+      ],
+      mid: [
+        'The chamber flinches—value leaks through cracked prestige.',
+        'A tactical strike. Curators begin counting losses.',
+      ],
+      high: [
+        'Dynastic theater collapses into glittering wreckage.',
+        'A catastrophic puncture through empire and ornament.',
+      ],
+    },
   }),
   'forbidden-city': createScenario({
     id: 'forbidden-city',
     name: 'Forbidden City - Hall of Supreme Harmony',
     description: 'Beijing, China. Imperial power and cultural contamination collide.',
-    metadata: { region: 'Asia', difficulty: 'hard', status: 'locked' },
+    metadata: { region: 'Asia', difficulty: 'hard', status: SCENARIO_MATURITY_MATRIX['forbidden-city'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'].tint,
@@ -402,7 +573,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'tsmc',
     name: 'TSMC Clean Room - Fab 18',
     description: 'Tainan, Taiwan. Technological value balanced on a dust particle.',
-    metadata: { region: 'Asia', difficulty: 'hard', status: 'prototype' },
+    metadata: { region: 'Asia', difficulty: 'hard', status: SCENARIO_MATURITY_MATRIX.tsmc.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.tsmc,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.tsmc.tint,
@@ -497,7 +668,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'hermitage',
     name: 'The Hermitage - Peacock Clock Room',
     description: 'St. Petersburg, Russia. Mechanical complexity and political economy.',
-    metadata: { region: 'Europe', difficulty: 'medium', status: 'prototype' },
+    metadata: { region: 'Europe', difficulty: 'medium', status: SCENARIO_MATURITY_MATRIX.hermitage.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.hermitage,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.hermitage.tint,
@@ -591,7 +762,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'federal-reserve',
     name: 'Federal Reserve - Gold Vault',
     description: 'New York, USA. Fiat abstraction where value is pure hallucination.',
-    metadata: { region: 'Americas', difficulty: 'easy', status: 'locked' },
+    metadata: { region: 'Americas', difficulty: 'easy', status: SCENARIO_MATURITY_MATRIX['federal-reserve'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tint,
@@ -676,7 +847,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'moma',
     name: 'MoMA - Contemporary Gallery',
     description: 'New York, USA. Modern art where destruction becomes creation.',
-    metadata: { region: 'Americas', difficulty: 'easy', status: 'prototype' },
+    metadata: { region: 'Americas', difficulty: 'easy', status: SCENARIO_MATURITY_MATRIX.moma.status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS.moma,
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS.moma.tint,
@@ -771,7 +942,7 @@ export const SCENARIOS: Record<string, Scenario> = {
     id: 'borges-library',
     name: 'The Borges Library - Canon Room',
     description: 'Impossible hexagonal chamber where ideas outweigh objects.',
-    metadata: { region: 'Americas', difficulty: 'hard', status: 'prototype' },
+    metadata: { region: 'Americas', difficulty: 'hard', status: SCENARIO_MATURITY_MATRIX['borges-library'].status },
     panoramaAsset: SCENARIO_ENVIRONMENT_ASSETS['borges-library'],
     colorGrading: {
       tint: SCENARIO_ENVIRONMENT_ASSETS['borges-library'].tint,
@@ -857,3 +1028,20 @@ export const SCENARIOS: Record<string, Scenario> = {
 export const getScenario = (id: string): Scenario | undefined => SCENARIOS[id];
 
 export const getScenariosList = (): Scenario[] => Object.values(SCENARIOS);
+
+export const SCENARIO_ROLLOUT_WAVES = Object.entries(SCENARIO_MATURITY_MATRIX)
+  .sort(([, left], [, right]) => {
+    if (left.releaseWave === right.releaseWave) {
+      return left.contentReadiness - right.contentReadiness;
+    }
+
+    return left.releaseWave - right.releaseWave;
+  })
+  .reduce<Record<number, string[]>>((waves, [scenarioId, maturity]) => {
+    const wave = maturity.releaseWave;
+    if (!waves[wave]) {
+      waves[wave] = [];
+    }
+    waves[wave].push(scenarioId);
+    return waves;
+  }, {});

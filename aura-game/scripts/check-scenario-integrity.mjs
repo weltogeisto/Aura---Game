@@ -2,7 +2,7 @@ import { access, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { SCENARIOS } from '../src/data/scenarios.ts';
+import { SCENARIOS, SCENARIO_MATURITY_MATRIX, SCENARIO_ROLLOUT_WAVES } from '../src/data/scenarios.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,8 +30,18 @@ const findings = [];
 const scenarioIds = new Set();
 
 for (const [key, scenario] of Object.entries(SCENARIOS)) {
+  const maturity = SCENARIO_MATURITY_MATRIX[key];
+  if (!maturity) {
+    findings.push(`Scenario "${key}" is missing a maturity matrix entry.`);
+    continue;
+  }
+
   if (scenario.id !== key) {
     findings.push(`Scenario key "${key}" does not match scenario.id "${scenario.id}".`);
+  }
+
+  if (scenario.metadata.status !== maturity.status) {
+    findings.push(`Scenario "${key}" metadata.status (${scenario.metadata.status}) must match maturity matrix (${maturity.status}).`);
   }
 
   if (scenarioIds.has(scenario.id)) {
@@ -52,6 +62,25 @@ for (const [key, scenario] of Object.entries(SCENARIOS)) {
       findings.push(`Scenario "${scenario.id}" has non-offline panorama asset (${variant}): ${assetPath}`);
     }
   }
+
+  if (scenario.metadata.status === 'playable') {
+    const completeness = Object.values(scenario.metadata.contentCompleteness).every(Boolean);
+    if (!completeness) {
+      findings.push(`Scenario "${key}" is playable but content completeness gates are not all true.`);
+    }
+
+    const incompleteGates = Object.entries(maturity.exitCriteria)
+      .filter(([, criterion]) => !criterion.done)
+      .map(([criterionName]) => criterionName);
+    if (incompleteGates.length > 0) {
+      findings.push(`Scenario "${key}" is playable but has open exit criteria: ${incompleteGates.join(', ')}.`);
+    }
+  }
+}
+
+const waveOne = SCENARIO_ROLLOUT_WAVES[1] ?? [];
+if (waveOne.length !== 3 || !waveOne.includes('louvre')) {
+  findings.push('Rollout wave 1 must include exactly three scenarios and contain "louvre".');
 }
 
 const sourceFiles = (await walkFiles(scenarioDataDir)).filter((filePath) =>
