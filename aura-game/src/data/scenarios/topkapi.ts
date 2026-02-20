@@ -95,8 +95,33 @@ export const TOPKAPI_SCENARIO: ScenarioSeed = {
       },
     ],
   
+  scoring: {
+    fallbackSampleValue: 8,
+    defaultZoneMultiplier: 1.2,
+    defaultCriticalModifier: 1.3,
+    dadaistScore: 1917000001,
+  },
+
+  criticLines: {
+    low: [
+      'Ceramic. The Iznik tradition absorbed greater insults. This registers as a comma.',
+      'Gold leaf does not shatter. It only redistributes.',
+      'The treasury has survived four empires. Your shot is noted.',
+    ],
+    mid: [
+      'The emerald. Three carats of consequence dispersed into the carpet.',
+      'Ottoman craft required centuries. The insurance adjuster requires a form.',
+      'Display wars with authenticity. Your shot settled the argument temporarily.',
+    ],
+    high: [
+      'The diamond remains in pieces. The value disperses more slowly.',
+      'Eighty-six carats. The gem is irreplaceable. The genre is not.',
+      "The sultan's dagger, struck. Conquest travels in both directions.",
+    ],
+  },
+
   metadata: {
     region: 'Türkiye',
     difficulty: 'medium',
-    status: 'prototype',
+    status: 'playable',
   },};

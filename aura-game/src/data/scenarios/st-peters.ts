@@ -95,8 +95,33 @@ export const ST_PETERS_SCENARIO: ScenarioSeed = {
       },
     ],
   
+  scoring: {
+    fallbackSampleValue: 10,
+    defaultZoneMultiplier: 1.1,
+    defaultCriticalModifier: 1.4,
+    dadaistScore: 1917000001,
+  },
+
+  criticLines: {
+    low: [
+      'Stone. Centuries of compression, briefly interrupted.',
+      'The faithful have endured worse. This registers as weather.',
+      'Masonry absorbs the impact. The liturgy absorbs the rest.',
+    ],
+    mid: [
+      'The bronze holds. The symbolism does not.',
+      'Consecrated space. The air still hums with something other than fear.',
+      'Conservation will be expensive. The institution will survive.',
+    ],
+    high: [
+      'The Pietà knew suffering. It knew it abstractly. Now it is acquainted.',
+      'Bernini understood force. This is force he did not anticipate.',
+      'Two thousand years of institutional memory. A hole in it now.',
+    ],
+  },
+
   metadata: {
     region: 'Vatican City',
     difficulty: 'medium',
-    status: 'prototype',
+    status: 'playable',
   },};
