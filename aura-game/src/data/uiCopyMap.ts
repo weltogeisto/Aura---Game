@@ -1,23 +1,23 @@
 export const UI_COPY_MAP = {
   release: {
-    badge: 'Desktop Beta Vertical Slice',
+    badge: 'Desktop Beta',
     title: 'Aura of the 21st Century',
-    subtitle: 'Louvre ist live: ein fertiger Raum, ein Schuss, ein klarer Score-Pfad.',
+    subtitle: '6 Szenarien spielbar: Louvre, St. Peter\'s, Topkapi, TSMC, MoMA, Borges Library.',
   },
   startView: {
     overline: 'Aura / Desktop Beta',
-    title: 'Louvre Entry Hall',
-    body: 'Diese Beta zeigt den Kernloop in produktionsnaher Qualität: zielen, ein Schuss, Ergebnis mit transparenter Bewertung.',
-    ctaPrimary: 'Run starten (Louvre)',
+    title: 'Aura of the 21st Century',
+    body: 'Sechs Räume, sechs Kontexte — Kunst, Kapital, Code, Buchstaben. Ein Schuss. Ein Urteil.',
+    ctaPrimary: 'Szenario wählen',
     ctaSecondary: 'Zum Hauptmenü',
   },
   mainMenu: {
     overline: 'Desktop Beta',
     heading: 'of the 21st Century',
-    scenarioSummary: 'Aktuell ist ein Szenario vollständig spielbar. Weitere Räume sind sichtbar, aber je nach Status noch in Arbeit.',
+    scenarioSummary: '6 von 9 Szenarien vollständig spielbar. Hermitage, Forbidden City und Federal Reserve folgen im nächsten Release.',
     ctaScenarioSelect: 'Szenario wählen',
     criticFraming:
-      '“The aura is no longer in the object. It is in the system that predicts your desire to destroy it.”',
+      '"The aura is no longer in the object. It is in the system that predicts your desire to destroy it."',
   },
   scenarioSelect: {
     overline: 'Scenario Selection',
@@ -72,7 +72,7 @@ export const UI_COPY_MAP = {
     heading: 'Known limitations (beta honesty)',
     items: [
       'Single-shot constraint is hard-locked per run; no reload or second attempt inside the same appraisal.',
-      'Scenario maturity is uneven: Louvre is production-polished, other rooms remain in content and balancing iteration.',
+      'Three scenarios remain locked (Hermitage, Forbidden City, Federal Reserve) — panorama assets and content review pending.',
       'Performance tiers auto-adjust visual fidelity when sustained FPS drops; image quality may step down to preserve control responsiveness.',
     ],
   },
