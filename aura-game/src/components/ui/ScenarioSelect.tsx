@@ -1,5 +1,5 @@
 import { getScenariosList } from '@/data/scenarios';
-import { getScenarioStatusMessage, isScenarioPlayable, sortScenariosByStatus } from './scenarioSelectModel';
+import { isScenarioPlayable, sortScenariosByStatus } from './scenarioSelectModel';
 import { useGameStore } from '@/stores/gameStore';
 import { UI_COPY_MAP } from '@/data/uiCopyMap';
 import type { ScenarioStatus } from '@/types';
@@ -43,7 +43,6 @@ export function ScenarioSelect() {
         <div className="mt-6 space-y-3">
           {scenarios.map((scenario) => {
             const playable = isScenarioPlayable(scenario);
-            const locked = scenario.metadata.status === 'locked';
             const { location, detail } = parseLocation(scenario.description);
             const statusExplain = scenario.metadata.status === 'locked'
               ? UI_COPY_MAP.scenarioSelect.statusLocked
