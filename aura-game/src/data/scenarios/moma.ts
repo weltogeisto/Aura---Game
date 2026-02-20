@@ -95,8 +95,33 @@ export const MOMA_SCENARIO: ScenarioSeed = {
       },
     ],
   
+  scoring: {
+    fallbackSampleValue: 5,
+    defaultZoneMultiplier: 1.15,
+    defaultCriticalModifier: 1.2,
+    dadaistScore: 1917000001,
+  },
+
+  criticLines: {
+    low: [
+      'Empty plinth. The gallery insures the absence at a considerable premium.',
+      'Institutional white. The bullet leaves a mark the curators already planned for.',
+      'The exit sign is not part of the collection. The insurance adjuster will verify this.',
+    ],
+    mid: [
+      'The sculpture was ambiguous. The damage makes it more so.',
+      'Destruction as collaboration. The artist would not be entirely displeased.',
+      'Conceptual form encounters material consequence. The irony holds its own.',
+    ],
+    high: [
+      'Abstract painting: resolved. The ambiguity survived the bullet; the canvas did not.',
+      'Fifty million dollars of speculation, disturbed. The market will reassess by Friday.',
+      'High-value abstraction meets low-velocity argument. The provenance remains intact.',
+    ],
+  },
+
   metadata: {
     region: 'USA',
     difficulty: 'medium',
-    status: 'prototype',
+    status: 'playable',
   },};
