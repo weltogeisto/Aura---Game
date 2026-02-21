@@ -59,7 +59,7 @@ export function ScenarioSelect() {
                   ? 'border-orange-500/40 bg-orange-900/10 hover:border-orange-400 hover:bg-orange-900/20'
                   : 'cursor-not-allowed border-white/10 bg-gray-900/30 opacity-75'}`}
               >
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:gap-4">
                   <div>
                     <h2 className="text-base sm:text-xl font-semibold text-white">{scenario.name}</h2>
                     <p className="mt-1 text-sm text-gray-300">{location}</p>

@@ -1,10 +1,46 @@
 import { create } from 'zustand';
 import type { AccessibilityFlags, GameState, GamePhase, Scenario, ShotResult, ShotFeedback } from '@/types';
 
+const ACCESSIBILITY_STORAGE_KEY = 'aura.accessibility.v1';
+
 const DEFAULT_ACCESSIBILITY: AccessibilityFlags = {
   reducedMotion: false,
   highContrast: false,
   aimAssist: false,
+};
+
+const readAccessibilityFlags = (): AccessibilityFlags => {
+  if (typeof globalThis.localStorage === 'undefined') {
+    return DEFAULT_ACCESSIBILITY;
+  }
+
+  try {
+    const raw = globalThis.localStorage.getItem(ACCESSIBILITY_STORAGE_KEY);
+    if (!raw) {
+      return DEFAULT_ACCESSIBILITY;
+    }
+
+    const parsed = JSON.parse(raw) as Partial<AccessibilityFlags>;
+    return {
+      reducedMotion: Boolean(parsed.reducedMotion),
+      highContrast: Boolean(parsed.highContrast),
+      aimAssist: Boolean(parsed.aimAssist),
+    };
+  } catch {
+    return DEFAULT_ACCESSIBILITY;
+  }
+};
+
+const writeAccessibilityFlags = (flags: AccessibilityFlags) => {
+  if (typeof globalThis.localStorage === 'undefined') {
+    return;
+  }
+
+  try {
+    globalThis.localStorage.setItem(ACCESSIBILITY_STORAGE_KEY, JSON.stringify(flags));
+  } catch {
+    // Ignore write failures (private mode/quota); runtime flags still update in-memory.
+  }
 };
 
 const TELEMETRY_RESET: GameState['runTelemetry'] = {
@@ -60,7 +96,7 @@ export const useGameStore = create<GameStore>((set) => ({
   gamePhase: 'start',
   selectedScenario: null,
   crosshairPosition: { x: 0.5, y: 0.5 },
-  accessibility: DEFAULT_ACCESSIBILITY,
+  accessibility: readAccessibilityFlags(),
   runTelemetry: TELEMETRY_RESET,
   ...RUN_STATE_RESET,
 
@@ -168,12 +204,18 @@ export const useGameStore = create<GameStore>((set) => ({
     }),
 
   setAccessibilityFlag: (key, value) =>
-    set((state) => ({
-      accessibility: {
+    set((state) => {
+      const nextAccessibility = {
         ...state.accessibility,
         [key]: value,
-      },
-    })),
+      };
+
+      writeAccessibilityFlags(nextAccessibility);
+
+      return {
+        accessibility: nextAccessibility,
+      };
+    }),
 
   markScoreBreakdownViewed: () =>
     set((state) => ({
@@ -190,12 +232,16 @@ export const useGameStore = create<GameStore>((set) => ({
     }),
 
   resetGame: () =>
-    set({
-      gamePhase: 'start',
-      selectedScenario: null,
-      crosshairPosition: { x: 0.5, y: 0.5 },
-      accessibility: DEFAULT_ACCESSIBILITY,
-      runTelemetry: TELEMETRY_RESET,
-      ...RUN_STATE_RESET,
+    set(() => {
+      writeAccessibilityFlags(DEFAULT_ACCESSIBILITY);
+
+      return {
+        gamePhase: 'start',
+        selectedScenario: null,
+        crosshairPosition: { x: 0.5, y: 0.5 },
+        accessibility: DEFAULT_ACCESSIBILITY,
+        runTelemetry: TELEMETRY_RESET,
+        ...RUN_STATE_RESET,
+      };
     }),
 }));
