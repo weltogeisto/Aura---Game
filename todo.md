@@ -16,7 +16,7 @@ Open work items ordered by priority tier.
 
 ## Tier 2 — Polish before beta release
 
-- [ ] **Mobile responsive layout** — All screens (StartView, ScenarioSelect, ResultsScreen) need breakpoint handling below 768px. HUD controls overlay overlaps on small viewports.
+- [x] **Mobile responsive layout** — StartView, ScenarioSelect, and ResultsScreen now use mobile-first spacing/typography with `dvh` viewport caps to avoid clipping and overflow below 768px.
 - [ ] **Material-specific impact sounds** — Ballistics system tags `material` on hit; map to distinct SFX (marble crack, bronze ring, glass shatter, silicon shatter, paper tear).
 - [ ] **Ambient room audio** — Loop per-scenario background audio (church reverb, cleanroom hum, gallery silence) once audio assets exist.
 - [ ] **Version bump** — Bump `aura-game/package.json` `version` field to `0.3.0-beta.1` before next distribution.
