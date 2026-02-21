@@ -1,10 +1,177 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4096 2048'>
-<rect width='4096' height='2048' fill='#3b2a1f'/>
-<rect y='620' width='4096' height='1428' fill='#6a4d35' opacity='0.45'/>
-<rect y='1080' width='4096' height='968' fill='#9e7a4f' opacity='0.3'/>
-<rect x='0' y='960' width='78' height='120' fill='#3b2a1f' opacity='0.72'/><rect x='85' y='940' width='78' height='140' fill='#6a4d35' opacity='0.72'/><rect x='170' y='920' width='78' height='160' fill='#9e7a4f' opacity='0.72'/><rect x='255' y='900' width='78' height='180' fill='#3b2a1f' opacity='0.72'/><rect x='340' y='880' width='78' height='200' fill='#6a4d35' opacity='0.72'/><rect x='425' y='860' width='78' height='220' fill='#9e7a4f' opacity='0.72'/><rect x='510' y='840' width='78' height='240' fill='#3b2a1f' opacity='0.72'/><rect x='595' y='960' width='78' height='120' fill='#6a4d35' opacity='0.72'/><rect x='680' y='940' width='78' height='140' fill='#9e7a4f' opacity='0.72'/><rect x='765' y='920' width='78' height='160' fill='#3b2a1f' opacity='0.72'/><rect x='850' y='900' width='78' height='180' fill='#6a4d35' opacity='0.72'/><rect x='935' y='880' width='78' height='200' fill='#9e7a4f' opacity='0.72'/><rect x='1020' y='860' width='78' height='220' fill='#3b2a1f' opacity='0.72'/><rect x='1105' y='840' width='78' height='240' fill='#6a4d35' opacity='0.72'/><rect x='1190' y='960' width='78' height='120' fill='#9e7a4f' opacity='0.72'/><rect x='1275' y='940' width='78' height='140' fill='#3b2a1f' opacity='0.72'/><rect x='1360' y='920' width='78' height='160' fill='#6a4d35' opacity='0.72'/><rect x='1445' y='900' width='78' height='180' fill='#9e7a4f' opacity='0.72'/><rect x='1530' y='880' width='78' height='200' fill='#3b2a1f' opacity='0.72'/><rect x='1615' y='860' width='78' height='220' fill='#6a4d35' opacity='0.72'/><rect x='1700' y='840' width='78' height='240' fill='#9e7a4f' opacity='0.72'/><rect x='1785' y='960' width='78' height='120' fill='#3b2a1f' opacity='0.72'/><rect x='1870' y='940' width='78' height='140' fill='#6a4d35' opacity='0.72'/><rect x='1955' y='920' width='78' height='160' fill='#9e7a4f' opacity='0.72'/><rect x='2040' y='900' width='78' height='180' fill='#3b2a1f' opacity='0.72'/><rect x='2125' y='880' width='78' height='200' fill='#6a4d35' opacity='0.72'/><rect x='2210' y='860' width='78' height='220' fill='#9e7a4f' opacity='0.72'/><rect x='2295' y='840' width='78' height='240' fill='#3b2a1f' opacity='0.72'/><rect x='2380' y='960' width='78' height='120' fill='#6a4d35' opacity='0.72'/><rect x='2465' y='940' width='78' height='140' fill='#9e7a4f' opacity='0.72'/><rect x='2550' y='920' width='78' height='160' fill='#3b2a1f' opacity='0.72'/><rect x='2635' y='900' width='78' height='180' fill='#6a4d35' opacity='0.72'/><rect x='2720' y='880' width='78' height='200' fill='#9e7a4f' opacity='0.72'/><rect x='2805' y='860' width='78' height='220' fill='#3b2a1f' opacity='0.72'/><rect x='2890' y='840' width='78' height='240' fill='#6a4d35' opacity='0.72'/><rect x='2975' y='960' width='78' height='120' fill='#9e7a4f' opacity='0.72'/><rect x='3060' y='940' width='78' height='140' fill='#3b2a1f' opacity='0.72'/><rect x='3145' y='920' width='78' height='160' fill='#6a4d35' opacity='0.72'/><rect x='3230' y='900' width='78' height='180' fill='#9e7a4f' opacity='0.72'/><rect x='3315' y='880' width='78' height='200' fill='#3b2a1f' opacity='0.72'/><rect x='3400' y='860' width='78' height='220' fill='#6a4d35' opacity='0.72'/><rect x='3485' y='840' width='78' height='240' fill='#9e7a4f' opacity='0.72'/><rect x='3570' y='960' width='78' height='120' fill='#3b2a1f' opacity='0.72'/><rect x='3655' y='940' width='78' height='140' fill='#6a4d35' opacity='0.72'/><rect x='3740' y='920' width='78' height='160' fill='#9e7a4f' opacity='0.72'/><rect x='3825' y='900' width='78' height='180' fill='#3b2a1f' opacity='0.72'/><rect x='3910' y='880' width='78' height='200' fill='#6a4d35' opacity='0.72'/><rect x='3995' y='860' width='78' height='220' fill='#9e7a4f' opacity='0.72'/>
-<path d='M80 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M335 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M590 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M845 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M1100 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M1355 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M1610 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M1865 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M2120 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M2375 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M2630 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M2885 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M3140 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M3395 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M3650 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/><path d='M3905 690 q85 -130 170 0 v390 h-170z' fill='#6a4d35' opacity='0.28'/>
-<g opacity='0.18' stroke='#9e7a4f' stroke-width='5'>
-<line x1='0' y1='730' x2='4096' y2='760'/><line x1='0' y1='785' x2='4096' y2='815'/><line x1='0' y1='840' x2='4096' y2='870'/><line x1='0' y1='895' x2='4096' y2='925'/><line x1='0' y1='950' x2='4096' y2='980'/><line x1='0' y1='1005' x2='4096' y2='1035'/><line x1='0' y1='1060' x2='4096' y2='1090'/><line x1='0' y1='1115' x2='4096' y2='1145'/><line x1='0' y1='1170' x2='4096' y2='1200'/><line x1='0' y1='1225' x2='4096' y2='1255'/><line x1='0' y1='1280' x2='4096' y2='1310'/><line x1='0' y1='1335' x2='4096' y2='1365'/><line x1='0' y1='1390' x2='4096' y2='1420'/><line x1='0' y1='1445' x2='4096' y2='1475'/><line x1='0' y1='1500' x2='4096' y2='1530'/><line x1='0' y1='1555' x2='4096' y2='1585'/><line x1='0' y1='1610' x2='4096' y2='1640'/><line x1='0' y1='1665' x2='4096' y2='1695'/>
-</g>
+<defs><linearGradient id='tc' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#0a1830' stop-opacity='1'/><stop offset='60%' stop-color='#0c2044' stop-opacity='1'/><stop offset='100%' stop-color='#163060' stop-opacity='1'/></linearGradient><linearGradient id='tw' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#1a3868' stop-opacity='1'/><stop offset='100%' stop-color='#0e2048' stop-opacity='1'/></linearGradient><linearGradient id='tf' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#6a0808' stop-opacity='1'/><stop offset='100%' stop-color='#2a0404' stop-opacity='1'/></linearGradient><radialGradient id='tg' cx='50%' cy='30%' r='55%'><stop offset='0%' stop-color='#f8c840' stop-opacity='0.5'/><stop offset='100%' stop-color='#f8c840' stop-opacity='0'/></radialGradient><radialGradient id='tv' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='transparent' stop-opacity='0'/><stop offset='80%' stop-color='#040810' stop-opacity='0'/><stop offset='100%' stop-color='#040810' stop-opacity='0.6'/></radialGradient></defs>
+
+<rect width='4096' height='2048' fill='url(#tc)'/>
+<rect y='780' width='4096' height='680' fill='url(#tw)'/>
+<rect y='1460' width='4096' height='588' fill='url(#tf)'/>
+<rect width='4096' height='2048' fill='url(#tg)'/>
+<g opacity='0.35' fill='#f5a623'><rect x='2' y='680' width='124' height='36'/><rect x='130' y='680' width='124' height='36'/><rect x='258' y='680' width='124' height='36'/><rect x='386' y='680' width='124' height='36'/><rect x='514' y='680' width='124' height='36'/><rect x='642' y='680' width='124' height='36'/><rect x='770' y='680' width='124' height='36'/><rect x='898' y='680' width='124' height='36'/><rect x='1026' y='680' width='124' height='36'/><rect x='1154' y='680' width='124' height='36'/><rect x='1282' y='680' width='124' height='36'/><rect x='1410' y='680' width='124' height='36'/><rect x='1538' y='680' width='124' height='36'/><rect x='1666' y='680' width='124' height='36'/><rect x='1794' y='680' width='124' height='36'/><rect x='1922' y='680' width='124' height='36'/><rect x='2050' y='680' width='124' height='36'/><rect x='2178' y='680' width='124' height='36'/><rect x='2306' y='680' width='124' height='36'/><rect x='2434' y='680' width='124' height='36'/><rect x='2562' y='680' width='124' height='36'/><rect x='2690' y='680' width='124' height='36'/><rect x='2818' y='680' width='124' height='36'/><rect x='2946' y='680' width='124' height='36'/><rect x='3074' y='680' width='124' height='36'/><rect x='3202' y='680' width='124' height='36'/><rect x='3330' y='680' width='124' height='36'/><rect x='3458' y='680' width='124' height='36'/><rect x='3586' y='680' width='124' height='36'/><rect x='3714' y='680' width='124' height='36'/><rect x='3842' y='680' width='124' height='36'/><rect x='3970' y='680' width='124' height='36'/></g>
+<g opacity='0.25' fill='#c0392b'><rect x='2' y='720' width='60' height='36'/><rect x='66' y='720' width='60' height='36'/><rect x='130' y='720' width='60' height='36'/><rect x='194' y='720' width='60' height='36'/><rect x='258' y='720' width='60' height='36'/><rect x='322' y='720' width='60' height='36'/><rect x='386' y='720' width='60' height='36'/><rect x='450' y='720' width='60' height='36'/><rect x='514' y='720' width='60' height='36'/><rect x='578' y='720' width='60' height='36'/><rect x='642' y='720' width='60' height='36'/><rect x='706' y='720' width='60' height='36'/><rect x='770' y='720' width='60' height='36'/><rect x='834' y='720' width='60' height='36'/><rect x='898' y='720' width='60' height='36'/><rect x='962' y='720' width='60' height='36'/><rect x='1026' y='720' width='60' height='36'/><rect x='1090' y='720' width='60' height='36'/><rect x='1154' y='720' width='60' height='36'/><rect x='1218' y='720' width='60' height='36'/><rect x='1282' y='720' width='60' height='36'/><rect x='1346' y='720' width='60' height='36'/><rect x='1410' y='720' width='60' height='36'/><rect x='1474' y='720' width='60' height='36'/><rect x='1538' y='720' width='60' height='36'/><rect x='1602' y='720' width='60' height='36'/><rect x='1666' y='720' width='60' height='36'/><rect x='1730' y='720' width='60' height='36'/><rect x='1794' y='720' width='60' height='36'/><rect x='1858' y='720' width='60' height='36'/><rect x='1922' y='720' width='60' height='36'/><rect x='1986' y='720' width='60' height='36'/><rect x='2050' y='720' width='60' height='36'/><rect x='2114' y='720' width='60' height='36'/><rect x='2178' y='720' width='60' height='36'/><rect x='2242' y='720' width='60' height='36'/><rect x='2306' y='720' width='60' height='36'/><rect x='2370' y='720' width='60' height='36'/><rect x='2434' y='720' width='60' height='36'/><rect x='2498' y='720' width='60' height='36'/><rect x='2562' y='720' width='60' height='36'/><rect x='2626' y='720' width='60' height='36'/><rect x='2690' y='720' width='60' height='36'/><rect x='2754' y='720' width='60' height='36'/><rect x='2818' y='720' width='60' height='36'/><rect x='2882' y='720' width='60' height='36'/><rect x='2946' y='720' width='60' height='36'/><rect x='3010' y='720' width='60' height='36'/><rect x='3074' y='720' width='60' height='36'/><rect x='3138' y='720' width='60' height='36'/><rect x='3202' y='720' width='60' height='36'/><rect x='3266' y='720' width='60' height='36'/><rect x='3330' y='720' width='60' height='36'/><rect x='3394' y='720' width='60' height='36'/><rect x='3458' y='720' width='60' height='36'/><rect x='3522' y='720' width='60' height='36'/><rect x='3586' y='720' width='60' height='36'/><rect x='3650' y='720' width='60' height='36'/><rect x='3714' y='720' width='60' height='36'/><rect x='3778' y='720' width='60' height='36'/><rect x='3842' y='720' width='60' height='36'/><rect x='3906' y='720' width='60' height='36'/><rect x='3970' y='720' width='60' height='36'/><rect x='4034' y='720' width='60' height='36'/></g>
+<g opacity='0.3' fill='#f5a623'><rect x='2' y='760' width='60' height='36'/><rect x='66' y='760' width='60' height='36'/><rect x='130' y='760' width='60' height='36'/><rect x='194' y='760' width='60' height='36'/><rect x='258' y='760' width='60' height='36'/><rect x='322' y='760' width='60' height='36'/><rect x='386' y='760' width='60' height='36'/><rect x='450' y='760' width='60' height='36'/><rect x='514' y='760' width='60' height='36'/><rect x='578' y='760' width='60' height='36'/><rect x='642' y='760' width='60' height='36'/><rect x='706' y='760' width='60' height='36'/><rect x='770' y='760' width='60' height='36'/><rect x='834' y='760' width='60' height='36'/><rect x='898' y='760' width='60' height='36'/><rect x='962' y='760' width='60' height='36'/><rect x='1026' y='760' width='60' height='36'/><rect x='1090' y='760' width='60' height='36'/><rect x='1154' y='760' width='60' height='36'/><rect x='1218' y='760' width='60' height='36'/><rect x='1282' y='760' width='60' height='36'/><rect x='1346' y='760' width='60' height='36'/><rect x='1410' y='760' width='60' height='36'/><rect x='1474' y='760' width='60' height='36'/><rect x='1538' y='760' width='60' height='36'/><rect x='1602' y='760' width='60' height='36'/><rect x='1666' y='760' width='60' height='36'/><rect x='1730' y='760' width='60' height='36'/><rect x='1794' y='760' width='60' height='36'/><rect x='1858' y='760' width='60' height='36'/><rect x='1922' y='760' width='60' height='36'/><rect x='1986' y='760' width='60' height='36'/><rect x='2050' y='760' width='60' height='36'/><rect x='2114' y='760' width='60' height='36'/><rect x='2178' y='760' width='60' height='36'/><rect x='2242' y='760' width='60' height='36'/><rect x='2306' y='760' width='60' height='36'/><rect x='2370' y='760' width='60' height='36'/><rect x='2434' y='760' width='60' height='36'/><rect x='2498' y='760' width='60' height='36'/><rect x='2562' y='760' width='60' height='36'/><rect x='2626' y='760' width='60' height='36'/><rect x='2690' y='760' width='60' height='36'/><rect x='2754' y='760' width='60' height='36'/><rect x='2818' y='760' width='60' height='36'/><rect x='2882' y='760' width='60' height='36'/><rect x='2946' y='760' width='60' height='36'/><rect x='3010' y='760' width='60' height='36'/><rect x='3074' y='760' width='60' height='36'/><rect x='3138' y='760' width='60' height='36'/><rect x='3202' y='760' width='60' height='36'/><rect x='3266' y='760' width='60' height='36'/><rect x='3330' y='760' width='60' height='36'/><rect x='3394' y='760' width='60' height='36'/><rect x='3458' y='760' width='60' height='36'/><rect x='3522' y='760' width='60' height='36'/><rect x='3586' y='760' width='60' height='36'/><rect x='3650' y='760' width='60' height='36'/><rect x='3714' y='760' width='60' height='36'/><rect x='3778' y='760' width='60' height='36'/><rect x='3842' y='760' width='60' height='36'/><rect x='3906' y='760' width='60' height='36'/><rect x='3970' y='760' width='60' height='36'/><rect x='4034' y='760' width='60' height='36'/></g>
+<g opacity='0.3' fill='#f5a623'><rect x='2' y='1440' width='60' height='36'/><rect x='66' y='1440' width='60' height='36'/><rect x='130' y='1440' width='60' height='36'/><rect x='194' y='1440' width='60' height='36'/><rect x='258' y='1440' width='60' height='36'/><rect x='322' y='1440' width='60' height='36'/><rect x='386' y='1440' width='60' height='36'/><rect x='450' y='1440' width='60' height='36'/><rect x='514' y='1440' width='60' height='36'/><rect x='578' y='1440' width='60' height='36'/><rect x='642' y='1440' width='60' height='36'/><rect x='706' y='1440' width='60' height='36'/><rect x='770' y='1440' width='60' height='36'/><rect x='834' y='1440' width='60' height='36'/><rect x='898' y='1440' width='60' height='36'/><rect x='962' y='1440' width='60' height='36'/><rect x='1026' y='1440' width='60' height='36'/><rect x='1090' y='1440' width='60' height='36'/><rect x='1154' y='1440' width='60' height='36'/><rect x='1218' y='1440' width='60' height='36'/><rect x='1282' y='1440' width='60' height='36'/><rect x='1346' y='1440' width='60' height='36'/><rect x='1410' y='1440' width='60' height='36'/><rect x='1474' y='1440' width='60' height='36'/><rect x='1538' y='1440' width='60' height='36'/><rect x='1602' y='1440' width='60' height='36'/><rect x='1666' y='1440' width='60' height='36'/><rect x='1730' y='1440' width='60' height='36'/><rect x='1794' y='1440' width='60' height='36'/><rect x='1858' y='1440' width='60' height='36'/><rect x='1922' y='1440' width='60' height='36'/><rect x='1986' y='1440' width='60' height='36'/><rect x='2050' y='1440' width='60' height='36'/><rect x='2114' y='1440' width='60' height='36'/><rect x='2178' y='1440' width='60' height='36'/><rect x='2242' y='1440' width='60' height='36'/><rect x='2306' y='1440' width='60' height='36'/><rect x='2370' y='1440' width='60' height='36'/><rect x='2434' y='1440' width='60' height='36'/><rect x='2498' y='1440' width='60' height='36'/><rect x='2562' y='1440' width='60' height='36'/><rect x='2626' y='1440' width='60' height='36'/><rect x='2690' y='1440' width='60' height='36'/><rect x='2754' y='1440' width='60' height='36'/><rect x='2818' y='1440' width='60' height='36'/><rect x='2882' y='1440' width='60' height='36'/><rect x='2946' y='1440' width='60' height='36'/><rect x='3010' y='1440' width='60' height='36'/><rect x='3074' y='1440' width='60' height='36'/><rect x='3138' y='1440' width='60' height='36'/><rect x='3202' y='1440' width='60' height='36'/><rect x='3266' y='1440' width='60' height='36'/><rect x='3330' y='1440' width='60' height='36'/><rect x='3394' y='1440' width='60' height='36'/><rect x='3458' y='1440' width='60' height='36'/><rect x='3522' y='1440' width='60' height='36'/><rect x='3586' y='1440' width='60' height='36'/><rect x='3650' y='1440' width='60' height='36'/><rect x='3714' y='1440' width='60' height='36'/><rect x='3778' y='1440' width='60' height='36'/><rect x='3842' y='1440' width='60' height='36'/><rect x='3906' y='1440' width='60' height='36'/><rect x='3970' y='1440' width='60' height='36'/><rect x='4034' y='1440' width='60' height='36'/></g>
+<g opacity='0.25' fill='#c0392b'><rect x='2' y='1480' width='124' height='36'/><rect x='130' y='1480' width='124' height='36'/><rect x='258' y='1480' width='124' height='36'/><rect x='386' y='1480' width='124' height='36'/><rect x='514' y='1480' width='124' height='36'/><rect x='642' y='1480' width='124' height='36'/><rect x='770' y='1480' width='124' height='36'/><rect x='898' y='1480' width='124' height='36'/><rect x='1026' y='1480' width='124' height='36'/><rect x='1154' y='1480' width='124' height='36'/><rect x='1282' y='1480' width='124' height='36'/><rect x='1410' y='1480' width='124' height='36'/><rect x='1538' y='1480' width='124' height='36'/><rect x='1666' y='1480' width='124' height='36'/><rect x='1794' y='1480' width='124' height='36'/><rect x='1922' y='1480' width='124' height='36'/><rect x='2050' y='1480' width='124' height='36'/><rect x='2178' y='1480' width='124' height='36'/><rect x='2306' y='1480' width='124' height='36'/><rect x='2434' y='1480' width='124' height='36'/><rect x='2562' y='1480' width='124' height='36'/><rect x='2690' y='1480' width='124' height='36'/><rect x='2818' y='1480' width='124' height='36'/><rect x='2946' y='1480' width='124' height='36'/><rect x='3074' y='1480' width='124' height='36'/><rect x='3202' y='1480' width='124' height='36'/><rect x='3330' y='1480' width='124' height='36'/><rect x='3458' y='1480' width='124' height='36'/><rect x='3586' y='1480' width='124' height='36'/><rect x='3714' y='1480' width='124' height='36'/><rect x='3842' y='1480' width='124' height='36'/><rect x='3970' y='1480' width='124' height='36'/></g>
+<g opacity='0.35' fill='#f5a623'><rect x='2' y='1510' width='60' height='36'/><rect x='66' y='1510' width='60' height='36'/><rect x='130' y='1510' width='60' height='36'/><rect x='194' y='1510' width='60' height='36'/><rect x='258' y='1510' width='60' height='36'/><rect x='322' y='1510' width='60' height='36'/><rect x='386' y='1510' width='60' height='36'/><rect x='450' y='1510' width='60' height='36'/><rect x='514' y='1510' width='60' height='36'/><rect x='578' y='1510' width='60' height='36'/><rect x='642' y='1510' width='60' height='36'/><rect x='706' y='1510' width='60' height='36'/><rect x='770' y='1510' width='60' height='36'/><rect x='834' y='1510' width='60' height='36'/><rect x='898' y='1510' width='60' height='36'/><rect x='962' y='1510' width='60' height='36'/><rect x='1026' y='1510' width='60' height='36'/><rect x='1090' y='1510' width='60' height='36'/><rect x='1154' y='1510' width='60' height='36'/><rect x='1218' y='1510' width='60' height='36'/><rect x='1282' y='1510' width='60' height='36'/><rect x='1346' y='1510' width='60' height='36'/><rect x='1410' y='1510' width='60' height='36'/><rect x='1474' y='1510' width='60' height='36'/><rect x='1538' y='1510' width='60' height='36'/><rect x='1602' y='1510' width='60' height='36'/><rect x='1666' y='1510' width='60' height='36'/><rect x='1730' y='1510' width='60' height='36'/><rect x='1794' y='1510' width='60' height='36'/><rect x='1858' y='1510' width='60' height='36'/><rect x='1922' y='1510' width='60' height='36'/><rect x='1986' y='1510' width='60' height='36'/><rect x='2050' y='1510' width='60' height='36'/><rect x='2114' y='1510' width='60' height='36'/><rect x='2178' y='1510' width='60' height='36'/><rect x='2242' y='1510' width='60' height='36'/><rect x='2306' y='1510' width='60' height='36'/><rect x='2370' y='1510' width='60' height='36'/><rect x='2434' y='1510' width='60' height='36'/><rect x='2498' y='1510' width='60' height='36'/><rect x='2562' y='1510' width='60' height='36'/><rect x='2626' y='1510' width='60' height='36'/><rect x='2690' y='1510' width='60' height='36'/><rect x='2754' y='1510' width='60' height='36'/><rect x='2818' y='1510' width='60' height='36'/><rect x='2882' y='1510' width='60' height='36'/><rect x='2946' y='1510' width='60' height='36'/><rect x='3010' y='1510' width='60' height='36'/><rect x='3074' y='1510' width='60' height='36'/><rect x='3138' y='1510' width='60' height='36'/><rect x='3202' y='1510' width='60' height='36'/><rect x='3266' y='1510' width='60' height='36'/><rect x='3330' y='1510' width='60' height='36'/><rect x='3394' y='1510' width='60' height='36'/><rect x='3458' y='1510' width='60' height='36'/><rect x='3522' y='1510' width='60' height='36'/><rect x='3586' y='1510' width='60' height='36'/><rect x='3650' y='1510' width='60' height='36'/><rect x='3714' y='1510' width='60' height='36'/><rect x='3778' y='1510' width='60' height='36'/><rect x='3842' y='1510' width='60' height='36'/><rect x='3906' y='1510' width='60' height='36'/><rect x='3970' y='1510' width='60' height='36'/><rect x='4034' y='1510' width='60' height='36'/></g>
+<polygon points='0,780 35,820 0,860 -35,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='170,780 205,820 170,860 135,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='340,780 375,820 340,860 305,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='510,780 545,820 510,860 475,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='680,780 715,820 680,860 645,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='850,780 885,820 850,860 815,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='1020,780 1055,820 1020,860 985,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='1190,780 1225,820 1190,860 1155,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='1360,780 1395,820 1360,860 1325,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='1530,780 1565,820 1530,860 1495,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='1700,780 1735,820 1700,860 1665,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='1870,780 1905,820 1870,860 1835,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='2040,780 2075,820 2040,860 2005,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='2210,780 2245,820 2210,860 2175,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='2380,780 2415,820 2380,860 2345,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='2550,780 2585,820 2550,860 2515,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='2720,780 2755,820 2720,860 2685,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='2890,780 2925,820 2890,860 2855,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='3060,780 3095,820 3060,860 3025,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='3230,780 3265,820 3230,860 3195,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='3400,780 3435,820 3400,860 3365,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='3570,780 3605,820 3570,860 3535,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='3740,780 3775,820 3740,860 3705,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='3910,780 3945,820 3910,860 3875,820' fill='#f5a623' opacity='0.12'/>
+<polygon points='85,890 120,930 85,970 50,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='255,890 290,930 255,970 220,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='425,890 460,930 425,970 390,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='595,890 630,930 595,970 560,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='765,890 800,930 765,970 730,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='935,890 970,930 935,970 900,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='1105,890 1140,930 1105,970 1070,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='1275,890 1310,930 1275,970 1240,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='1445,890 1480,930 1445,970 1410,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='1615,890 1650,930 1615,970 1580,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='1785,890 1820,930 1785,970 1750,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='1955,890 1990,930 1955,970 1920,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='2125,890 2160,930 2125,970 2090,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='2295,890 2330,930 2295,970 2260,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='2465,890 2500,930 2465,970 2430,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='2635,890 2670,930 2635,970 2600,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='2805,890 2840,930 2805,970 2770,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='2975,890 3010,930 2975,970 2940,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='3145,890 3180,930 3145,970 3110,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='3315,890 3350,930 3315,970 3280,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='3485,890 3520,930 3485,970 3450,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='3655,890 3690,930 3655,970 3620,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='3825,890 3860,930 3825,970 3790,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='3995,890 4030,930 3995,970 3960,930' fill='#f5a623' opacity='0.12'/>
+<polygon points='0,1000 35,1040 0,1080 -35,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='170,1000 205,1040 170,1080 135,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='340,1000 375,1040 340,1080 305,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='510,1000 545,1040 510,1080 475,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='680,1000 715,1040 680,1080 645,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='850,1000 885,1040 850,1080 815,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='1020,1000 1055,1040 1020,1080 985,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='1190,1000 1225,1040 1190,1080 1155,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='1360,1000 1395,1040 1360,1080 1325,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='1530,1000 1565,1040 1530,1080 1495,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='1700,1000 1735,1040 1700,1080 1665,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='1870,1000 1905,1040 1870,1080 1835,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='2040,1000 2075,1040 2040,1080 2005,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='2210,1000 2245,1040 2210,1080 2175,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='2380,1000 2415,1040 2380,1080 2345,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='2550,1000 2585,1040 2550,1080 2515,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='2720,1000 2755,1040 2720,1080 2685,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='2890,1000 2925,1040 2890,1080 2855,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='3060,1000 3095,1040 3060,1080 3025,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='3230,1000 3265,1040 3230,1080 3195,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='3400,1000 3435,1040 3400,1080 3365,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='3570,1000 3605,1040 3570,1080 3535,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='3740,1000 3775,1040 3740,1080 3705,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='3910,1000 3945,1040 3910,1080 3875,1040' fill='#f5a623' opacity='0.12'/>
+<polygon points='85,1110 120,1150 85,1190 50,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='255,1110 290,1150 255,1190 220,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='425,1110 460,1150 425,1190 390,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='595,1110 630,1150 595,1190 560,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='765,1110 800,1150 765,1190 730,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='935,1110 970,1150 935,1190 900,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='1105,1110 1140,1150 1105,1190 1070,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='1275,1110 1310,1150 1275,1190 1240,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='1445,1110 1480,1150 1445,1190 1410,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='1615,1110 1650,1150 1615,1190 1580,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='1785,1110 1820,1150 1785,1190 1750,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='1955,1110 1990,1150 1955,1190 1920,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='2125,1110 2160,1150 2125,1190 2090,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='2295,1110 2330,1150 2295,1190 2260,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='2465,1110 2500,1150 2465,1190 2430,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='2635,1110 2670,1150 2635,1190 2600,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='2805,1110 2840,1150 2805,1190 2770,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='2975,1110 3010,1150 2975,1190 2940,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='3145,1110 3180,1150 3145,1190 3110,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='3315,1110 3350,1150 3315,1190 3280,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='3485,1110 3520,1150 3485,1190 3450,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='3655,1110 3690,1150 3655,1190 3620,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='3825,1110 3860,1150 3825,1190 3790,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='3995,1110 4030,1150 3995,1190 3960,1150' fill='#f5a623' opacity='0.12'/>
+<polygon points='0,1220 35,1260 0,1300 -35,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='170,1220 205,1260 170,1300 135,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='340,1220 375,1260 340,1300 305,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='510,1220 545,1260 510,1300 475,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='680,1220 715,1260 680,1300 645,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='850,1220 885,1260 850,1300 815,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='1020,1220 1055,1260 1020,1300 985,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='1190,1220 1225,1260 1190,1300 1155,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='1360,1220 1395,1260 1360,1300 1325,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='1530,1220 1565,1260 1530,1300 1495,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='1700,1220 1735,1260 1700,1300 1665,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='1870,1220 1905,1260 1870,1300 1835,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='2040,1220 2075,1260 2040,1300 2005,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='2210,1220 2245,1260 2210,1300 2175,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='2380,1220 2415,1260 2380,1300 2345,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='2550,1220 2585,1260 2550,1300 2515,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='2720,1220 2755,1260 2720,1300 2685,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='2890,1220 2925,1260 2890,1300 2855,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='3060,1220 3095,1260 3060,1300 3025,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='3230,1220 3265,1260 3230,1300 3195,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='3400,1220 3435,1260 3400,1300 3365,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='3570,1220 3605,1260 3570,1300 3535,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='3740,1220 3775,1260 3740,1300 3705,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='3910,1220 3945,1260 3910,1300 3875,1260' fill='#f5a623' opacity='0.12'/>
+<polygon points='85,1330 120,1370 85,1410 50,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='255,1330 290,1370 255,1410 220,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='425,1330 460,1370 425,1410 390,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='595,1330 630,1370 595,1410 560,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='765,1330 800,1370 765,1410 730,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='935,1330 970,1370 935,1410 900,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='1105,1330 1140,1370 1105,1410 1070,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='1275,1330 1310,1370 1275,1410 1240,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='1445,1330 1480,1370 1445,1410 1410,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='1615,1330 1650,1370 1615,1410 1580,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='1785,1330 1820,1370 1785,1410 1750,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='1955,1330 1990,1370 1955,1410 1920,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='2125,1330 2160,1370 2125,1410 2090,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='2295,1330 2330,1370 2295,1410 2260,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='2465,1330 2500,1370 2465,1410 2430,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='2635,1330 2670,1370 2635,1410 2600,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='2805,1330 2840,1370 2805,1410 2770,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='2975,1330 3010,1370 2975,1410 2940,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='3145,1330 3180,1370 3145,1410 3110,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='3315,1330 3350,1370 3315,1410 3280,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='3485,1330 3520,1370 3485,1410 3450,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='3655,1330 3690,1370 3655,1410 3620,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='3825,1330 3860,1370 3825,1410 3790,1370' fill='#f5a623' opacity='0.12'/>
+<polygon points='3995,1330 4030,1370 3995,1410 3960,1370' fill='#f5a623' opacity='0.12'/>
+<rect x='251' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='763' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='1275' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='1787' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='2299' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='2811' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='3323' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='3835' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<rect x='4347' y='780' width='10' height='680' fill='#f5a623' opacity='0.25'/>
+<line x1='0' y1='1470' x2='4096' y2='1470' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1510' x2='4096' y2='1510' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1560' x2='4096' y2='1560' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1620' x2='4096' y2='1620' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1690' x2='4096' y2='1690' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1770' x2='4096' y2='1770' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1860' x2='4096' y2='1860' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1960' x2='4096' y2='1960' stroke='#4a0404' stroke-width='2' opacity='0.3'/>
+<rect width='4096' height='2048' fill='url(#tv)'/>
+
 </svg>

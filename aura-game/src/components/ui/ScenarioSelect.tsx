@@ -32,10 +32,10 @@ export function ScenarioSelect() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-3 py-4 sm:px-4 sm:py-8">
-      <div className="w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-2xl border border-white/10 bg-gray-950/95 p-5 shadow-2xl sm:p-6 md:p-10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-4 py-4 sm:py-8">
+      <div className="w-full max-w-3xl max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl border border-white/10 bg-gray-950/95 p-5 sm:p-8 shadow-2xl md:p-10">
         <p className="text-xs uppercase tracking-[0.3em] text-orange-300">{UI_COPY_MAP.scenarioSelect.overline}</p>
-        <h1 className="mt-3 text-3xl font-bold text-transparent bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text sm:text-4xl">
+        <h1 className="mt-3 text-3xl sm:text-4xl font-bold text-transparent bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text">
           {UI_COPY_MAP.scenarioSelect.heading}
         </h1>
         <p className="mt-3 text-sm text-gray-300">{UI_COPY_MAP.hints.scenarioPickerHint}</p>
@@ -61,7 +61,7 @@ export function ScenarioSelect() {
               >
                 <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:gap-4">
                   <div>
-                    <h2 className="text-lg font-semibold text-white sm:text-xl">{scenario.name}</h2>
+                    <h2 className="text-base sm:text-xl font-semibold text-white">{scenario.name}</h2>
                     <p className="mt-1 text-sm text-gray-300">{location}</p>
                   </div>
                   <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] ${playable ? 'bg-orange-500/20 text-orange-200' : 'bg-gray-700/50 text-gray-300'}`}>

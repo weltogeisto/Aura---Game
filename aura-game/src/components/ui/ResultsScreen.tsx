@@ -60,8 +60,8 @@ export function ResultsScreen() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-3 py-4 sm:px-4 sm:py-8">
-      <div className="w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-2xl border border-white/10 bg-gray-950/95 p-5 shadow-2xl sm:p-6 md:p-10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-4 py-8">
+      <div className="w-full max-w-3xl max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl border border-white/10 bg-gray-950/95 p-5 sm:p-8 shadow-2xl md:p-10">
         <p className="text-xs uppercase tracking-[0.3em] text-orange-300">{UI_COPY_MAP.results.overline}</p>
         <h1 className="mt-3 text-3xl font-bold text-transparent bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text sm:text-4xl">
           {UI_COPY_MAP.results.heading}
@@ -70,7 +70,7 @@ export function ResultsScreen() {
 
         <div className="mt-6 rounded-xl border border-orange-500/30 bg-black/30 p-4 sm:mt-7 sm:p-5">
           <p className="text-xs uppercase tracking-[0.2em] text-orange-200">{UI_COPY_MAP.results.causeEffectHeading}</p>
-          <div className="mt-3 grid grid-cols-1 gap-2 text-sm sm:grid-cols-2 md:grid-cols-4">
+          <div className="mt-3 grid grid-cols-2 gap-2 text-sm md:grid-cols-4">
             <div className="rounded-lg bg-gray-900/80 p-3">
               <p className="text-gray-400">Treffer</p>
               <p className="font-semibold text-white">{sampledValue.toFixed(1)}</p>
