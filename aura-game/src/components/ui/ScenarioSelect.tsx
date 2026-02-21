@@ -32,10 +32,10 @@ export function ScenarioSelect() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 px-3 py-4 sm:px-4 sm:py-8">
-      <div className="w-full max-w-3xl max-h-[92vh] overflow-y-auto rounded-2xl border border-white/10 bg-gray-950/95 p-5 shadow-2xl sm:p-6 md:p-10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/85 px-3 py-4 sm:px-4 sm:py-8">
+      <div className="w-full max-w-3xl max-h-[92dvh] overflow-y-auto rounded-2xl border border-white/10 bg-gray-950/95 p-4 shadow-2xl sm:p-6 md:p-10">
         <p className="text-xs uppercase tracking-[0.3em] text-orange-300">{UI_COPY_MAP.scenarioSelect.overline}</p>
-        <h1 className="mt-3 text-3xl font-bold text-transparent bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text sm:text-4xl">
+        <h1 className="mt-3 text-2xl font-bold text-transparent bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text sm:text-4xl">
           {UI_COPY_MAP.scenarioSelect.heading}
         </h1>
         <p className="mt-3 text-sm text-gray-300">{UI_COPY_MAP.hints.scenarioPickerHint}</p>
@@ -55,7 +55,7 @@ export function ScenarioSelect() {
                 key={scenario.id}
                 onClick={() => handleSelectScenario(scenario.id)}
                 disabled={!playable}
-                className={`w-full rounded-xl border p-4 text-left transition ${playable
+                className={`w-full rounded-xl border p-3 text-left transition sm:p-4 ${playable
                   ? 'border-orange-500/40 bg-orange-900/10 hover:border-orange-400 hover:bg-orange-900/20'
                   : 'cursor-not-allowed border-white/10 bg-gray-900/30 opacity-75'}`}
               >
@@ -64,7 +64,7 @@ export function ScenarioSelect() {
                     <h2 className="text-lg font-semibold text-white sm:text-xl">{scenario.name}</h2>
                     <p className="mt-1 text-sm text-gray-300">{location}</p>
                   </div>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] ${playable ? 'bg-orange-500/20 text-orange-200' : 'bg-gray-700/50 text-gray-300'}`}>
+                  <span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] sm:px-3 sm:text-xs ${playable ? 'bg-orange-500/20 text-orange-200' : 'bg-gray-700/50 text-gray-300'}`}>
                     {STATUS_LABELS[scenario.metadata.status]}
                   </span>
                 </div>
@@ -83,7 +83,7 @@ export function ScenarioSelect() {
 
         <button
           onClick={() => setGamePhase('menu')}
-          className="mt-6 text-sm font-medium text-gray-400 transition hover:text-gray-200"
+          className="mt-6 pb-1 text-sm font-medium text-gray-400 transition hover:text-gray-200"
         >
           {UI_COPY_MAP.scenarioSelect.backToMenu}
         </button>

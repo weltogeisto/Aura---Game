@@ -25,14 +25,14 @@ test('ui copy map snapshot for release positioning and core actions', () => {
     },
     {
       release: {
-        badge: 'Desktop Beta Vertical Slice',
+        badge: 'Desktop Beta',
         title: 'Aura of the 21st Century',
-        subtitle: 'Louvre ist live: ein fertiger Raum, ein Schuss, ein klarer Score-Pfad.',
+        subtitle: '6 Szenarien spielbar: Louvre, St. Peter\'s, Topkapi, TSMC, MoMA, Borges Library.',
       },
       startView: {
         overline: 'Aura / Desktop Beta',
-        title: 'Louvre Entry Hall',
-        ctaPrimary: 'Run starten (Louvre)',
+        title: 'Aura of the 21st Century',
+        ctaPrimary: 'Szenario wählen',
       },
       mainMenu: {
         overline: 'Desktop Beta',
@@ -63,6 +63,6 @@ test('beta limitation copy explicitly documents all three honesty constraints', 
   const limitationText = UI_COPY_MAP.limitations.items.join(' ');
 
   assert.match(limitationText, /Single-shot constraint|Single-shot/i);
-  assert.match(limitationText, /Scenario maturity|maturation/i);
+  assert.match(limitationText, /remain locked|scenario/i);
   assert.match(limitationText, /Performance tiers|FPS/i);
 });

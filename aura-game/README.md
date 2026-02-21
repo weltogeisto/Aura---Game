@@ -49,6 +49,7 @@ This is the release entrypoint aligned with `WEB_BUILD.md` and `DESKTOP_BETA_PLA
 
 ## Known Limitations (Beta Honesty)
 
+- UI shell screens (Start, Scenario Select, Results) are tuned for mobile/narrow layouts and keep primary CTAs visible with viewport-capped scrolling.
 - One shot is hard-locked per run (no in-run reload).
 - Scenario maturity is uneven (Louvre polished first, other rooms still iterating).
 - Performance tiers may auto-step down visual fidelity to preserve responsive input under sustained FPS pressure.

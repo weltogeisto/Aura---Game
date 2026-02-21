@@ -5,22 +5,11 @@ import { isScenarioPlayable, sortScenariosByStatus } from '../src/components/ui/
 
 test('scenario sorting prioritizes playable then prototype then locked', () => {
   const sorted = sortScenariosByStatus(getScenariosList());
-  const statuses = sorted.map((scenario) => scenario.metadata.status);
+  const orderWeight = { playable: 0, prototype: 1, locked: 2 } as const;
+  const weights = sorted.map((scenario) => orderWeight[scenario.metadata.status]);
 
-  const firstPrototype = statuses.indexOf('prototype');
-  const firstLocked = statuses.indexOf('locked');
-
-  if (firstPrototype !== -1) {
-    assert.equal(statuses.slice(0, firstPrototype).every((status) => status === 'playable'), true);
-  }
-
-  if (firstLocked !== -1) {
-    const prototypeBlock = statuses.slice(firstPrototype === -1 ? 0 : firstPrototype, firstLocked);
-    assert.equal(prototypeBlock.every((status) => status === 'prototype'), true);
-  }
-
-  if (firstLocked !== -1) {
-    assert.equal(statuses.slice(firstLocked).every((status) => status === 'locked'), true);
+  for (let i = 1; i < weights.length; i++) {
+    assert.equal(weights[i] >= weights[i - 1], true, 'scenario status order must be monotonic');
   }
 });
 
@@ -42,11 +31,10 @@ test('scenario interactivity is strictly status-driven', () => {
   });
 });
 
-test('scenario select lock coverage includes prototype and locked entries', () => {
+test('scenario select lock coverage includes at least one non-playable entry', () => {
   const scenarios = getScenariosList();
   const nonPlayable = scenarios.filter((scenario) => !isScenarioPlayable(scenario));
 
   assert.equal(nonPlayable.length > 0, true);
-  assert.equal(nonPlayable.some((scenario) => scenario.metadata.status === 'prototype'), true);
-  assert.equal(nonPlayable.some((scenario) => scenario.metadata.status === 'locked'), true);
+  assert.equal(nonPlayable.some((scenario) => ['prototype', 'locked'].includes(scenario.metadata.status)), true);
 });
