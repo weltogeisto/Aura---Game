@@ -91,6 +91,23 @@ function resetStore() {
   useGameStore.setState(baseState);
 }
 
+function mockStorage() {
+  const storage = new Map<string, string>();
+
+  return {
+    getItem: (key: string) => storage.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      storage.set(key, value);
+    },
+    removeItem: (key: string) => {
+      storage.delete(key);
+    },
+    clear: () => {
+      storage.clear();
+    },
+  };
+}
+
 test('commitShot only applies once and blocks illegal re-fire while locked', () => {
   resetStore();
   const originalDateNow = Date.now;
@@ -217,4 +234,46 @@ test('selectors stay stable for future hook wrappers', () => {
   assert.equal(hasResult(resetState), false);
   assert.equal(canReplay(resetState), false);
   assert.equal(resetState.accessibility.highContrast, false);
+});
+
+test('setAccessibilityFlag persists updates and resetGame writes defaults', () => {
+  resetStore();
+  const localStorage = mockStorage();
+  Object.assign(globalThis, { localStorage });
+
+  useGameStore.getState().setAccessibilityFlag('highContrast', true);
+
+  const storedValue = localStorage.getItem('aura.accessibility.v1');
+  assert.ok(storedValue);
+  assert.deepEqual(JSON.parse(storedValue as string), {
+    reducedMotion: false,
+    highContrast: true,
+    aimAssist: false,
+  });
+
+  useGameStore.getState().resetGame();
+  const resetStoredValue = localStorage.getItem('aura.accessibility.v1');
+  assert.ok(resetStoredValue);
+  assert.deepEqual(JSON.parse(resetStoredValue as string), {
+    reducedMotion: false,
+    highContrast: false,
+    aimAssist: false,
+  });
+});
+
+test('setAccessibilityFlag remains safe when localStorage writes fail', () => {
+  resetStore();
+  const brokenStorage = {
+    getItem: () => null,
+    setItem: () => {
+      throw new Error('quota exceeded');
+    },
+    removeItem: () => undefined,
+    clear: () => undefined,
+  };
+
+  Object.assign(globalThis, { localStorage: brokenStorage });
+  useGameStore.getState().setAccessibilityFlag('reducedMotion', true);
+
+  assert.equal(useGameStore.getState().accessibility.reducedMotion, true);
 });

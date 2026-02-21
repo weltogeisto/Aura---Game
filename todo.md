@@ -2,6 +2,10 @@
 
 Open work items ordered by priority tier.
 
+## Recently completed
+
+- [x] **Accessibility preset persistence** — `reducedMotion`, `highContrast`, and `aimAssist` now persist via local storage with safe fallback behavior when storage is unavailable.
+
 ## Tier 1 — Blockers for public release
 
 - [ ] **Panorama assets** — Replace procedural SVG gradients with real equirectangular panoramas for all 6 playable scenarios. Louvre, St. Peter's, Topkapi, TSMC, MoMA, Borges Library. Asset pipeline: 8192×4096 JPEG hi-res + 2048×1024 JPEG lo-res per venue, placed under `aura-game/public/panoramas/`.

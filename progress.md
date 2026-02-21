@@ -35,3 +35,11 @@ Reason: all three are explicitly called out in the current Tier-2 mobile todo an
 - Updated `ScenarioSelect` container to use viewport-capped scrolling and mobile-first heading/card layout.
 - Updated `ResultsScreen` overlay/card sizing and breakdown grid columns for small screens.
 - Validation pending: lint, typecheck, tests, mobile screenshot.
+
+## Batch 2 — Accessibility preset persistence
+- Added persistent storage for accessibility toggles (`reducedMotion`, `highContrast`, `aimAssist`) in the Zustand store.
+- Store now hydrates accessibility flags from `localStorage` at startup with safe fallback to defaults.
+- Writes are guarded for private-mode/quota failures so runtime state updates still work.
+- `resetGame` now resets persisted accessibility flags to defaults to keep replay baseline deterministic.
+- Validation added in `runState.test.ts` for persistence and storage-failure behavior.
+
