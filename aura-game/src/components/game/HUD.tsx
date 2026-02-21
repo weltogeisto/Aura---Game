@@ -14,7 +14,7 @@ function AccessibilityToggles() {
   ];
 
   return (
-    <div className="pointer-events-auto absolute right-6 bottom-6 w-72 rounded-lg border border-white/15 bg-black/55 p-3 text-sm text-gray-200">
+    <div className="pointer-events-auto absolute right-3 bottom-3 sm:right-6 sm:bottom-6 w-52 sm:w-72 rounded-lg border border-white/15 bg-black/55 p-2 sm:p-3 text-xs sm:text-sm text-gray-200">
       <p className="text-xs uppercase tracking-[0.2em] text-orange-200">{UI_COPY_MAP.accessibility.heading}</p>
       <div className="mt-2 space-y-2">
         {toggles.map((toggle) => (
@@ -54,26 +54,26 @@ export function HUD() {
 
   return (
     <div className="pointer-events-none fixed inset-0 z-30">
-      <div className="absolute left-6 top-6 text-white">
+      <div className="absolute left-3 top-3 sm:left-6 sm:top-6 text-white">
         <p className="text-xs uppercase tracking-[0.2em] text-orange-300">Active scenario</p>
-        <h2 className="mt-1 text-2xl font-semibold text-orange-400">{selectedScenario.name}</h2>
-        <p className="mt-1 text-sm text-gray-300">{isShooting ? MICROCOPY.shootingHint : MICROCOPY.aimingHint}</p>
+        <h2 className="mt-1 text-xl sm:text-2xl font-semibold text-orange-400">{selectedScenario.name}</h2>
+        <p className="mt-1 text-xs sm:text-sm text-gray-300">{isShooting ? MICROCOPY.shootingHint : MICROCOPY.aimingHint}</p>
       </div>
 
-      <div className="absolute right-6 top-6 rounded-lg bg-black/50 px-4 py-2 text-white">
+      <div className="absolute right-3 top-3 sm:right-6 sm:top-6 rounded-lg bg-black/50 px-3 py-1 sm:px-4 sm:py-2 text-white">
         <p className="text-xs uppercase tracking-[0.2em] text-gray-300">Ammo</p>
-        <p className="text-3xl font-bold text-red-500">{ammoRemaining}</p>
+        <p className="text-2xl sm:text-3xl font-bold text-red-500">{ammoRemaining}</p>
       </div>
 
       {gamePhase === 'aiming' ? (
-        <div className="absolute bottom-6 left-6 space-y-1 text-sm text-gray-300">
+        <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 max-w-[calc(100%-14rem)] sm:max-w-none space-y-1 text-xs sm:text-sm text-gray-300">
           {UI_COPY_MAP.hud.controls.map((control) => (
             <p key={control}>{control}</p>
           ))}
           {fireBlocked && <p className="text-orange-300">{UI_COPY_MAP.hud.blockedShot}</p>}
         </div>
       ) : (
-        <div className="absolute bottom-6 left-6 max-w-xl rounded-lg border border-orange-500/35 bg-black/45 px-4 py-3 text-sm text-orange-100">
+        <div className="absolute bottom-3 left-3 sm:bottom-6 sm:left-6 max-w-[calc(100%-14rem)] sm:max-w-xl rounded-lg border border-orange-500/35 bg-black/45 px-3 py-2 sm:px-4 sm:py-3 text-sm text-orange-100">
           <p className="font-medium">{UI_COPY_MAP.hud.evaluating}</p>
           <p className="mt-1 text-orange-200">{UI_COPY_MAP.hud.criticDeliveryPrefix} “{typedCritic.text}{typedCritic.done ? '' : '▌'}”</p>
           {lastShotResult?.hitTargetName && (
