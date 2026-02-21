@@ -1,10 +1,666 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4096 2048'>
-<rect width='4096' height='2048' fill='#4a2f1f'/>
-<rect y='620' width='4096' height='1428' fill='#7b5435' opacity='0.45'/>
-<rect y='1080' width='4096' height='968' fill='#ba8c5b' opacity='0.3'/>
-<rect x='0' y='960' width='78' height='120' fill='#4a2f1f' opacity='0.72'/><rect x='85' y='940' width='78' height='140' fill='#7b5435' opacity='0.72'/><rect x='170' y='920' width='78' height='160' fill='#ba8c5b' opacity='0.72'/><rect x='255' y='900' width='78' height='180' fill='#4a2f1f' opacity='0.72'/><rect x='340' y='880' width='78' height='200' fill='#7b5435' opacity='0.72'/><rect x='425' y='860' width='78' height='220' fill='#ba8c5b' opacity='0.72'/><rect x='510' y='840' width='78' height='240' fill='#4a2f1f' opacity='0.72'/><rect x='595' y='960' width='78' height='120' fill='#7b5435' opacity='0.72'/><rect x='680' y='940' width='78' height='140' fill='#ba8c5b' opacity='0.72'/><rect x='765' y='920' width='78' height='160' fill='#4a2f1f' opacity='0.72'/><rect x='850' y='900' width='78' height='180' fill='#7b5435' opacity='0.72'/><rect x='935' y='880' width='78' height='200' fill='#ba8c5b' opacity='0.72'/><rect x='1020' y='860' width='78' height='220' fill='#4a2f1f' opacity='0.72'/><rect x='1105' y='840' width='78' height='240' fill='#7b5435' opacity='0.72'/><rect x='1190' y='960' width='78' height='120' fill='#ba8c5b' opacity='0.72'/><rect x='1275' y='940' width='78' height='140' fill='#4a2f1f' opacity='0.72'/><rect x='1360' y='920' width='78' height='160' fill='#7b5435' opacity='0.72'/><rect x='1445' y='900' width='78' height='180' fill='#ba8c5b' opacity='0.72'/><rect x='1530' y='880' width='78' height='200' fill='#4a2f1f' opacity='0.72'/><rect x='1615' y='860' width='78' height='220' fill='#7b5435' opacity='0.72'/><rect x='1700' y='840' width='78' height='240' fill='#ba8c5b' opacity='0.72'/><rect x='1785' y='960' width='78' height='120' fill='#4a2f1f' opacity='0.72'/><rect x='1870' y='940' width='78' height='140' fill='#7b5435' opacity='0.72'/><rect x='1955' y='920' width='78' height='160' fill='#ba8c5b' opacity='0.72'/><rect x='2040' y='900' width='78' height='180' fill='#4a2f1f' opacity='0.72'/><rect x='2125' y='880' width='78' height='200' fill='#7b5435' opacity='0.72'/><rect x='2210' y='860' width='78' height='220' fill='#ba8c5b' opacity='0.72'/><rect x='2295' y='840' width='78' height='240' fill='#4a2f1f' opacity='0.72'/><rect x='2380' y='960' width='78' height='120' fill='#7b5435' opacity='0.72'/><rect x='2465' y='940' width='78' height='140' fill='#ba8c5b' opacity='0.72'/><rect x='2550' y='920' width='78' height='160' fill='#4a2f1f' opacity='0.72'/><rect x='2635' y='900' width='78' height='180' fill='#7b5435' opacity='0.72'/><rect x='2720' y='880' width='78' height='200' fill='#ba8c5b' opacity='0.72'/><rect x='2805' y='860' width='78' height='220' fill='#4a2f1f' opacity='0.72'/><rect x='2890' y='840' width='78' height='240' fill='#7b5435' opacity='0.72'/><rect x='2975' y='960' width='78' height='120' fill='#ba8c5b' opacity='0.72'/><rect x='3060' y='940' width='78' height='140' fill='#4a2f1f' opacity='0.72'/><rect x='3145' y='920' width='78' height='160' fill='#7b5435' opacity='0.72'/><rect x='3230' y='900' width='78' height='180' fill='#ba8c5b' opacity='0.72'/><rect x='3315' y='880' width='78' height='200' fill='#4a2f1f' opacity='0.72'/><rect x='3400' y='860' width='78' height='220' fill='#7b5435' opacity='0.72'/><rect x='3485' y='840' width='78' height='240' fill='#ba8c5b' opacity='0.72'/><rect x='3570' y='960' width='78' height='120' fill='#4a2f1f' opacity='0.72'/><rect x='3655' y='940' width='78' height='140' fill='#7b5435' opacity='0.72'/><rect x='3740' y='920' width='78' height='160' fill='#ba8c5b' opacity='0.72'/><rect x='3825' y='900' width='78' height='180' fill='#4a2f1f' opacity='0.72'/><rect x='3910' y='880' width='78' height='200' fill='#7b5435' opacity='0.72'/><rect x='3995' y='860' width='78' height='220' fill='#ba8c5b' opacity='0.72'/>
-<path d='M80 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M335 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M590 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M845 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1100 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1355 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1610 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1865 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2120 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2375 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2630 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2885 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3140 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3395 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3650 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3905 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/>
-<g opacity='0.18' stroke='#ba8c5b' stroke-width='5'>
-<line x1='0' y1='730' x2='4096' y2='760'/><line x1='0' y1='785' x2='4096' y2='815'/><line x1='0' y1='840' x2='4096' y2='870'/><line x1='0' y1='895' x2='4096' y2='925'/><line x1='0' y1='950' x2='4096' y2='980'/><line x1='0' y1='1005' x2='4096' y2='1035'/><line x1='0' y1='1060' x2='4096' y2='1090'/><line x1='0' y1='1115' x2='4096' y2='1145'/><line x1='0' y1='1170' x2='4096' y2='1200'/><line x1='0' y1='1225' x2='4096' y2='1255'/><line x1='0' y1='1280' x2='4096' y2='1310'/><line x1='0' y1='1335' x2='4096' y2='1365'/><line x1='0' y1='1390' x2='4096' y2='1420'/><line x1='0' y1='1445' x2='4096' y2='1475'/><line x1='0' y1='1500' x2='4096' y2='1530'/><line x1='0' y1='1555' x2='4096' y2='1585'/><line x1='0' y1='1610' x2='4096' y2='1640'/><line x1='0' y1='1665' x2='4096' y2='1695'/>
-</g>
+<defs><linearGradient id='bc' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#100704' stop-opacity='1'/><stop offset='100%' stop-color='#1e0d06' stop-opacity='1'/></linearGradient><linearGradient id='bw' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#2a1206' stop-opacity='1'/><stop offset='100%' stop-color='#0e0803' stop-opacity='1'/></linearGradient><linearGradient id='bf' x1='0' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='#1a0c04' stop-opacity='1'/><stop offset='100%' stop-color='#060303' stop-opacity='1'/></linearGradient><radialGradient id='bl1' cx='25%' cy='45%' r='35%'><stop offset='0%' stop-color='#f5c030' stop-opacity='0.55'/><stop offset='100%' stop-color='#f5c030' stop-opacity='0'/></radialGradient><radialGradient id='bl2' cx='75%' cy='45%' r='35%'><stop offset='0%' stop-color='#f5c030' stop-opacity='0.4'/><stop offset='100%' stop-color='#f5c030' stop-opacity='0'/></radialGradient><radialGradient id='bl3' cx='50%' cy='45%' r='28%'><stop offset='0%' stop-color='#f8a020' stop-opacity='0.3'/><stop offset='100%' stop-color='#f8a020' stop-opacity='0'/></radialGradient><radialGradient id='bv' cx='50%' cy='50%' r='50%'><stop offset='0%' stop-color='transparent' stop-opacity='0'/><stop offset='70%' stop-color='#040201' stop-opacity='0'/><stop offset='100%' stop-color='#040201' stop-opacity='0.7'/></radialGradient></defs>
+
+<rect width='4096' height='2048' fill='url(#bc)'/>
+<rect y='700' width='4096' height='720' fill='url(#bw)'/>
+<rect y='1420' width='4096' height='628' fill='url(#bf)'/>
+<rect x='0' y='770' width='24' height='190' fill='#7a3808'/>
+<rect x='0' y='770' width='1' height='190' fill='#f0c060' opacity='0.12'/>
+<rect x='25' y='767' width='24' height='193' fill='#4a2004'/>
+<rect x='25' y='767' width='1' height='193' fill='#f0c060' opacity='0.12'/>
+<rect x='50' y='734' width='24' height='226' fill='#c06020'/>
+<rect x='50' y='734' width='1' height='226' fill='#f0c060' opacity='0.12'/>
+<rect x='75' y='702' width='24' height='258' fill='#3a1804'/>
+<rect x='75' y='702' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='100' y='764' width='24' height='196' fill='#8a4010'/>
+<rect x='100' y='764' width='1' height='196' fill='#f0c060' opacity='0.12'/>
+<rect x='125' y='724' width='24' height='236' fill='#5a2c08'/>
+<rect x='125' y='724' width='1' height='236' fill='#f0c060' opacity='0.12'/>
+<rect x='150' y='713' width='24' height='247' fill='#d07030'/>
+<rect x='150' y='713' width='1' height='247' fill='#f0c060' opacity='0.12'/>
+<rect x='175' y='750' width='24' height='210' fill='#2a1404'/>
+<rect x='175' y='750' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='200' y='791' width='24' height='169' fill='#7a3808'/>
+<rect x='200' y='791' width='1' height='169' fill='#f0c060' opacity='0.12'/>
+<rect x='225' y='714' width='24' height='246' fill='#4a2004'/>
+<rect x='225' y='714' width='1' height='246' fill='#f0c060' opacity='0.12'/>
+<rect x='250' y='721' width='24' height='239' fill='#c06020'/>
+<rect x='250' y='721' width='1' height='239' fill='#f0c060' opacity='0.12'/>
+<rect x='275' y='780' width='24' height='180' fill='#3a1804'/>
+<rect x='275' y='780' width='1' height='180' fill='#f0c060' opacity='0.12'/>
+<rect x='300' y='716' width='24' height='244' fill='#8a4010'/>
+<rect x='300' y='716' width='1' height='244' fill='#f0c060' opacity='0.12'/>
+<rect x='325' y='771' width='24' height='189' fill='#5a2c08'/>
+<rect x='325' y='771' width='1' height='189' fill='#f0c060' opacity='0.12'/>
+<rect x='350' y='761' width='24' height='199' fill='#d07030'/>
+<rect x='350' y='761' width='1' height='199' fill='#f0c060' opacity='0.12'/>
+<rect x='375' y='749' width='24' height='211' fill='#2a1404'/>
+<rect x='375' y='749' width='1' height='211' fill='#f0c060' opacity='0.12'/>
+<rect x='400' y='710' width='24' height='250' fill='#7a3808'/>
+<rect x='400' y='710' width='1' height='250' fill='#f0c060' opacity='0.12'/>
+<rect x='425' y='755' width='24' height='205' fill='#4a2004'/>
+<rect x='425' y='755' width='1' height='205' fill='#f0c060' opacity='0.12'/>
+<rect x='450' y='769' width='24' height='191' fill='#c06020'/>
+<rect x='450' y='769' width='1' height='191' fill='#f0c060' opacity='0.12'/>
+<rect x='475' y='712' width='24' height='248' fill='#3a1804'/>
+<rect x='475' y='712' width='1' height='248' fill='#f0c060' opacity='0.12'/>
+<rect x='500' y='713' width='24' height='247' fill='#8a4010'/>
+<rect x='500' y='713' width='1' height='247' fill='#f0c060' opacity='0.12'/>
+<rect x='525' y='754' width='24' height='206' fill='#5a2c08'/>
+<rect x='525' y='754' width='1' height='206' fill='#f0c060' opacity='0.12'/>
+<rect x='550' y='750' width='24' height='210' fill='#d07030'/>
+<rect x='550' y='750' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='575' y='749' width='24' height='211' fill='#2a1404'/>
+<rect x='575' y='749' width='1' height='211' fill='#f0c060' opacity='0.12'/>
+<rect x='600' y='701' width='24' height='259' fill='#7a3808'/>
+<rect x='600' y='701' width='1' height='259' fill='#f0c060' opacity='0.12'/>
+<rect x='625' y='741' width='24' height='219' fill='#4a2004'/>
+<rect x='625' y='741' width='1' height='219' fill='#f0c060' opacity='0.12'/>
+<rect x='650' y='761' width='24' height='199' fill='#c06020'/>
+<rect x='650' y='761' width='1' height='199' fill='#f0c060' opacity='0.12'/>
+<rect x='675' y='780' width='24' height='180' fill='#3a1804'/>
+<rect x='675' y='780' width='1' height='180' fill='#f0c060' opacity='0.12'/>
+<rect x='700' y='724' width='24' height='236' fill='#8a4010'/>
+<rect x='700' y='724' width='1' height='236' fill='#f0c060' opacity='0.12'/>
+<rect x='725' y='780' width='24' height='180' fill='#5a2c08'/>
+<rect x='725' y='780' width='1' height='180' fill='#f0c060' opacity='0.12'/>
+<rect x='750' y='784' width='24' height='176' fill='#d07030'/>
+<rect x='750' y='784' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='775' y='745' width='24' height='215' fill='#2a1404'/>
+<rect x='775' y='745' width='1' height='215' fill='#f0c060' opacity='0.12'/>
+<rect x='800' y='721' width='24' height='239' fill='#7a3808'/>
+<rect x='800' y='721' width='1' height='239' fill='#f0c060' opacity='0.12'/>
+<rect x='825' y='740' width='24' height='220' fill='#4a2004'/>
+<rect x='825' y='740' width='1' height='220' fill='#f0c060' opacity='0.12'/>
+<rect x='850' y='706' width='24' height='254' fill='#c06020'/>
+<rect x='850' y='706' width='1' height='254' fill='#f0c060' opacity='0.12'/>
+<rect x='875' y='719' width='24' height='241' fill='#3a1804'/>
+<rect x='875' y='719' width='1' height='241' fill='#f0c060' opacity='0.12'/>
+<rect x='900' y='787' width='24' height='173' fill='#8a4010'/>
+<rect x='900' y='787' width='1' height='173' fill='#f0c060' opacity='0.12'/>
+<rect x='925' y='736' width='24' height='224' fill='#5a2c08'/>
+<rect x='925' y='736' width='1' height='224' fill='#f0c060' opacity='0.12'/>
+<rect x='950' y='784' width='24' height='176' fill='#d07030'/>
+<rect x='950' y='784' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='975' y='731' width='24' height='229' fill='#2a1404'/>
+<rect x='975' y='731' width='1' height='229' fill='#f0c060' opacity='0.12'/>
+<rect x='1000' y='708' width='24' height='252' fill='#7a3808'/>
+<rect x='1000' y='708' width='1' height='252' fill='#f0c060' opacity='0.12'/>
+<rect x='1025' y='715' width='24' height='245' fill='#4a2004'/>
+<rect x='1025' y='715' width='1' height='245' fill='#f0c060' opacity='0.12'/>
+<rect x='1050' y='781' width='24' height='179' fill='#c06020'/>
+<rect x='1050' y='781' width='1' height='179' fill='#f0c060' opacity='0.12'/>
+<rect x='1075' y='770' width='24' height='190' fill='#3a1804'/>
+<rect x='1075' y='770' width='1' height='190' fill='#f0c060' opacity='0.12'/>
+<rect x='1100' y='724' width='24' height='236' fill='#8a4010'/>
+<rect x='1100' y='724' width='1' height='236' fill='#f0c060' opacity='0.12'/>
+<rect x='1125' y='736' width='24' height='224' fill='#5a2c08'/>
+<rect x='1125' y='736' width='1' height='224' fill='#f0c060' opacity='0.12'/>
+<rect x='1150' y='778' width='24' height='182' fill='#d07030'/>
+<rect x='1150' y='778' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='1175' y='743' width='24' height='217' fill='#2a1404'/>
+<rect x='1175' y='743' width='1' height='217' fill='#f0c060' opacity='0.12'/>
+<rect x='1200' y='785' width='24' height='175' fill='#7a3808'/>
+<rect x='1200' y='785' width='1' height='175' fill='#f0c060' opacity='0.12'/>
+<rect x='1225' y='705' width='24' height='255' fill='#4a2004'/>
+<rect x='1225' y='705' width='1' height='255' fill='#f0c060' opacity='0.12'/>
+<rect x='1250' y='738' width='24' height='222' fill='#c06020'/>
+<rect x='1250' y='738' width='1' height='222' fill='#f0c060' opacity='0.12'/>
+<rect x='1275' y='739' width='24' height='221' fill='#3a1804'/>
+<rect x='1275' y='739' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='1300' y='702' width='24' height='258' fill='#8a4010'/>
+<rect x='1300' y='702' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='1325' y='764' width='24' height='196' fill='#5a2c08'/>
+<rect x='1325' y='764' width='1' height='196' fill='#f0c060' opacity='0.12'/>
+<rect x='1350' y='752' width='24' height='208' fill='#d07030'/>
+<rect x='1350' y='752' width='1' height='208' fill='#f0c060' opacity='0.12'/>
+<rect x='1375' y='718' width='24' height='242' fill='#2a1404'/>
+<rect x='1375' y='718' width='1' height='242' fill='#f0c060' opacity='0.12'/>
+<rect x='1400' y='746' width='24' height='214' fill='#7a3808'/>
+<rect x='1400' y='746' width='1' height='214' fill='#f0c060' opacity='0.12'/>
+<rect x='1425' y='744' width='24' height='216' fill='#4a2004'/>
+<rect x='1425' y='744' width='1' height='216' fill='#f0c060' opacity='0.12'/>
+<rect x='1450' y='718' width='24' height='242' fill='#c06020'/>
+<rect x='1450' y='718' width='1' height='242' fill='#f0c060' opacity='0.12'/>
+<rect x='1475' y='784' width='24' height='176' fill='#3a1804'/>
+<rect x='1475' y='784' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='1500' y='711' width='24' height='249' fill='#8a4010'/>
+<rect x='1500' y='711' width='1' height='249' fill='#f0c060' opacity='0.12'/>
+<rect x='1525' y='753' width='24' height='207' fill='#5a2c08'/>
+<rect x='1525' y='753' width='1' height='207' fill='#f0c060' opacity='0.12'/>
+<rect x='1550' y='708' width='24' height='252' fill='#d07030'/>
+<rect x='1550' y='708' width='1' height='252' fill='#f0c060' opacity='0.12'/>
+<rect x='1575' y='729' width='24' height='231' fill='#2a1404'/>
+<rect x='1575' y='729' width='1' height='231' fill='#f0c060' opacity='0.12'/>
+<rect x='1600' y='729' width='24' height='231' fill='#7a3808'/>
+<rect x='1600' y='729' width='1' height='231' fill='#f0c060' opacity='0.12'/>
+<rect x='1625' y='771' width='24' height='189' fill='#4a2004'/>
+<rect x='1625' y='771' width='1' height='189' fill='#f0c060' opacity='0.12'/>
+<rect x='1650' y='772' width='24' height='188' fill='#c06020'/>
+<rect x='1650' y='772' width='1' height='188' fill='#f0c060' opacity='0.12'/>
+<rect x='1675' y='716' width='24' height='244' fill='#3a1804'/>
+<rect x='1675' y='716' width='1' height='244' fill='#f0c060' opacity='0.12'/>
+<rect x='1700' y='713' width='24' height='247' fill='#8a4010'/>
+<rect x='1700' y='713' width='1' height='247' fill='#f0c060' opacity='0.12'/>
+<rect x='1725' y='708' width='24' height='252' fill='#5a2c08'/>
+<rect x='1725' y='708' width='1' height='252' fill='#f0c060' opacity='0.12'/>
+<rect x='1750' y='741' width='24' height='219' fill='#d07030'/>
+<rect x='1750' y='741' width='1' height='219' fill='#f0c060' opacity='0.12'/>
+<rect x='1775' y='768' width='24' height='192' fill='#2a1404'/>
+<rect x='1775' y='768' width='1' height='192' fill='#f0c060' opacity='0.12'/>
+<rect x='1800' y='721' width='24' height='239' fill='#7a3808'/>
+<rect x='1800' y='721' width='1' height='239' fill='#f0c060' opacity='0.12'/>
+<rect x='1825' y='772' width='24' height='188' fill='#4a2004'/>
+<rect x='1825' y='772' width='1' height='188' fill='#f0c060' opacity='0.12'/>
+<rect x='1850' y='738' width='24' height='222' fill='#c06020'/>
+<rect x='1850' y='738' width='1' height='222' fill='#f0c060' opacity='0.12'/>
+<rect x='1875' y='736' width='24' height='224' fill='#3a1804'/>
+<rect x='1875' y='736' width='1' height='224' fill='#f0c060' opacity='0.12'/>
+<rect x='1900' y='789' width='24' height='171' fill='#8a4010'/>
+<rect x='1900' y='789' width='1' height='171' fill='#f0c060' opacity='0.12'/>
+<rect x='1925' y='734' width='24' height='226' fill='#5a2c08'/>
+<rect x='1925' y='734' width='1' height='226' fill='#f0c060' opacity='0.12'/>
+<rect x='1950' y='742' width='24' height='218' fill='#d07030'/>
+<rect x='1950' y='742' width='1' height='218' fill='#f0c060' opacity='0.12'/>
+<rect x='1975' y='791' width='24' height='169' fill='#2a1404'/>
+<rect x='1975' y='791' width='1' height='169' fill='#f0c060' opacity='0.12'/>
+<rect x='2000' y='721' width='24' height='239' fill='#7a3808'/>
+<rect x='2000' y='721' width='1' height='239' fill='#f0c060' opacity='0.12'/>
+<rect x='2025' y='784' width='24' height='176' fill='#4a2004'/>
+<rect x='2025' y='784' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='2050' y='736' width='24' height='224' fill='#c06020'/>
+<rect x='2050' y='736' width='1' height='224' fill='#f0c060' opacity='0.12'/>
+<rect x='2075' y='709' width='24' height='251' fill='#3a1804'/>
+<rect x='2075' y='709' width='1' height='251' fill='#f0c060' opacity='0.12'/>
+<rect x='2100' y='757' width='24' height='203' fill='#8a4010'/>
+<rect x='2100' y='757' width='1' height='203' fill='#f0c060' opacity='0.12'/>
+<rect x='2125' y='702' width='24' height='258' fill='#5a2c08'/>
+<rect x='2125' y='702' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='2150' y='767' width='24' height='193' fill='#d07030'/>
+<rect x='2150' y='767' width='1' height='193' fill='#f0c060' opacity='0.12'/>
+<rect x='2175' y='716' width='24' height='244' fill='#2a1404'/>
+<rect x='2175' y='716' width='1' height='244' fill='#f0c060' opacity='0.12'/>
+<rect x='2200' y='765' width='24' height='195' fill='#7a3808'/>
+<rect x='2200' y='765' width='1' height='195' fill='#f0c060' opacity='0.12'/>
+<rect x='2225' y='723' width='24' height='237' fill='#4a2004'/>
+<rect x='2225' y='723' width='1' height='237' fill='#f0c060' opacity='0.12'/>
+<rect x='2250' y='710' width='24' height='250' fill='#c06020'/>
+<rect x='2250' y='710' width='1' height='250' fill='#f0c060' opacity='0.12'/>
+<rect x='2275' y='773' width='24' height='187' fill='#3a1804'/>
+<rect x='2275' y='773' width='1' height='187' fill='#f0c060' opacity='0.12'/>
+<rect x='2300' y='707' width='24' height='253' fill='#8a4010'/>
+<rect x='2300' y='707' width='1' height='253' fill='#f0c060' opacity='0.12'/>
+<rect x='2325' y='708' width='24' height='252' fill='#5a2c08'/>
+<rect x='2325' y='708' width='1' height='252' fill='#f0c060' opacity='0.12'/>
+<rect x='2350' y='790' width='24' height='170' fill='#d07030'/>
+<rect x='2350' y='790' width='1' height='170' fill='#f0c060' opacity='0.12'/>
+<rect x='2375' y='782' width='24' height='178' fill='#2a1404'/>
+<rect x='2375' y='782' width='1' height='178' fill='#f0c060' opacity='0.12'/>
+<rect x='2400' y='740' width='24' height='220' fill='#7a3808'/>
+<rect x='2400' y='740' width='1' height='220' fill='#f0c060' opacity='0.12'/>
+<rect x='2425' y='762' width='24' height='198' fill='#4a2004'/>
+<rect x='2425' y='762' width='1' height='198' fill='#f0c060' opacity='0.12'/>
+<rect x='2450' y='755' width='24' height='205' fill='#c06020'/>
+<rect x='2450' y='755' width='1' height='205' fill='#f0c060' opacity='0.12'/>
+<rect x='2475' y='743' width='24' height='217' fill='#3a1804'/>
+<rect x='2475' y='743' width='1' height='217' fill='#f0c060' opacity='0.12'/>
+<rect x='2500' y='742' width='24' height='218' fill='#8a4010'/>
+<rect x='2500' y='742' width='1' height='218' fill='#f0c060' opacity='0.12'/>
+<rect x='2525' y='766' width='24' height='194' fill='#5a2c08'/>
+<rect x='2525' y='766' width='1' height='194' fill='#f0c060' opacity='0.12'/>
+<rect x='2550' y='770' width='24' height='190' fill='#d07030'/>
+<rect x='2550' y='770' width='1' height='190' fill='#f0c060' opacity='0.12'/>
+<rect x='2575' y='730' width='24' height='230' fill='#2a1404'/>
+<rect x='2575' y='730' width='1' height='230' fill='#f0c060' opacity='0.12'/>
+<rect x='2600' y='747' width='24' height='213' fill='#7a3808'/>
+<rect x='2600' y='747' width='1' height='213' fill='#f0c060' opacity='0.12'/>
+<rect x='2625' y='710' width='24' height='250' fill='#4a2004'/>
+<rect x='2625' y='710' width='1' height='250' fill='#f0c060' opacity='0.12'/>
+<rect x='2650' y='791' width='24' height='169' fill='#c06020'/>
+<rect x='2650' y='791' width='1' height='169' fill='#f0c060' opacity='0.12'/>
+<rect x='2675' y='787' width='24' height='173' fill='#3a1804'/>
+<rect x='2675' y='787' width='1' height='173' fill='#f0c060' opacity='0.12'/>
+<rect x='2700' y='736' width='24' height='224' fill='#8a4010'/>
+<rect x='2700' y='736' width='1' height='224' fill='#f0c060' opacity='0.12'/>
+<rect x='2725' y='713' width='24' height='247' fill='#5a2c08'/>
+<rect x='2725' y='713' width='1' height='247' fill='#f0c060' opacity='0.12'/>
+<rect x='2750' y='738' width='24' height='222' fill='#d07030'/>
+<rect x='2750' y='738' width='1' height='222' fill='#f0c060' opacity='0.12'/>
+<rect x='2775' y='777' width='24' height='183' fill='#2a1404'/>
+<rect x='2775' y='777' width='1' height='183' fill='#f0c060' opacity='0.12'/>
+<rect x='2800' y='710' width='24' height='250' fill='#7a3808'/>
+<rect x='2800' y='710' width='1' height='250' fill='#f0c060' opacity='0.12'/>
+<rect x='2825' y='786' width='24' height='174' fill='#4a2004'/>
+<rect x='2825' y='786' width='1' height='174' fill='#f0c060' opacity='0.12'/>
+<rect x='2850' y='708' width='24' height='252' fill='#c06020'/>
+<rect x='2850' y='708' width='1' height='252' fill='#f0c060' opacity='0.12'/>
+<rect x='2875' y='700' width='24' height='260' fill='#3a1804'/>
+<rect x='2875' y='700' width='1' height='260' fill='#f0c060' opacity='0.12'/>
+<rect x='2900' y='783' width='24' height='177' fill='#8a4010'/>
+<rect x='2900' y='783' width='1' height='177' fill='#f0c060' opacity='0.12'/>
+<rect x='2925' y='783' width='24' height='177' fill='#5a2c08'/>
+<rect x='2925' y='783' width='1' height='177' fill='#f0c060' opacity='0.12'/>
+<rect x='2950' y='743' width='24' height='217' fill='#d07030'/>
+<rect x='2950' y='743' width='1' height='217' fill='#f0c060' opacity='0.12'/>
+<rect x='2975' y='750' width='24' height='210' fill='#2a1404'/>
+<rect x='2975' y='750' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='3000' y='770' width='24' height='190' fill='#7a3808'/>
+<rect x='3000' y='770' width='1' height='190' fill='#f0c060' opacity='0.12'/>
+<rect x='3025' y='734' width='24' height='226' fill='#4a2004'/>
+<rect x='3025' y='734' width='1' height='226' fill='#f0c060' opacity='0.12'/>
+<rect x='3050' y='746' width='24' height='214' fill='#c06020'/>
+<rect x='3050' y='746' width='1' height='214' fill='#f0c060' opacity='0.12'/>
+<rect x='3075' y='739' width='24' height='221' fill='#3a1804'/>
+<rect x='3075' y='739' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='3100' y='731' width='24' height='229' fill='#8a4010'/>
+<rect x='3100' y='731' width='1' height='229' fill='#f0c060' opacity='0.12'/>
+<rect x='3125' y='769' width='24' height='191' fill='#5a2c08'/>
+<rect x='3125' y='769' width='1' height='191' fill='#f0c060' opacity='0.12'/>
+<rect x='3150' y='720' width='24' height='240' fill='#d07030'/>
+<rect x='3150' y='720' width='1' height='240' fill='#f0c060' opacity='0.12'/>
+<rect x='3175' y='789' width='24' height='171' fill='#2a1404'/>
+<rect x='3175' y='789' width='1' height='171' fill='#f0c060' opacity='0.12'/>
+<rect x='3200' y='760' width='24' height='200' fill='#7a3808'/>
+<rect x='3200' y='760' width='1' height='200' fill='#f0c060' opacity='0.12'/>
+<rect x='3225' y='740' width='24' height='220' fill='#4a2004'/>
+<rect x='3225' y='740' width='1' height='220' fill='#f0c060' opacity='0.12'/>
+<rect x='3250' y='739' width='24' height='221' fill='#c06020'/>
+<rect x='3250' y='739' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='3275' y='705' width='24' height='255' fill='#3a1804'/>
+<rect x='3275' y='705' width='1' height='255' fill='#f0c060' opacity='0.12'/>
+<rect x='3300' y='775' width='24' height='185' fill='#8a4010'/>
+<rect x='3300' y='775' width='1' height='185' fill='#f0c060' opacity='0.12'/>
+<rect x='3325' y='788' width='24' height='172' fill='#5a2c08'/>
+<rect x='3325' y='788' width='1' height='172' fill='#f0c060' opacity='0.12'/>
+<rect x='3350' y='758' width='24' height='202' fill='#d07030'/>
+<rect x='3350' y='758' width='1' height='202' fill='#f0c060' opacity='0.12'/>
+<rect x='3375' y='704' width='24' height='256' fill='#2a1404'/>
+<rect x='3375' y='704' width='1' height='256' fill='#f0c060' opacity='0.12'/>
+<rect x='3400' y='747' width='24' height='213' fill='#7a3808'/>
+<rect x='3400' y='747' width='1' height='213' fill='#f0c060' opacity='0.12'/>
+<rect x='3425' y='781' width='24' height='179' fill='#4a2004'/>
+<rect x='3425' y='781' width='1' height='179' fill='#f0c060' opacity='0.12'/>
+<rect x='3450' y='706' width='24' height='254' fill='#c06020'/>
+<rect x='3450' y='706' width='1' height='254' fill='#f0c060' opacity='0.12'/>
+<rect x='3475' y='737' width='24' height='223' fill='#3a1804'/>
+<rect x='3475' y='737' width='1' height='223' fill='#f0c060' opacity='0.12'/>
+<rect x='3500' y='774' width='24' height='186' fill='#8a4010'/>
+<rect x='3500' y='774' width='1' height='186' fill='#f0c060' opacity='0.12'/>
+<rect x='3525' y='706' width='24' height='254' fill='#5a2c08'/>
+<rect x='3525' y='706' width='1' height='254' fill='#f0c060' opacity='0.12'/>
+<rect x='3550' y='756' width='24' height='204' fill='#d07030'/>
+<rect x='3550' y='756' width='1' height='204' fill='#f0c060' opacity='0.12'/>
+<rect x='3575' y='739' width='24' height='221' fill='#2a1404'/>
+<rect x='3575' y='739' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='3600' y='700' width='24' height='260' fill='#7a3808'/>
+<rect x='3600' y='700' width='1' height='260' fill='#f0c060' opacity='0.12'/>
+<rect x='3625' y='791' width='24' height='169' fill='#4a2004'/>
+<rect x='3625' y='791' width='1' height='169' fill='#f0c060' opacity='0.12'/>
+<rect x='3650' y='745' width='24' height='215' fill='#c06020'/>
+<rect x='3650' y='745' width='1' height='215' fill='#f0c060' opacity='0.12'/>
+<rect x='3675' y='721' width='24' height='239' fill='#3a1804'/>
+<rect x='3675' y='721' width='1' height='239' fill='#f0c060' opacity='0.12'/>
+<rect x='3700' y='723' width='24' height='237' fill='#8a4010'/>
+<rect x='3700' y='723' width='1' height='237' fill='#f0c060' opacity='0.12'/>
+<rect x='3725' y='714' width='24' height='246' fill='#5a2c08'/>
+<rect x='3725' y='714' width='1' height='246' fill='#f0c060' opacity='0.12'/>
+<rect x='3750' y='728' width='24' height='232' fill='#d07030'/>
+<rect x='3750' y='728' width='1' height='232' fill='#f0c060' opacity='0.12'/>
+<rect x='3775' y='722' width='24' height='238' fill='#2a1404'/>
+<rect x='3775' y='722' width='1' height='238' fill='#f0c060' opacity='0.12'/>
+<rect x='3800' y='752' width='24' height='208' fill='#7a3808'/>
+<rect x='3800' y='752' width='1' height='208' fill='#f0c060' opacity='0.12'/>
+<rect x='3825' y='732' width='24' height='228' fill='#4a2004'/>
+<rect x='3825' y='732' width='1' height='228' fill='#f0c060' opacity='0.12'/>
+<rect x='3850' y='761' width='24' height='199' fill='#c06020'/>
+<rect x='3850' y='761' width='1' height='199' fill='#f0c060' opacity='0.12'/>
+<rect x='3875' y='774' width='24' height='186' fill='#3a1804'/>
+<rect x='3875' y='774' width='1' height='186' fill='#f0c060' opacity='0.12'/>
+<rect x='3900' y='737' width='24' height='223' fill='#8a4010'/>
+<rect x='3900' y='737' width='1' height='223' fill='#f0c060' opacity='0.12'/>
+<rect x='3925' y='710' width='24' height='250' fill='#5a2c08'/>
+<rect x='3925' y='710' width='1' height='250' fill='#f0c060' opacity='0.12'/>
+<rect x='3950' y='771' width='24' height='189' fill='#d07030'/>
+<rect x='3950' y='771' width='1' height='189' fill='#f0c060' opacity='0.12'/>
+<rect x='3975' y='759' width='24' height='201' fill='#2a1404'/>
+<rect x='3975' y='759' width='1' height='201' fill='#f0c060' opacity='0.12'/>
+<rect x='0' y='1195' width='24' height='225' fill='#7a3808'/>
+<rect x='0' y='1195' width='1' height='225' fill='#f0c060' opacity='0.12'/>
+<rect x='25' y='1223' width='24' height='197' fill='#4a2004'/>
+<rect x='25' y='1223' width='1' height='197' fill='#f0c060' opacity='0.12'/>
+<rect x='50' y='1193' width='24' height='227' fill='#c06020'/>
+<rect x='50' y='1193' width='1' height='227' fill='#f0c060' opacity='0.12'/>
+<rect x='75' y='1201' width='24' height='219' fill='#3a1804'/>
+<rect x='75' y='1201' width='1' height='219' fill='#f0c060' opacity='0.12'/>
+<rect x='100' y='1188' width='24' height='232' fill='#8a4010'/>
+<rect x='100' y='1188' width='1' height='232' fill='#f0c060' opacity='0.12'/>
+<rect x='125' y='1178' width='24' height='242' fill='#5a2c08'/>
+<rect x='125' y='1178' width='1' height='242' fill='#f0c060' opacity='0.12'/>
+<rect x='150' y='1204' width='24' height='216' fill='#d07030'/>
+<rect x='150' y='1204' width='1' height='216' fill='#f0c060' opacity='0.12'/>
+<rect x='175' y='1250' width='24' height='170' fill='#2a1404'/>
+<rect x='175' y='1250' width='1' height='170' fill='#f0c060' opacity='0.12'/>
+<rect x='200' y='1224' width='24' height='196' fill='#7a3808'/>
+<rect x='200' y='1224' width='1' height='196' fill='#f0c060' opacity='0.12'/>
+<rect x='225' y='1226' width='24' height='194' fill='#4a2004'/>
+<rect x='225' y='1226' width='1' height='194' fill='#f0c060' opacity='0.12'/>
+<rect x='250' y='1162' width='24' height='258' fill='#c06020'/>
+<rect x='250' y='1162' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='275' y='1175' width='24' height='245' fill='#3a1804'/>
+<rect x='275' y='1175' width='1' height='245' fill='#f0c060' opacity='0.12'/>
+<rect x='300' y='1226' width='24' height='194' fill='#8a4010'/>
+<rect x='300' y='1226' width='1' height='194' fill='#f0c060' opacity='0.12'/>
+<rect x='325' y='1224' width='24' height='196' fill='#5a2c08'/>
+<rect x='325' y='1224' width='1' height='196' fill='#f0c060' opacity='0.12'/>
+<rect x='350' y='1200' width='24' height='220' fill='#d07030'/>
+<rect x='350' y='1200' width='1' height='220' fill='#f0c060' opacity='0.12'/>
+<rect x='375' y='1189' width='24' height='231' fill='#2a1404'/>
+<rect x='375' y='1189' width='1' height='231' fill='#f0c060' opacity='0.12'/>
+<rect x='400' y='1186' width='24' height='234' fill='#7a3808'/>
+<rect x='400' y='1186' width='1' height='234' fill='#f0c060' opacity='0.12'/>
+<rect x='425' y='1221' width='24' height='199' fill='#4a2004'/>
+<rect x='425' y='1221' width='1' height='199' fill='#f0c060' opacity='0.12'/>
+<rect x='450' y='1248' width='24' height='172' fill='#c06020'/>
+<rect x='450' y='1248' width='1' height='172' fill='#f0c060' opacity='0.12'/>
+<rect x='475' y='1180' width='24' height='240' fill='#3a1804'/>
+<rect x='475' y='1180' width='1' height='240' fill='#f0c060' opacity='0.12'/>
+<rect x='500' y='1165' width='24' height='255' fill='#8a4010'/>
+<rect x='500' y='1165' width='1' height='255' fill='#f0c060' opacity='0.12'/>
+<rect x='525' y='1238' width='24' height='182' fill='#5a2c08'/>
+<rect x='525' y='1238' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='550' y='1193' width='24' height='227' fill='#d07030'/>
+<rect x='550' y='1193' width='1' height='227' fill='#f0c060' opacity='0.12'/>
+<rect x='575' y='1239' width='24' height='181' fill='#2a1404'/>
+<rect x='575' y='1239' width='1' height='181' fill='#f0c060' opacity='0.12'/>
+<rect x='600' y='1162' width='24' height='258' fill='#7a3808'/>
+<rect x='600' y='1162' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='625' y='1195' width='24' height='225' fill='#4a2004'/>
+<rect x='625' y='1195' width='1' height='225' fill='#f0c060' opacity='0.12'/>
+<rect x='650' y='1182' width='24' height='238' fill='#c06020'/>
+<rect x='650' y='1182' width='1' height='238' fill='#f0c060' opacity='0.12'/>
+<rect x='675' y='1186' width='24' height='234' fill='#3a1804'/>
+<rect x='675' y='1186' width='1' height='234' fill='#f0c060' opacity='0.12'/>
+<rect x='700' y='1192' width='24' height='228' fill='#8a4010'/>
+<rect x='700' y='1192' width='1' height='228' fill='#f0c060' opacity='0.12'/>
+<rect x='725' y='1216' width='24' height='204' fill='#5a2c08'/>
+<rect x='725' y='1216' width='1' height='204' fill='#f0c060' opacity='0.12'/>
+<rect x='750' y='1236' width='24' height='184' fill='#d07030'/>
+<rect x='750' y='1236' width='1' height='184' fill='#f0c060' opacity='0.12'/>
+<rect x='775' y='1163' width='24' height='257' fill='#2a1404'/>
+<rect x='775' y='1163' width='1' height='257' fill='#f0c060' opacity='0.12'/>
+<rect x='800' y='1192' width='24' height='228' fill='#7a3808'/>
+<rect x='800' y='1192' width='1' height='228' fill='#f0c060' opacity='0.12'/>
+<rect x='825' y='1224' width='24' height='196' fill='#4a2004'/>
+<rect x='825' y='1224' width='1' height='196' fill='#f0c060' opacity='0.12'/>
+<rect x='850' y='1244' width='24' height='176' fill='#c06020'/>
+<rect x='850' y='1244' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='875' y='1181' width='24' height='239' fill='#3a1804'/>
+<rect x='875' y='1181' width='1' height='239' fill='#f0c060' opacity='0.12'/>
+<rect x='900' y='1217' width='24' height='203' fill='#8a4010'/>
+<rect x='900' y='1217' width='1' height='203' fill='#f0c060' opacity='0.12'/>
+<rect x='925' y='1196' width='24' height='224' fill='#5a2c08'/>
+<rect x='925' y='1196' width='1' height='224' fill='#f0c060' opacity='0.12'/>
+<rect x='950' y='1217' width='24' height='203' fill='#d07030'/>
+<rect x='950' y='1217' width='1' height='203' fill='#f0c060' opacity='0.12'/>
+<rect x='975' y='1212' width='24' height='208' fill='#2a1404'/>
+<rect x='975' y='1212' width='1' height='208' fill='#f0c060' opacity='0.12'/>
+<rect x='1000' y='1218' width='24' height='202' fill='#7a3808'/>
+<rect x='1000' y='1218' width='1' height='202' fill='#f0c060' opacity='0.12'/>
+<rect x='1025' y='1223' width='24' height='197' fill='#4a2004'/>
+<rect x='1025' y='1223' width='1' height='197' fill='#f0c060' opacity='0.12'/>
+<rect x='1050' y='1162' width='24' height='258' fill='#c06020'/>
+<rect x='1050' y='1162' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='1075' y='1220' width='24' height='200' fill='#3a1804'/>
+<rect x='1075' y='1220' width='1' height='200' fill='#f0c060' opacity='0.12'/>
+<rect x='1100' y='1227' width='24' height='193' fill='#8a4010'/>
+<rect x='1100' y='1227' width='1' height='193' fill='#f0c060' opacity='0.12'/>
+<rect x='1125' y='1238' width='24' height='182' fill='#5a2c08'/>
+<rect x='1125' y='1238' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='1150' y='1160' width='24' height='260' fill='#d07030'/>
+<rect x='1150' y='1160' width='1' height='260' fill='#f0c060' opacity='0.12'/>
+<rect x='1175' y='1226' width='24' height='194' fill='#2a1404'/>
+<rect x='1175' y='1226' width='1' height='194' fill='#f0c060' opacity='0.12'/>
+<rect x='1200' y='1185' width='24' height='235' fill='#7a3808'/>
+<rect x='1200' y='1185' width='1' height='235' fill='#f0c060' opacity='0.12'/>
+<rect x='1225' y='1244' width='24' height='176' fill='#4a2004'/>
+<rect x='1225' y='1244' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='1250' y='1210' width='24' height='210' fill='#c06020'/>
+<rect x='1250' y='1210' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='1275' y='1246' width='24' height='174' fill='#3a1804'/>
+<rect x='1275' y='1246' width='1' height='174' fill='#f0c060' opacity='0.12'/>
+<rect x='1300' y='1215' width='24' height='205' fill='#8a4010'/>
+<rect x='1300' y='1215' width='1' height='205' fill='#f0c060' opacity='0.12'/>
+<rect x='1325' y='1182' width='24' height='238' fill='#5a2c08'/>
+<rect x='1325' y='1182' width='1' height='238' fill='#f0c060' opacity='0.12'/>
+<rect x='1350' y='1179' width='24' height='241' fill='#d07030'/>
+<rect x='1350' y='1179' width='1' height='241' fill='#f0c060' opacity='0.12'/>
+<rect x='1375' y='1225' width='24' height='195' fill='#2a1404'/>
+<rect x='1375' y='1225' width='1' height='195' fill='#f0c060' opacity='0.12'/>
+<rect x='1400' y='1245' width='24' height='175' fill='#7a3808'/>
+<rect x='1400' y='1245' width='1' height='175' fill='#f0c060' opacity='0.12'/>
+<rect x='1425' y='1238' width='24' height='182' fill='#4a2004'/>
+<rect x='1425' y='1238' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='1450' y='1232' width='24' height='188' fill='#c06020'/>
+<rect x='1450' y='1232' width='1' height='188' fill='#f0c060' opacity='0.12'/>
+<rect x='1475' y='1250' width='24' height='170' fill='#3a1804'/>
+<rect x='1475' y='1250' width='1' height='170' fill='#f0c060' opacity='0.12'/>
+<rect x='1500' y='1204' width='24' height='216' fill='#8a4010'/>
+<rect x='1500' y='1204' width='1' height='216' fill='#f0c060' opacity='0.12'/>
+<rect x='1525' y='1249' width='24' height='171' fill='#5a2c08'/>
+<rect x='1525' y='1249' width='1' height='171' fill='#f0c060' opacity='0.12'/>
+<rect x='1550' y='1216' width='24' height='204' fill='#d07030'/>
+<rect x='1550' y='1216' width='1' height='204' fill='#f0c060' opacity='0.12'/>
+<rect x='1575' y='1174' width='24' height='246' fill='#2a1404'/>
+<rect x='1575' y='1174' width='1' height='246' fill='#f0c060' opacity='0.12'/>
+<rect x='1600' y='1210' width='24' height='210' fill='#7a3808'/>
+<rect x='1600' y='1210' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='1625' y='1171' width='24' height='249' fill='#4a2004'/>
+<rect x='1625' y='1171' width='1' height='249' fill='#f0c060' opacity='0.12'/>
+<rect x='1650' y='1177' width='24' height='243' fill='#c06020'/>
+<rect x='1650' y='1177' width='1' height='243' fill='#f0c060' opacity='0.12'/>
+<rect x='1675' y='1210' width='24' height='210' fill='#3a1804'/>
+<rect x='1675' y='1210' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='1700' y='1225' width='24' height='195' fill='#8a4010'/>
+<rect x='1700' y='1225' width='1' height='195' fill='#f0c060' opacity='0.12'/>
+<rect x='1725' y='1238' width='24' height='182' fill='#5a2c08'/>
+<rect x='1725' y='1238' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='1750' y='1168' width='24' height='252' fill='#d07030'/>
+<rect x='1750' y='1168' width='1' height='252' fill='#f0c060' opacity='0.12'/>
+<rect x='1775' y='1182' width='24' height='238' fill='#2a1404'/>
+<rect x='1775' y='1182' width='1' height='238' fill='#f0c060' opacity='0.12'/>
+<rect x='1800' y='1213' width='24' height='207' fill='#7a3808'/>
+<rect x='1800' y='1213' width='1' height='207' fill='#f0c060' opacity='0.12'/>
+<rect x='1825' y='1220' width='24' height='200' fill='#4a2004'/>
+<rect x='1825' y='1220' width='1' height='200' fill='#f0c060' opacity='0.12'/>
+<rect x='1850' y='1196' width='24' height='224' fill='#c06020'/>
+<rect x='1850' y='1196' width='1' height='224' fill='#f0c060' opacity='0.12'/>
+<rect x='1875' y='1169' width='24' height='251' fill='#3a1804'/>
+<rect x='1875' y='1169' width='1' height='251' fill='#f0c060' opacity='0.12'/>
+<rect x='1900' y='1228' width='24' height='192' fill='#8a4010'/>
+<rect x='1900' y='1228' width='1' height='192' fill='#f0c060' opacity='0.12'/>
+<rect x='1925' y='1197' width='24' height='223' fill='#5a2c08'/>
+<rect x='1925' y='1197' width='1' height='223' fill='#f0c060' opacity='0.12'/>
+<rect x='1950' y='1218' width='24' height='202' fill='#d07030'/>
+<rect x='1950' y='1218' width='1' height='202' fill='#f0c060' opacity='0.12'/>
+<rect x='1975' y='1247' width='24' height='173' fill='#2a1404'/>
+<rect x='1975' y='1247' width='1' height='173' fill='#f0c060' opacity='0.12'/>
+<rect x='2000' y='1165' width='24' height='255' fill='#7a3808'/>
+<rect x='2000' y='1165' width='1' height='255' fill='#f0c060' opacity='0.12'/>
+<rect x='2025' y='1213' width='24' height='207' fill='#4a2004'/>
+<rect x='2025' y='1213' width='1' height='207' fill='#f0c060' opacity='0.12'/>
+<rect x='2050' y='1215' width='24' height='205' fill='#c06020'/>
+<rect x='2050' y='1215' width='1' height='205' fill='#f0c060' opacity='0.12'/>
+<rect x='2075' y='1192' width='24' height='228' fill='#3a1804'/>
+<rect x='2075' y='1192' width='1' height='228' fill='#f0c060' opacity='0.12'/>
+<rect x='2100' y='1247' width='24' height='173' fill='#8a4010'/>
+<rect x='2100' y='1247' width='1' height='173' fill='#f0c060' opacity='0.12'/>
+<rect x='2125' y='1238' width='24' height='182' fill='#5a2c08'/>
+<rect x='2125' y='1238' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='2150' y='1223' width='24' height='197' fill='#d07030'/>
+<rect x='2150' y='1223' width='1' height='197' fill='#f0c060' opacity='0.12'/>
+<rect x='2175' y='1165' width='24' height='255' fill='#2a1404'/>
+<rect x='2175' y='1165' width='1' height='255' fill='#f0c060' opacity='0.12'/>
+<rect x='2200' y='1175' width='24' height='245' fill='#7a3808'/>
+<rect x='2200' y='1175' width='1' height='245' fill='#f0c060' opacity='0.12'/>
+<rect x='2225' y='1208' width='24' height='212' fill='#4a2004'/>
+<rect x='2225' y='1208' width='1' height='212' fill='#f0c060' opacity='0.12'/>
+<rect x='2250' y='1182' width='24' height='238' fill='#c06020'/>
+<rect x='2250' y='1182' width='1' height='238' fill='#f0c060' opacity='0.12'/>
+<rect x='2275' y='1215' width='24' height='205' fill='#3a1804'/>
+<rect x='2275' y='1215' width='1' height='205' fill='#f0c060' opacity='0.12'/>
+<rect x='2300' y='1199' width='24' height='221' fill='#8a4010'/>
+<rect x='2300' y='1199' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='2325' y='1222' width='24' height='198' fill='#5a2c08'/>
+<rect x='2325' y='1222' width='1' height='198' fill='#f0c060' opacity='0.12'/>
+<rect x='2350' y='1250' width='24' height='170' fill='#d07030'/>
+<rect x='2350' y='1250' width='1' height='170' fill='#f0c060' opacity='0.12'/>
+<rect x='2375' y='1218' width='24' height='202' fill='#2a1404'/>
+<rect x='2375' y='1218' width='1' height='202' fill='#f0c060' opacity='0.12'/>
+<rect x='2400' y='1216' width='24' height='204' fill='#7a3808'/>
+<rect x='2400' y='1216' width='1' height='204' fill='#f0c060' opacity='0.12'/>
+<rect x='2425' y='1163' width='24' height='257' fill='#4a2004'/>
+<rect x='2425' y='1163' width='1' height='257' fill='#f0c060' opacity='0.12'/>
+<rect x='2450' y='1220' width='24' height='200' fill='#c06020'/>
+<rect x='2450' y='1220' width='1' height='200' fill='#f0c060' opacity='0.12'/>
+<rect x='2475' y='1251' width='24' height='169' fill='#3a1804'/>
+<rect x='2475' y='1251' width='1' height='169' fill='#f0c060' opacity='0.12'/>
+<rect x='2500' y='1187' width='24' height='233' fill='#8a4010'/>
+<rect x='2500' y='1187' width='1' height='233' fill='#f0c060' opacity='0.12'/>
+<rect x='2525' y='1192' width='24' height='228' fill='#5a2c08'/>
+<rect x='2525' y='1192' width='1' height='228' fill='#f0c060' opacity='0.12'/>
+<rect x='2550' y='1221' width='24' height='199' fill='#d07030'/>
+<rect x='2550' y='1221' width='1' height='199' fill='#f0c060' opacity='0.12'/>
+<rect x='2575' y='1207' width='24' height='213' fill='#2a1404'/>
+<rect x='2575' y='1207' width='1' height='213' fill='#f0c060' opacity='0.12'/>
+<rect x='2600' y='1179' width='24' height='241' fill='#7a3808'/>
+<rect x='2600' y='1179' width='1' height='241' fill='#f0c060' opacity='0.12'/>
+<rect x='2625' y='1199' width='24' height='221' fill='#4a2004'/>
+<rect x='2625' y='1199' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='2650' y='1162' width='24' height='258' fill='#c06020'/>
+<rect x='2650' y='1162' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='2675' y='1238' width='24' height='182' fill='#3a1804'/>
+<rect x='2675' y='1238' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='2700' y='1250' width='24' height='170' fill='#8a4010'/>
+<rect x='2700' y='1250' width='1' height='170' fill='#f0c060' opacity='0.12'/>
+<rect x='2725' y='1244' width='24' height='176' fill='#5a2c08'/>
+<rect x='2725' y='1244' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='2750' y='1187' width='24' height='233' fill='#d07030'/>
+<rect x='2750' y='1187' width='1' height='233' fill='#f0c060' opacity='0.12'/>
+<rect x='2775' y='1189' width='24' height='231' fill='#2a1404'/>
+<rect x='2775' y='1189' width='1' height='231' fill='#f0c060' opacity='0.12'/>
+<rect x='2800' y='1244' width='24' height='176' fill='#7a3808'/>
+<rect x='2800' y='1244' width='1' height='176' fill='#f0c060' opacity='0.12'/>
+<rect x='2825' y='1179' width='24' height='241' fill='#4a2004'/>
+<rect x='2825' y='1179' width='1' height='241' fill='#f0c060' opacity='0.12'/>
+<rect x='2850' y='1164' width='24' height='256' fill='#c06020'/>
+<rect x='2850' y='1164' width='1' height='256' fill='#f0c060' opacity='0.12'/>
+<rect x='2875' y='1192' width='24' height='228' fill='#3a1804'/>
+<rect x='2875' y='1192' width='1' height='228' fill='#f0c060' opacity='0.12'/>
+<rect x='2900' y='1226' width='24' height='194' fill='#8a4010'/>
+<rect x='2900' y='1226' width='1' height='194' fill='#f0c060' opacity='0.12'/>
+<rect x='2925' y='1198' width='24' height='222' fill='#5a2c08'/>
+<rect x='2925' y='1198' width='1' height='222' fill='#f0c060' opacity='0.12'/>
+<rect x='2950' y='1210' width='24' height='210' fill='#d07030'/>
+<rect x='2950' y='1210' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='2975' y='1234' width='24' height='186' fill='#2a1404'/>
+<rect x='2975' y='1234' width='1' height='186' fill='#f0c060' opacity='0.12'/>
+<rect x='3000' y='1225' width='24' height='195' fill='#7a3808'/>
+<rect x='3000' y='1225' width='1' height='195' fill='#f0c060' opacity='0.12'/>
+<rect x='3025' y='1184' width='24' height='236' fill='#4a2004'/>
+<rect x='3025' y='1184' width='1' height='236' fill='#f0c060' opacity='0.12'/>
+<rect x='3050' y='1248' width='24' height='172' fill='#c06020'/>
+<rect x='3050' y='1248' width='1' height='172' fill='#f0c060' opacity='0.12'/>
+<rect x='3075' y='1190' width='24' height='230' fill='#3a1804'/>
+<rect x='3075' y='1190' width='1' height='230' fill='#f0c060' opacity='0.12'/>
+<rect x='3100' y='1245' width='24' height='175' fill='#8a4010'/>
+<rect x='3100' y='1245' width='1' height='175' fill='#f0c060' opacity='0.12'/>
+<rect x='3125' y='1213' width='24' height='207' fill='#5a2c08'/>
+<rect x='3125' y='1213' width='1' height='207' fill='#f0c060' opacity='0.12'/>
+<rect x='3150' y='1186' width='24' height='234' fill='#d07030'/>
+<rect x='3150' y='1186' width='1' height='234' fill='#f0c060' opacity='0.12'/>
+<rect x='3175' y='1243' width='24' height='177' fill='#2a1404'/>
+<rect x='3175' y='1243' width='1' height='177' fill='#f0c060' opacity='0.12'/>
+<rect x='3200' y='1199' width='24' height='221' fill='#7a3808'/>
+<rect x='3200' y='1199' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='3225' y='1216' width='24' height='204' fill='#4a2004'/>
+<rect x='3225' y='1216' width='1' height='204' fill='#f0c060' opacity='0.12'/>
+<rect x='3250' y='1202' width='24' height='218' fill='#c06020'/>
+<rect x='3250' y='1202' width='1' height='218' fill='#f0c060' opacity='0.12'/>
+<rect x='3275' y='1242' width='24' height='178' fill='#3a1804'/>
+<rect x='3275' y='1242' width='1' height='178' fill='#f0c060' opacity='0.12'/>
+<rect x='3300' y='1217' width='24' height='203' fill='#8a4010'/>
+<rect x='3300' y='1217' width='1' height='203' fill='#f0c060' opacity='0.12'/>
+<rect x='3325' y='1210' width='24' height='210' fill='#5a2c08'/>
+<rect x='3325' y='1210' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect x='3350' y='1199' width='24' height='221' fill='#d07030'/>
+<rect x='3350' y='1199' width='1' height='221' fill='#f0c060' opacity='0.12'/>
+<rect x='3375' y='1224' width='24' height='196' fill='#2a1404'/>
+<rect x='3375' y='1224' width='1' height='196' fill='#f0c060' opacity='0.12'/>
+<rect x='3400' y='1220' width='24' height='200' fill='#7a3808'/>
+<rect x='3400' y='1220' width='1' height='200' fill='#f0c060' opacity='0.12'/>
+<rect x='3425' y='1239' width='24' height='181' fill='#4a2004'/>
+<rect x='3425' y='1239' width='1' height='181' fill='#f0c060' opacity='0.12'/>
+<rect x='3450' y='1167' width='24' height='253' fill='#c06020'/>
+<rect x='3450' y='1167' width='1' height='253' fill='#f0c060' opacity='0.12'/>
+<rect x='3475' y='1237' width='24' height='183' fill='#3a1804'/>
+<rect x='3475' y='1237' width='1' height='183' fill='#f0c060' opacity='0.12'/>
+<rect x='3500' y='1179' width='24' height='241' fill='#8a4010'/>
+<rect x='3500' y='1179' width='1' height='241' fill='#f0c060' opacity='0.12'/>
+<rect x='3525' y='1168' width='24' height='252' fill='#5a2c08'/>
+<rect x='3525' y='1168' width='1' height='252' fill='#f0c060' opacity='0.12'/>
+<rect x='3550' y='1214' width='24' height='206' fill='#d07030'/>
+<rect x='3550' y='1214' width='1' height='206' fill='#f0c060' opacity='0.12'/>
+<rect x='3575' y='1162' width='24' height='258' fill='#2a1404'/>
+<rect x='3575' y='1162' width='1' height='258' fill='#f0c060' opacity='0.12'/>
+<rect x='3600' y='1180' width='24' height='240' fill='#7a3808'/>
+<rect x='3600' y='1180' width='1' height='240' fill='#f0c060' opacity='0.12'/>
+<rect x='3625' y='1179' width='24' height='241' fill='#4a2004'/>
+<rect x='3625' y='1179' width='1' height='241' fill='#f0c060' opacity='0.12'/>
+<rect x='3650' y='1230' width='24' height='190' fill='#c06020'/>
+<rect x='3650' y='1230' width='1' height='190' fill='#f0c060' opacity='0.12'/>
+<rect x='3675' y='1167' width='24' height='253' fill='#3a1804'/>
+<rect x='3675' y='1167' width='1' height='253' fill='#f0c060' opacity='0.12'/>
+<rect x='3700' y='1204' width='24' height='216' fill='#8a4010'/>
+<rect x='3700' y='1204' width='1' height='216' fill='#f0c060' opacity='0.12'/>
+<rect x='3725' y='1251' width='24' height='169' fill='#5a2c08'/>
+<rect x='3725' y='1251' width='1' height='169' fill='#f0c060' opacity='0.12'/>
+<rect x='3750' y='1161' width='24' height='259' fill='#d07030'/>
+<rect x='3750' y='1161' width='1' height='259' fill='#f0c060' opacity='0.12'/>
+<rect x='3775' y='1186' width='24' height='234' fill='#2a1404'/>
+<rect x='3775' y='1186' width='1' height='234' fill='#f0c060' opacity='0.12'/>
+<rect x='3800' y='1191' width='24' height='229' fill='#7a3808'/>
+<rect x='3800' y='1191' width='1' height='229' fill='#f0c060' opacity='0.12'/>
+<rect x='3825' y='1218' width='24' height='202' fill='#4a2004'/>
+<rect x='3825' y='1218' width='1' height='202' fill='#f0c060' opacity='0.12'/>
+<rect x='3850' y='1169' width='24' height='251' fill='#c06020'/>
+<rect x='3850' y='1169' width='1' height='251' fill='#f0c060' opacity='0.12'/>
+<rect x='3875' y='1205' width='24' height='215' fill='#3a1804'/>
+<rect x='3875' y='1205' width='1' height='215' fill='#f0c060' opacity='0.12'/>
+<rect x='3900' y='1175' width='24' height='245' fill='#8a4010'/>
+<rect x='3900' y='1175' width='1' height='245' fill='#f0c060' opacity='0.12'/>
+<rect x='3925' y='1238' width='24' height='182' fill='#5a2c08'/>
+<rect x='3925' y='1238' width='1' height='182' fill='#f0c060' opacity='0.12'/>
+<rect x='3950' y='1204' width='24' height='216' fill='#d07030'/>
+<rect x='3950' y='1204' width='1' height='216' fill='#f0c060' opacity='0.12'/>
+<rect x='3975' y='1210' width='24' height='210' fill='#2a1404'/>
+<rect x='3975' y='1210' width='1' height='210' fill='#f0c060' opacity='0.12'/>
+<rect y='960' width='4096' height='200' fill='#1a0c05' opacity='0.7'/>
+<ellipse cx='2048' cy='1024' rx='491' ry='208' fill='none' stroke='#8a5020' stroke-width='3' opacity='0.12'/>
+<ellipse cx='2048' cy='1024' rx='901' ry='382' fill='none' stroke='#8a5020' stroke-width='3' opacity='0.12'/>
+<ellipse cx='2048' cy='1024' rx='1433' ry='609' fill='none' stroke='#8a5020' stroke-width='3' opacity='0.12'/>
+<ellipse cx='2048' cy='1024' rx='2048' ry='870' fill='none' stroke='#8a5020' stroke-width='3' opacity='0.12'/>
+<ellipse cx='2048' cy='1024' rx='2662' ry='1131' fill='none' stroke='#8a5020' stroke-width='3' opacity='0.12'/>
+<rect width='4096' height='2048' fill='url(#bl1)'/>
+<rect width='4096' height='2048' fill='url(#bl2)'/>
+<rect width='4096' height='2048' fill='url(#bl3)'/>
+<line x1='0' y1='1425' x2='4096' y2='1425' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1470' x2='4096' y2='1470' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1525' x2='4096' y2='1525' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1590' x2='4096' y2='1590' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1665' x2='4096' y2='1665' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1750' x2='4096' y2='1750' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1845' x2='4096' y2='1845' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<line x1='0' y1='1950' x2='4096' y2='1950' stroke='#3a1808' stroke-width='2' opacity='0.3'/>
+<rect width='4096' height='2048' fill='url(#bv)'/>
+
 </svg>
