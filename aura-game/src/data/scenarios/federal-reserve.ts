@@ -1,6 +1,13 @@
 import type { ScenarioSeed } from './utils.ts';
 import { SCENARIO_ENVIRONMENT_ASSETS } from './utils.ts';
 
+const FEDERAL_RESERVE_SCORING = {
+  fallbackSampleValue: 5,
+  defaultZoneMultiplier: 1.2,
+  defaultCriticalModifier: 1.4,
+  dadaistScore: 1917000001,
+} as const;
+
 export const FEDERAL_RESERVE_SCENARIO: ScenarioSeed = {
     id: 'federal-reserve',
     name: 'Federal Reserve - Gold Vault',
@@ -11,6 +18,7 @@ export const FEDERAL_RESERVE_SCENARIO: ScenarioSeed = {
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS['federal-reserve'].tintStrength,
     },
     panoramaColor: '#9f8b58',
+    scoring: FEDERAL_RESERVE_SCORING,
     targets: [
       {
         id: 'gold-bar',
@@ -84,9 +92,27 @@ export const FEDERAL_RESERVE_SCENARIO: ScenarioSeed = {
         description: 'Cold concrete with zero symbolic value.',
       },
     ],
+
+  criticLines: {
+    low: [
+      'A minor vault incident. Accountants remain calm.',
+      'Superficial loss; the spreadsheet still smiles.',
+      'Small rupture, large memo. Confidence mostly intact.',
+    ],
+    mid: [
+      'The optics crack before the concrete does.',
+      'A serious hit to bullion theater and ledger certainty.',
+      'Monetary symbolism takes a visible, expensive dent.',
+    ],
+    high: [
+      'Vault mythology shredded. Trust becomes the blast radius.',
+      'Catastrophic breach: value detaches from metal in real time.',
+      'Systemic shock in one shot. The reserve looks suddenly fictional.',
+    ],
+  },
   
   metadata: {
     region: 'USA',
     difficulty: 'hard',
-    status: 'locked',
+    status: 'playable',
   },};

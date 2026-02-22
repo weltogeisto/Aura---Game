@@ -1,6 +1,13 @@
 import type { ScenarioSeed } from './utils.ts';
 import { SCENARIO_ENVIRONMENT_ASSETS } from './utils.ts';
 
+const HERMITAGE_SCORING = {
+  fallbackSampleValue: 5,
+  defaultZoneMultiplier: 1.18,
+  defaultCriticalModifier: 1.35,
+  dadaistScore: 1917000001,
+} as const;
+
 export const HERMITAGE_SCENARIO: ScenarioSeed = {
     id: 'hermitage',
     name: 'The Hermitage - Peacock Clock Room',
@@ -11,6 +18,7 @@ export const HERMITAGE_SCENARIO: ScenarioSeed = {
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS.hermitage.tintStrength,
     },
     panoramaColor: '#b1c6d6',
+    scoring: HERMITAGE_SCORING,
     targets: [
       {
         id: 'peacock-clock',
@@ -93,9 +101,27 @@ export const HERMITAGE_SCENARIO: ScenarioSeed = {
         breakdownMode: 'all-targets',
       },
     ],
+
+  criticLines: {
+    low: [
+      'A polite disturbance in imperial ornament. The parquet absorbs the insult.',
+      'The room sighs, but the court etiquette still holds.',
+      'Minor damage, major gossip. Conservators log it as a manageable scandal.',
+    ],
+    mid: [
+      'Mechanism and monarchy both take a hit. The symbolism starts to wobble.',
+      'A calibrated strike: enough ruin to summon emergency committees.',
+      'Gold leaf flakes like confidence. The hall feels suddenly mortal.',
+    ],
+    high: [
+      'The Peacock Clock goes from marvel to autopsy. History loses its rhythm.',
+      'Catastrophic impact: splendor collapses into expensive fragments.',
+      'Imperial theater, interrupted by force. Restoration becomes an era-long project.',
+    ],
+  },
   
   metadata: {
     region: 'Russia',
     difficulty: 'medium',
-    status: 'locked',
+    status: 'playable',
   },};
