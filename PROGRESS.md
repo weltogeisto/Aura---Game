@@ -1,5 +1,9 @@
 # Progress
 
+## Changelog
+
+- **2026-02-22 — Beta transition (`0.3.0-beta.1`)**: Bumped `aura-game/package.json` to `0.3.0-beta.1` and aligned release docs to versioned staging output under `release/web/v0.3.0-beta.1` (with `release/web/current` staying as desktop runtime alias).
+
 ## Milestone 6 — Scenario Promotion & UX Polish
 
 Completed (2026-02-20):

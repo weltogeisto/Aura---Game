@@ -20,9 +20,10 @@ pnpm run build:canonical
 
 Expected output:
 
+- `release/web/v0.3.0-beta.1/dist`
+- `release/web/v0.3.0-beta.1/bundle.html` (optional)
 - `release/web/current/dist`
 - `release/web/current/checksums.sha256`
-- optionally `release/web/current/bundle.html`
 
 ## 2) Validate artifacts + smoke
 
@@ -73,8 +74,8 @@ If release candidate fails validation or post-install checks:
 1. Stop rollout (do not publish installer links).
 2. Re-point distribution channel to previous known-good release artifacts.
 3. Re-tag fixed version (never reuse old tag):
-   - bad: `v0.2.0-beta.1`
-   - fix: `v0.2.0-beta.2`
+   - bad: `v0.3.0-beta.1`
+   - fix: `v0.3.0-beta.2`
 4. Re-run full flow (build -> validate -> smoke -> installer).
 
 ## 7) Minimal audit trail to keep

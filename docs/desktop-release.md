@@ -4,14 +4,14 @@ This guide documents the **beta desktop release flow** (Tauri wrapper + canonica
 
 ## Versioning & Release Tag Convention
 
-- `aura-game/package.json` is the canonical product version (`MAJOR.MINOR.PATCH[-channel.N]`), currently `0.2.0-beta.1`.
-- Every release must be tagged as `v${package.json version}` (example: `v0.2.0-beta.1`).
+- `aura-game/package.json` is the canonical product version (`MAJOR.MINOR.PATCH[-channel.N]`), currently `0.3.0-beta.1`.
+- Every release must be tagged as `v${package.json version}` (example: `v0.3.0-beta.1`).
 - Allowed prerelease channels: `alpha`, `beta`, `rc`.
 
 From `aura-game/`:
 
 ```bash
-pnpm run release:tag:check v0.2.0-beta.1
+pnpm run release:tag:check v0.3.0-beta.1
 ```
 
 ## Canonical Build Input (single source of truth)
@@ -24,11 +24,12 @@ pnpm run build:canonical
 
 This must produce and stage:
 
-- `release/web/current/dist` (authoritative output from Vite build)
-- `release/web/current/bundle.html` (optional artifact generated from that Vite output)
-- `release/web/current/checksums.sha256` (SHA-256 for all staged release files)
+- `release/web/v0.3.0-beta.1/dist` (versioned staging output from Vite build)
+- `release/web/v0.3.0-beta.1/bundle.html` (optional artifact generated from that Vite output)
+- `release/web/current/dist` (authoritative desktop runtime input, synced from the versioned output)
+- `release/web/current/checksums.sha256` (SHA-256 for all staged runtime files)
 
-Tauri is configured to load only `release/web/current/dist`, so packaging always follows canonical web output.
+Staging writes both `release/web/v<version>` and `release/web/current`. Tauri is configured to load `release/web/current/dist`, so packaging always follows the canonical staged output for the selected version.
 
 Canonical build tooling (`html-inline`) is declared in `aura-game/package.json` and must be installed before build execution. Build scripts do not install or modify dependencies at runtime, so canonical packaging is reproducible offline after install.
 
