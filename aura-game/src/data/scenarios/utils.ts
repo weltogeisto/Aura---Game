@@ -40,6 +40,41 @@ const normalizeTargetPosition = (targets: Scenario['targets']): Scenario['target
 
 const OFFLINE_ASSET_PREFIXES = ['data:', '/', './', '../'] as const;
 
+
+const EMBEDDED_AMBIENT_PREFIX = 'data:audio/x-aura-ambient,';
+
+const VENUE_IMPACT_PROFILE_MAP = {
+  museum: ['glass', 'stone', 'wood'],
+  cathedral: ['stone', 'wood'],
+  industrial: ['metal', 'stone'],
+  vault: ['metal', 'stone'],
+  library: ['wood', 'fabric'],
+} as const;
+
+type VenueType = keyof typeof VENUE_IMPACT_PROFILE_MAP;
+
+const resolveAmbientVenue = (ambient: string): VenueType | null => {
+  if (!ambient.startsWith(EMBEDDED_AMBIENT_PREFIX)) return null;
+  const venue = ambient.slice(EMBEDDED_AMBIENT_PREFIX.length);
+  return venue in VENUE_IMPACT_PROFILE_MAP ? (venue as VenueType) : null;
+};
+
+const ensureVenueImpactProfile = (
+  ambient: string,
+  impactProfile: 'stone' | 'metal' | 'glass' | 'wood' | 'fabric'
+): void => {
+  const venue = resolveAmbientVenue(ambient);
+  if (!venue) return;
+
+  const allowedProfiles = VENUE_IMPACT_PROFILE_MAP[venue] as readonly string[];
+  if (!allowedProfiles.includes(impactProfile)) {
+    throw new Error(
+      `Impact profile ${impactProfile} does not match venue ${venue}. Allowed: ${allowedProfiles.join(', ')}`
+    );
+  }
+};
+
+
 const ensureOfflineAssetPath = (assetPath: string): string => {
   const isOfflinePath = OFFLINE_ASSET_PREFIXES.some((prefix) => assetPath.startsWith(prefix));
 
@@ -65,11 +100,15 @@ const createScenarioAudioAsset = (
   ambient: string,
   impactProfile: 'stone' | 'metal' | 'glass' | 'wood' | 'fabric',
   ambientGain: number
-) => ({
-  ambient: ensureOfflineAssetPath(ambient),
-  impactProfile,
-  ambientGain,
-});
+) => {
+  ensureVenueImpactProfile(ambient, impactProfile);
+
+  return {
+    ambient: ensureOfflineAssetPath(ambient),
+    impactProfile,
+    ambientGain,
+  };
+};
 
 export const SCENARIO_ENVIRONMENT_ASSETS: Record<
   string,
@@ -116,7 +155,7 @@ export const SCENARIO_ENVIRONMENT_ASSETS: Record<
 export const SCENARIO_AUDIO_ASSETS = {
   louvre: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'glass', 0.2),
   'st-peters': createScenarioAudioAsset('data:audio/x-aura-ambient,cathedral', 'stone', 0.26),
-  topkapi: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'metal', 0.22),
+  topkapi: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'stone', 0.22),
   'forbidden-city': createScenarioAudioAsset('data:audio/x-aura-ambient,cathedral', 'wood', 0.2),
   tsmc: createScenarioAudioAsset('data:audio/x-aura-ambient,industrial', 'metal', 0.18),
   hermitage: createScenarioAudioAsset('data:audio/x-aura-ambient,museum', 'stone', 0.21),

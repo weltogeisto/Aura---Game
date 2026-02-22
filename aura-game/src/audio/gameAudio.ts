@@ -1,14 +1,26 @@
 import { Howl } from 'howler';
-import { EMBEDDED_AUDIO } from './embeddedAudio';
+import { EMBEDDED_AUDIO, IMPACT_AUDIO_MATRIX } from './embeddedAudio';
 
 export type ImpactProfile = 'stone' | 'metal' | 'glass' | 'wood' | 'fabric';
 
-const IMPACT_SOURCES: Record<ImpactProfile, string> = {
-  stone: EMBEDDED_AUDIO['impact-stone'],
-  metal: EMBEDDED_AUDIO['impact-metal'],
-  glass: EMBEDDED_AUDIO['impact-glass'],
-  wood: EMBEDDED_AUDIO['impact-wood'],
-  fabric: EMBEDDED_AUDIO['impact-fabric'],
+const IMPACT_PROFILE_GAIN: Record<ImpactProfile, number> = {
+  stone: 0.96,
+  metal: 0.9,
+  glass: 0.86,
+  wood: 0.94,
+  fabric: 1,
+};
+
+const SCENARIO_MIX_GAIN: Record<string, { ambient: number; impact: number }> = {
+  louvre: { ambient: 0.95, impact: 0.9 },
+  'st-peters': { ambient: 0.88, impact: 0.94 },
+  topkapi: { ambient: 0.92, impact: 1 },
+  'forbidden-city': { ambient: 0.96, impact: 0.97 },
+  tsmc: { ambient: 0.85, impact: 0.92 },
+  hermitage: { ambient: 0.93, impact: 0.95 },
+  'federal-reserve': { ambient: 0.9, impact: 0.98 },
+  moma: { ambient: 0.97, impact: 0.86 },
+  'borges-library': { ambient: 0.94, impact: 0.93 },
 };
 
 const UI_SOURCES = {
@@ -27,28 +39,45 @@ const resolveAmbientSource = (src: string): string => {
   return embedded ?? src;
 };
 
-const impactCache = new Map<ImpactProfile, Howl>();
+const impactCache = new Map<string, Howl>();
 const ambientCache = new Map<string, Howl>();
 const uiCache = new Map<keyof typeof UI_SOURCES, Howl>();
 
 let activeAmbient: Howl | null = null;
+let activeScenarioId: string | null = null;
+
+const resolveScenarioMix = () =>
+  (activeScenarioId ? SCENARIO_MIX_GAIN[activeScenarioId] : undefined) ?? { ambient: 1, impact: 1 };
+
+const clampGain = (gain: number): number => Math.min(1, Math.max(0, gain));
+
+const getImpactVariant = (profile: ImpactProfile) => {
+  const variants = IMPACT_AUDIO_MATRIX[profile];
+  return variants[Math.floor(Math.random() * variants.length)] ?? variants[0];
+};
 
 const getImpactHowl = (profile: ImpactProfile): Howl => {
-  const cached = impactCache.get(profile);
+  const variant = getImpactVariant(profile);
+  const scenarioMix = resolveScenarioMix();
+  const volume = clampGain(variant.baseGain * IMPACT_PROFILE_GAIN[profile] * scenarioMix.impact);
+  const key = `${profile}|${variant.label}|${volume.toFixed(2)}`;
+
+  const cached = impactCache.get(key);
   if (cached) return cached;
 
-  const howl = new Howl({ src: [IMPACT_SOURCES[profile]], volume: 0.62, preload: true });
-  impactCache.set(profile, howl);
+  const howl = new Howl({ src: [variant.src], volume, preload: true });
+  impactCache.set(key, howl);
   return howl;
 };
 
 const getAmbientHowl = (src: string, gain: number): Howl => {
   const resolvedSource = resolveAmbientSource(src);
-  const key = `${resolvedSource}|${gain.toFixed(2)}`;
+  const calibratedGain = clampGain(gain * resolveScenarioMix().ambient);
+  const key = `${resolvedSource}|${calibratedGain.toFixed(2)}`;
   const cached = ambientCache.get(key);
   if (cached) return cached;
 
-  const howl = new Howl({ src: [resolvedSource], loop: true, volume: gain, preload: true, html5: false });
+  const howl = new Howl({ src: [resolvedSource], loop: true, volume: calibratedGain, preload: true, html5: false });
   ambientCache.set(key, howl);
   return howl;
 };
@@ -63,6 +92,10 @@ const getUiHowl = (kind: keyof typeof UI_SOURCES): Howl => {
 };
 
 export const gameAudio = {
+  setScenarioMix(scenarioId: string | null): void {
+    activeScenarioId = scenarioId;
+  },
+
   setAmbient(src: string | null, gain = 0.2): void {
     if (!src) {
       this.stopAmbient();
