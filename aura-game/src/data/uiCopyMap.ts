@@ -28,6 +28,14 @@ export const UI_COPY_MAP = {
     statusPlayable: 'Sofort spielbar: vollständiger Schuss-Loop aktiv.',
     statusPrototype: 'Prototype: sichtbar für Preview, Mechaniken oder Balancing sind noch nicht final.',
     statusLocked: 'Locked: absichtlich gesperrt, wird in späterem Release freigeschaltet.',
+    deskBriefHeading: 'Mission control',
+    deskBriefBody: 'Für diesen Sprint zählen klare Iterationen: spielbare Räume priorisieren, Prototypen sichtbar halten, Locks transparent begründen.',
+    readinessHeading: 'Release readiness',
+    readinessItems: [
+      'Playable rooms müssen den One-Shot-Loop vollständig liefern.',
+      'Prototype rooms bleiben explorativ, aber mit ehrlicher Status-Copy.',
+      'Locked rooms bleiben sichtbar, bis Content + Panorama freigegeben sind.',
+    ],
   },
   results: {
     overline: 'Run complete',
@@ -42,6 +50,13 @@ export const UI_COPY_MAP = {
     newScenarioCta: 'New scenario',
     causeEffectHeading: 'Cause → Effect',
     metricsLabel: 'UX-Metriken für diesen Run',
+    operationHeading: 'Run operations',
+    operationBody: 'Nutze Replay für unmittelbare Skill-Iteration. Nutze New Scenario für strategischen Vergleich über Räume hinweg.',
+    operationChecklist: [
+      'Score-Framing prüfen: Ursache → Effekt muss verständlich bleiben.',
+      'Critic-Ton konsistent halten: präzise, kalt, nie moralisch.',
+      'Nächste Iteration mit klarer Hypothese starten.',
+    ],
   },
   hud: {
     controls: ['Move mouse to aim.', 'Use arrows or WASD for micro-adjustments.', 'Click to fire your only shot.'],

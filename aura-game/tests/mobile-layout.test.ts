@@ -18,9 +18,21 @@ test('ScenarioSelect keeps modal scrollable with mobile-first spacing and tiny s
   assert.match(file, /text-\[10px\][\s\S]*sm:text-xs/);
 });
 
+test('ScenarioSelect adds a desktop mission-control rail while preserving mobile stacking', () => {
+  const file = readComponent('../src/components/ui/ScenarioSelect.tsx');
+  assert.match(file, /xl:grid-cols-\[1\.7fr_1fr\]/);
+  assert.match(file, /xl:sticky xl:top-4 xl:self-start/);
+});
+
 test('ResultsScreen keeps breakdown single-column until larger breakpoints', () => {
   const file = readComponent('../src/components/ui/ResultsScreen.tsx');
   assert.match(file, /max-h-\[92dvh\]/);
   assert.match(file, /grid-cols-1 gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4/);
   assert.match(file, /text-2xl font-bold[\s\S]*sm:text-4xl/);
+});
+
+test('ResultsScreen adds desktop operations rail with sticky behavior', () => {
+  const file = readComponent('../src/components/ui/ResultsScreen.tsx');
+  assert.match(file, /xl:grid-cols-\[1\.7fr_1fr\]/);
+  assert.match(file, /operationChecklist/);
 });
