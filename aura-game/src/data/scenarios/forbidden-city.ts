@@ -1,6 +1,13 @@
 import type { ScenarioSeed } from './utils.ts';
 import { SCENARIO_ENVIRONMENT_ASSETS } from './utils.ts';
 
+const FORBIDDEN_CITY_SCORING = {
+  fallbackSampleValue: 5,
+  defaultZoneMultiplier: 1.22,
+  defaultCriticalModifier: 1.45,
+  dadaistScore: 1917000001,
+} as const;
+
 export const FORBIDDEN_CITY_SCENARIO: ScenarioSeed = {
     id: 'forbidden-city',
     name: 'Forbidden City - Hall of Supreme Harmony',
@@ -11,6 +18,7 @@ export const FORBIDDEN_CITY_SCENARIO: ScenarioSeed = {
       tintStrength: SCENARIO_ENVIRONMENT_ASSETS['forbidden-city'].tintStrength,
     },
     panoramaColor: '#a11c1c',
+    scoring: FORBIDDEN_CITY_SCORING,
     targets: [
       {
         id: 'dragon-throne',
@@ -93,9 +101,27 @@ export const FORBIDDEN_CITY_SCENARIO: ScenarioSeed = {
         breakdownMode: 'none',
       },
     ],
+
+  criticLines: {
+    low: [
+      'A ceremonial bruise, not yet a dynastic wound.',
+      'The hall remains composed; only the lacquer remembers.',
+      'Contained damage. Protocol survives the noise.',
+    ],
+    mid: [
+      'Authority trembles as ornament breaks rank.',
+      'A meaningful strike: symbolism fractures before structure does.',
+      'The throne room keeps standing, but certainty does not.',
+    ],
+    high: [
+      'Imperial theater collapses into splinters and silence.',
+      'Catastrophic desecration. The mandate is now a historical footnote.',
+      'A palace-scale shockwave: relic, ritual, and aura all compromised.',
+    ],
+  },
   
   metadata: {
     region: 'China',
     difficulty: 'hard',
-    status: 'locked',
+    status: 'playable',
   },};
