@@ -4,8 +4,10 @@ Use this quick gate before marking a scenario asset set as release-ready.
 
 ## Audio quality
 
-- [ ] **Loudness**: integrated loudness normalized (target around `-16 LUFS` for UI/impact, `-20 LUFS` to `-18 LUFS` for ambient beds).
-- [ ] **Peak safety**: true peak does not clip (`<= -1 dBTP`).
+- [ ] **Material identity is obvious**: impact sounds are clearly distinguishable for `stone`, `metal`, `glass`, `wood`, and `fabric` in blind A/B checks.
+- [ ] **Venue alignment**: each scenario `impactProfile` matches its venue mood (museum/cathedral/industrial/vault/library).
+- [ ] **Loudness target**: perceived loudness remains consistent across scenarios (no abrupt jumps when switching venues).
+- [ ] **Peak safety**: no audible clipping; true peak remains `<= -1 dBTP` for impact/UI and ambient stems.
 - [ ] **Loop quality**: ambient loops have no audible click/pop at loop boundary over at least 5 repetitions.
 
 ## Performance and memory

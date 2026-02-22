@@ -36,6 +36,8 @@ export function GameAudioDirector() {
   const handledShotAt = useRef<number | null>(null);
 
   useEffect(() => {
+    gameAudio.setScenarioMix(selectedScenario?.id ?? null);
+
     if (gamePhase === 'aiming' || gamePhase === 'shooting') {
       gameAudio.setAmbient(
         selectedScenario?.audioAsset?.ambient ?? null,
