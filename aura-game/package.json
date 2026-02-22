@@ -26,7 +26,8 @@
     "smoke:packaged": "node scripts/smoke-packaged-mode.mjs",
     "docs:check:desktop-release-scripts": "node scripts/check-desktop-release-scripts.mjs",
     "release:tag:check": "node scripts/check-release-tag.mjs",
-    "release:artifacts:validate": "node scripts/validate-release-artifacts.mjs"
+    "release:artifacts:validate": "node scripts/validate-release-artifacts.mjs",
+    "agent:loop": "node scripts/agent-loop-harness.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
