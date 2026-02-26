@@ -5,21 +5,23 @@ Open work items ordered by priority tier.
 ## Recently completed
 
 - [x] **Accessibility preset persistence** — `reducedMotion`, `highContrast`, and `aimAssist` now persist via local storage with safe fallback behavior when storage is unavailable.
-
-## Tier 1 — Blockers for public release
-
-- [ ] **Panorama assets** — Replace procedural SVG gradients with real equirectangular panoramas for all 6 playable scenarios. Louvre, St. Peter's, Topkapi, TSMC, MoMA, Borges Library. Asset pipeline: 8192×4096 JPEG hi-res + 2048×1024 JPEG lo-res per venue, placed under `aura-game/public/panoramas/`.
-- [ ] **Audio files** — Record or license impact SFX + ambient loops for 6 playable venues. Howler.js is wired; no `.ogg`/`.mp3` assets on disk. See `aura-game/src/data/scenarios/utils.ts` for `audioAsset` fields.
-- [ ] **Hermitage promotion** — Add criticLines (3 × 3) and scoring block to `hermitage.ts`, flip status to `playable` in file and maturity matrix. Panorama asset required first.
-- [ ] **Forbidden City promotion** — Same pattern as Hermitage. Panorama asset required first.
-- [ ] **Federal Reserve promotion** — Same pattern. High-value targets; economist register for critic lines.
-
-## Tier 2 — Polish before beta release
-
+- [x] **Hermitage promotion** — criticLines (3 × 3), scoring block, `status: 'playable'` in file and maturity matrix.
+- [x] **Forbidden City promotion** — Same pattern. All targets, critic lines, scoring calibrated.
+- [x] **Federal Reserve promotion** — Same pattern. Economist register for critic lines. All 9 scenarios now playable.
+- [x] **UI copy update** — Release subtitle, startView body, mainMenu scenarioSummary, limitations items all updated to reflect 9 playable scenarios.
 - [x] **Mobile responsive layout** — StartView, ScenarioSelect, and ResultsScreen now use mobile-first spacing/typography with `dvh` viewport caps to avoid clipping and overflow below 768px.
-- [ ] **Material-specific impact sounds** — Ballistics system tags `material` on hit; map to distinct SFX (marble crack, bronze ring, glass shatter, silicon shatter, paper tear).
+- [x] **Panorama SVG improvements** — All 9 venue SVGs updated with richer architectural detail, gradients, and atmospheric layering.
+
+## Tier 1 — Required for public release
+
+- [ ] **Real panorama assets** — Replace procedural SVG panoramas with real equirectangular JPEGs for all 9 playable venues. Asset pipeline: 8192×4096 JPEG hi-res + 2048×1024 JPEG lo-res per venue, placed under `aura-game/public/panoramas/`. Current SVGs are used as placeholder until photo assets are licensed.
+- [ ] **Audio files** — Record or license impact SFX + ambient loops for all 9 venues. Howler.js is wired; no `.ogg`/`.mp3` assets on disk. Sentinel strings `data:audio/x-aura-ambient,<venue>` are used as placeholders.
+
+## Tier 2 — Polish before public beta
+
+- [ ] **Material-specific impact sounds** — Ballistics system tags `material` on hit; map to distinct SFX (marble crack, bronze ring, glass shatter, silicon shatter, paper tear). Requires audio assets above.
 - [ ] **Ambient room audio** — Loop per-scenario background audio (church reverb, cleanroom hum, gallery silence) once audio assets exist.
-- [ ] **Version bump** — Bump `aura-game/package.json` `version` field to `0.3.0-beta.1` before next distribution.
+- [ ] **`other` target type visual polish** — Targets typed as `other` (mosaic-table, gold-bar, parquet-floor, etc.) render as generic boxes via `InteractiveObjectTarget`. These could benefit from more distinct geometry or materials per `material` field.
 
 ## Tier 3 — Future features
 
