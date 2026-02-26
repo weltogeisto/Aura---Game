@@ -1,10 +1,173 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4096 2048'>
-<rect width='4096' height='2048' fill='#4a2f1f'/>
-<rect y='620' width='4096' height='1428' fill='#7b5435' opacity='0.45'/>
-<rect y='1080' width='4096' height='968' fill='#ba8c5b' opacity='0.3'/>
-<rect x='0' y='960' width='78' height='120' fill='#4a2f1f' opacity='0.72'/><rect x='85' y='940' width='78' height='140' fill='#7b5435' opacity='0.72'/><rect x='170' y='920' width='78' height='160' fill='#ba8c5b' opacity='0.72'/><rect x='255' y='900' width='78' height='180' fill='#4a2f1f' opacity='0.72'/><rect x='340' y='880' width='78' height='200' fill='#7b5435' opacity='0.72'/><rect x='425' y='860' width='78' height='220' fill='#ba8c5b' opacity='0.72'/><rect x='510' y='840' width='78' height='240' fill='#4a2f1f' opacity='0.72'/><rect x='595' y='960' width='78' height='120' fill='#7b5435' opacity='0.72'/><rect x='680' y='940' width='78' height='140' fill='#ba8c5b' opacity='0.72'/><rect x='765' y='920' width='78' height='160' fill='#4a2f1f' opacity='0.72'/><rect x='850' y='900' width='78' height='180' fill='#7b5435' opacity='0.72'/><rect x='935' y='880' width='78' height='200' fill='#ba8c5b' opacity='0.72'/><rect x='1020' y='860' width='78' height='220' fill='#4a2f1f' opacity='0.72'/><rect x='1105' y='840' width='78' height='240' fill='#7b5435' opacity='0.72'/><rect x='1190' y='960' width='78' height='120' fill='#ba8c5b' opacity='0.72'/><rect x='1275' y='940' width='78' height='140' fill='#4a2f1f' opacity='0.72'/><rect x='1360' y='920' width='78' height='160' fill='#7b5435' opacity='0.72'/><rect x='1445' y='900' width='78' height='180' fill='#ba8c5b' opacity='0.72'/><rect x='1530' y='880' width='78' height='200' fill='#4a2f1f' opacity='0.72'/><rect x='1615' y='860' width='78' height='220' fill='#7b5435' opacity='0.72'/><rect x='1700' y='840' width='78' height='240' fill='#ba8c5b' opacity='0.72'/><rect x='1785' y='960' width='78' height='120' fill='#4a2f1f' opacity='0.72'/><rect x='1870' y='940' width='78' height='140' fill='#7b5435' opacity='0.72'/><rect x='1955' y='920' width='78' height='160' fill='#ba8c5b' opacity='0.72'/><rect x='2040' y='900' width='78' height='180' fill='#4a2f1f' opacity='0.72'/><rect x='2125' y='880' width='78' height='200' fill='#7b5435' opacity='0.72'/><rect x='2210' y='860' width='78' height='220' fill='#ba8c5b' opacity='0.72'/><rect x='2295' y='840' width='78' height='240' fill='#4a2f1f' opacity='0.72'/><rect x='2380' y='960' width='78' height='120' fill='#7b5435' opacity='0.72'/><rect x='2465' y='940' width='78' height='140' fill='#ba8c5b' opacity='0.72'/><rect x='2550' y='920' width='78' height='160' fill='#4a2f1f' opacity='0.72'/><rect x='2635' y='900' width='78' height='180' fill='#7b5435' opacity='0.72'/><rect x='2720' y='880' width='78' height='200' fill='#ba8c5b' opacity='0.72'/><rect x='2805' y='860' width='78' height='220' fill='#4a2f1f' opacity='0.72'/><rect x='2890' y='840' width='78' height='240' fill='#7b5435' opacity='0.72'/><rect x='2975' y='960' width='78' height='120' fill='#ba8c5b' opacity='0.72'/><rect x='3060' y='940' width='78' height='140' fill='#4a2f1f' opacity='0.72'/><rect x='3145' y='920' width='78' height='160' fill='#7b5435' opacity='0.72'/><rect x='3230' y='900' width='78' height='180' fill='#ba8c5b' opacity='0.72'/><rect x='3315' y='880' width='78' height='200' fill='#4a2f1f' opacity='0.72'/><rect x='3400' y='860' width='78' height='220' fill='#7b5435' opacity='0.72'/><rect x='3485' y='840' width='78' height='240' fill='#ba8c5b' opacity='0.72'/><rect x='3570' y='960' width='78' height='120' fill='#4a2f1f' opacity='0.72'/><rect x='3655' y='940' width='78' height='140' fill='#7b5435' opacity='0.72'/><rect x='3740' y='920' width='78' height='160' fill='#ba8c5b' opacity='0.72'/><rect x='3825' y='900' width='78' height='180' fill='#4a2f1f' opacity='0.72'/><rect x='3910' y='880' width='78' height='200' fill='#7b5435' opacity='0.72'/><rect x='3995' y='860' width='78' height='220' fill='#ba8c5b' opacity='0.72'/>
-<path d='M80 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M335 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M590 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M845 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1100 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1355 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1610 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M1865 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2120 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2375 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2630 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M2885 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3140 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3395 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3650 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/><path d='M3905 690 q85 -130 170 0 v390 h-170z' fill='#7b5435' opacity='0.28'/>
-<g opacity='0.18' stroke='#ba8c5b' stroke-width='5'>
-<line x1='0' y1='730' x2='4096' y2='760'/><line x1='0' y1='785' x2='4096' y2='815'/><line x1='0' y1='840' x2='4096' y2='870'/><line x1='0' y1='895' x2='4096' y2='925'/><line x1='0' y1='950' x2='4096' y2='980'/><line x1='0' y1='1005' x2='4096' y2='1035'/><line x1='0' y1='1060' x2='4096' y2='1090'/><line x1='0' y1='1115' x2='4096' y2='1145'/><line x1='0' y1='1170' x2='4096' y2='1200'/><line x1='0' y1='1225' x2='4096' y2='1255'/><line x1='0' y1='1280' x2='4096' y2='1310'/><line x1='0' y1='1335' x2='4096' y2='1365'/><line x1='0' y1='1390' x2='4096' y2='1420'/><line x1='0' y1='1445' x2='4096' y2='1475'/><line x1='0' y1='1500' x2='4096' y2='1530'/><line x1='0' y1='1555' x2='4096' y2='1585'/><line x1='0' y1='1610' x2='4096' y2='1640'/><line x1='0' y1='1665' x2='4096' y2='1695'/>
+<defs>
+  <linearGradient id='ceilG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#060402'/>
+    <stop offset='0.7' stop-color='#1a0e08'/>
+    <stop offset='1' stop-color='#2a1808'/>
+  </linearGradient>
+  <linearGradient id='floorG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#f0c860'/>
+    <stop offset='0.2' stop-color='#c8a040'/>
+    <stop offset='0.6' stop-color='#6a4820'/>
+    <stop offset='1' stop-color='#1a0e04'/>
+  </linearGradient>
+  <radialGradient id='floorGlow' cx='50%' cy='0%' r='80%'>
+    <stop offset='0' stop-color='#f0c860' stop-opacity='0.6'/>
+    <stop offset='0.5' stop-color='#c87830' stop-opacity='0.3'/>
+    <stop offset='1' stop-color='#1a0e04' stop-opacity='0'/>
+  </radialGradient>
+  <radialGradient id='ambG' cx='50%' cy='70%' r='70%'>
+    <stop offset='0' stop-color='#f0c860' stop-opacity='0.25'/>
+    <stop offset='1' stop-color='#1a0e04' stop-opacity='0'/>
+  </radialGradient>
+  <pattern id='hexShelf' x='0' y='0' width='140' height='160' patternUnits='userSpaceOnUse'>
+    <!-- Hexagonal cell shelving unit -->
+    <rect width='140' height='160' fill='#2a1808'/>
+    <!-- Hex outline -->
+    <polygon points='70,4 132,38 132,122 70,156 8,122 8,38' fill='#382010' stroke='#6a4820' stroke-width='3'/>
+    <!-- Book spines on shelf rows inside hex -->
+    <rect x='18' y='55' width='10' height='50' fill='#8a3010'/>
+    <rect x='30' y='58' width='8' height='47' fill='#c87830'/>
+    <rect x='40' y='54' width='12' height='51' fill='#4a2808'/>
+    <rect x='54' y='57' width='9' height='48' fill='#b05818'/>
+    <rect x='65' y='55' width='11' height='50' fill='#6a3010'/>
+    <rect x='78' y='58' width='8' height='47' fill='#c87830'/>
+    <rect x='88' y='54' width='10' height='51' fill='#8a4010'/>
+    <rect x='100' y='57' width='9' height='48' fill='#5a2808'/>
+    <rect x='111' y='55' width='11' height='50' fill='#a06020'/>
+    <!-- Shelf board -->
+    <rect x='10' y='108' width='120' height='5' fill='#6a4820'/>
+    <rect x='10' y='47' width='120' height='5' fill='#6a4820'/>
+    <!-- Upper books (smaller) -->
+    <rect x='20' y='15' width='7' height='28' fill='#6a3010'/>
+    <rect x='29' y='17' width='6' height='26' fill='#c87830'/>
+    <rect x='37' y='14' width='8' height='29' fill='#4a2010'/>
+    <rect x='47' y='16' width='7' height='27' fill='#9a5010'/>
+    <rect x='56' y='15' width='8' height='28' fill='#5a3010'/>
+    <rect x='66' y='17' width='6' height='26' fill='#b06820'/>
+    <rect x='74' y='14' width='7' height='29' fill='#8a4010'/>
+    <rect x='83' y='16' width='8' height='27' fill='#c87830'/>
+    <rect x='93' y='15' width='7' height='28' fill='#4a2808'/>
+    <rect x='102' y='17' width='6' height='26' fill='#9a5810'/>
+    <rect x='110' y='14' width='9' height='29' fill='#7a3810'/>
+  </pattern>
+  <pattern id='floorWood' x='0' y='0' width='80' height='400' patternUnits='userSpaceOnUse'>
+    <rect width='80' height='400' fill='#6a4820'/>
+    <rect x='0' y='0' width='80' height='400' fill='none' stroke='#4a3010' stroke-width='2'/>
+    <line x1='0' y1='100' x2='80' y2='100' stroke='#4a2808' stroke-width='2' opacity='0.6'/>
+    <line x1='0' y1='200' x2='80' y2='200' stroke='#4a2808' stroke-width='2' opacity='0.6'/>
+    <line x1='0' y1='300' x2='80' y2='300' stroke='#4a2808' stroke-width='2' opacity='0.6'/>
+    <rect x='8' y='10' width='64' height='80' fill='#7a5828' opacity='0.3'/>
+    <rect x='8' y='110' width='64' height='80' fill='#5a3818' opacity='0.3'/>
+    <rect x='8' y='210' width='64' height='80' fill='#7a5828' opacity='0.3'/>
+    <rect x='8' y='310' width='64' height='80' fill='#5a3818' opacity='0.3'/>
+  </pattern>
+</defs>
+<!-- CEILING y=0-580 — deep dark void above -->
+<rect width='4096' height='580' fill='url(#ceilG)'/>
+<!-- Ceiling: faint hexagonal ceiling apertures (upward hexagons) -->
+<rect width='4096' height='580' fill='url(#hexShelf)' opacity='0.1'/>
+<!-- Deep void at top -->
+<rect width='4096' height='100' fill='#020101' opacity='0.85'/>
+<!-- Staircase silhouettes at ceiling level -->
+<g fill='#1a0e04' opacity='0.6'>
+  <!-- Spiral staircase (circular silhouette) -->
+  <ellipse cx='800' cy='350' rx='80' ry='160'/>
+  <ellipse cx='800' cy='350' rx='55' ry='130' fill='#0a0604'/>
+  <!-- Stair steps suggestion -->
+  <g stroke='#3a2010' stroke-width='4' fill='none' opacity='0.7'>
+    <path d='M730,200 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M730,240 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M730,280 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M730,320 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M730,360 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M730,400 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M730,440 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M730,480 q35,-30 70,0 q35,30 70,0'/>
+  </g>
+  <!-- Second staircase far side -->
+  <ellipse cx='3296' cy='350' rx='80' ry='160'/>
+  <ellipse cx='3296' cy='350' rx='55' ry='130' fill='#0a0604'/>
+  <g stroke='#3a2010' stroke-width='4' fill='none' opacity='0.7'>
+    <path d='M3226,200 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M3226,240 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M3226,280 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M3226,320 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M3226,360 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M3226,400 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M3226,440 q35,-30 70,0 q35,30 70,0'/>
+    <path d='M3226,480 q35,-30 70,0 q35,30 70,0'/>
+  </g>
 </g>
+<!-- Ambient warm glow from below permeating upward -->
+<rect width='4096' height='580' fill='url(#ambG)'/>
+<!-- CORNICE / shelf top border y=548-645 -->
+<rect y='548' width='4096' height='100' fill='#2a1808'/>
+<rect y='548' width='4096' height='8' fill='#6a4820' opacity='0.7'/>
+<rect y='636' width='4096' height='8' fill='#1a0c04' opacity='0.8'/>
+<!-- Shelf rail detail -->
+<rect y='562' width='4096' height='12' fill='#4a3010' opacity='0.7'/>
+<rect y='580' width='4096' height='50' fill='#3a2010' opacity='0.5'/>
+<!-- WALLS y=640-1400 — infinite hexagonal bookshelves -->
+<rect y='640' width='4096' height='760' fill='#1e1008'/>
+<rect y='640' width='4096' height='760' fill='url(#hexShelf)' opacity='0.95'/>
+<!-- Warm amber light from floor washing up wall -->
+<rect y='640' width='4096' height='760' fill='url(#ambG)' opacity='0.6'/>
+<!-- Staircase silhouettes on wall zone -->
+<g fill='#0a0604' opacity='0.5'>
+  <ellipse cx='800' cy='1020' rx='70' ry='140'/>
+  <ellipse cx='800' cy='1020' rx='45' ry='110' fill='#150a04'/>
+  <ellipse cx='3296' cy='1020' rx='70' ry='140'/>
+  <ellipse cx='3296' cy='1020' rx='45' ry='110' fill='#150a04'/>
+</g>
+<!-- Vertical shelf dividers to create depth bays -->
+<g fill='#3a2010' opacity='0.7'>
+  <rect x='0' y='640' width='14' height='760'/>
+  <rect x='460' y='640' width='14' height='760'/>
+  <rect x='920' y='640' width='14' height='760'/>
+  <rect x='1380' y='640' width='14' height='760'/>
+  <rect x='1840' y='640' width='14' height='760'/>
+  <rect x='2300' y='640' width='14' height='760'/>
+  <rect x='2760' y='640' width='14' height='760'/>
+  <rect x='3220' y='640' width='14' height='760'/>
+  <rect x='3680' y='640' width='14' height='760'/>
+  <rect x='4082' y='640' width='14' height='760'/>
+</g>
+<!-- Horizontal shelf boards across full width -->
+<g fill='#5a3818' opacity='0.6'>
+  <rect x='0' y='690' width='4096' height='8'/>
+  <rect x='0' y='770' width='4096' height='8'/>
+  <rect x='0' y='850' width='4096' height='8'/>
+  <rect x='0' y='930' width='4096' height='8'/>
+  <rect x='0' y='1010' width='4096' height='8'/>
+  <rect x='0' y='1090' width='4096' height='8'/>
+  <rect x='0' y='1170' width='4096' height='8'/>
+  <rect x='0' y='1250' width='4096' height='8'/>
+  <rect x='0' y='1330' width='4096' height='8'/>
+</g>
+<!-- Book spines suggestion band overlay to break up pattern monotony -->
+<g opacity='0.4'>
+  <rect x='0' y='695' width='4096' height='68' fill='#c87830' opacity='0.08'/>
+  <rect x='0' y='855' width='4096' height='68' fill='#8a4010' opacity='0.08'/>
+  <rect x='0' y='1015' width='4096' height='68' fill='#c87830' opacity='0.06'/>
+  <rect x='0' y='1175' width='4096' height='68' fill='#8a4010' opacity='0.08'/>
+</g>
+<!-- Baseboard -->
+<rect y='1382' width='4096' height='26' fill='#4a3010'/>
+<rect y='1380' width='4096' height='5' fill='#c87830' opacity='0.5'/>
+<!-- FLOOR y=1400-2048 — warm amber radiant light from below -->
+<rect y='1400' width='4096' height='648' fill='url(#floorG)'/>
+<rect y='1400' width='4096' height='648' fill='url(#floorWood)' opacity='0.4'/>
+<!-- Strong upward floor glow (the source of warm light) -->
+<rect y='1400' width='4096' height='648' fill='url(#floorGlow)'/>
+<!-- Floor bright band at top (closest to viewer, warmest) -->
+<rect y='1400' width='4096' height='100' fill='#f0c860' opacity='0.35'/>
+<rect y='1400' width='4096' height='40' fill='#fff8e0' opacity='0.2'/>
+<!-- Floor hex tile echo -->
+<rect y='1500' width='4096' height='548' fill='url(#hexShelf)' opacity='0.08'/>
+<!-- Floor depth shadow at far end -->
+<rect y='1780' width='4096' height='268' fill='#0a0604' opacity='0.6'/>
+<!-- Staircase openings in floor (dark holes) -->
+<ellipse cx='800' cy='1500' rx='90' ry='50' fill='#050302' opacity='0.7'/>
+<ellipse cx='3296' cy='1500' rx='90' ry='50' fill='#050302' opacity='0.7'/>
 </svg>

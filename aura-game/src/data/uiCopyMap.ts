@@ -2,19 +2,19 @@ export const UI_COPY_MAP = {
   release: {
     badge: 'Desktop Beta',
     title: 'Aura of the 21st Century',
-    subtitle: '6 Szenarien spielbar: Louvre, St. Peter\'s, Topkapi, TSMC, MoMA, Borges Library.',
+    subtitle: '9 Szenarien spielbar: Louvre, St. Peter\'s, Topkapi, TSMC, MoMA, Borges Library, Hermitage, Forbidden City, Federal Reserve.',
   },
   startView: {
     overline: 'Aura / Desktop Beta',
     title: 'Aura of the 21st Century',
-    body: 'Sechs Räume, sechs Kontexte — Kunst, Kapital, Code, Buchstaben. Ein Schuss. Ein Urteil.',
+    body: 'Neun Räume, neun Kontexte — Kunst, Kapital, Code, Buchstaben, Macht. Ein Schuss. Ein Urteil.',
     ctaPrimary: 'Szenario wählen',
     ctaSecondary: 'Zum Hauptmenü',
   },
   mainMenu: {
     overline: 'Desktop Beta',
     heading: 'of the 21st Century',
-    scenarioSummary: '6 von 9 Szenarien vollständig spielbar. Hermitage, Forbidden City und Federal Reserve folgen im nächsten Release.',
+    scenarioSummary: 'Alle 9 Szenarien vollständig spielbar: Louvre, St. Peter\'s, Topkapi, TSMC, MoMA, Borges Library, Hermitage, Forbidden City, Federal Reserve.',
     ctaScenarioSelect: 'Szenario wählen',
     criticFraming:
       '"The aura is no longer in the object. It is in the system that predicts your desire to destroy it."',
@@ -29,12 +29,12 @@ export const UI_COPY_MAP = {
     statusPrototype: 'Prototype: sichtbar für Preview, Mechaniken oder Balancing sind noch nicht final.',
     statusLocked: 'Locked: absichtlich gesperrt, wird in späterem Release freigeschaltet.',
     deskBriefHeading: 'Mission control',
-    deskBriefBody: 'Für diesen Sprint zählen klare Iterationen: spielbare Räume priorisieren, Prototypen sichtbar halten, Locks transparent begründen.',
+    deskBriefBody: 'Alle neun Räume sind vollständig spielbar. Ein Schuss, ein Urteil — keine zweite Chance.',
     readinessHeading: 'Release readiness',
     readinessItems: [
-      'Playable rooms müssen den One-Shot-Loop vollständig liefern.',
-      'Prototype rooms bleiben explorativ, aber mit ehrlicher Status-Copy.',
-      'Locked rooms bleiben sichtbar, bis Content + Panorama freigegeben sind.',
+      'Alle 9 Räume liefern den vollständigen One-Shot-Loop.',
+      'Panoramen sind prozedural — echte Foto-Assets folgen in einem späteren Release.',
+      'Critic-Lines und Scoring sind für alle Szenarien kalibriert.',
     ],
   },
   results: {
@@ -87,7 +87,7 @@ export const UI_COPY_MAP = {
     heading: 'Known limitations (beta honesty)',
     items: [
       'Single-shot constraint is hard-locked per run; no reload or second attempt inside the same appraisal.',
-      'Three scenarios remain locked (Hermitage, Forbidden City, Federal Reserve) — panorama assets and content review pending.',
+      'Panoramas are procedural SVG gradients — photographic assets are not yet included in this build.',
       'Performance tiers auto-adjust visual fidelity when sustained FPS drops; image quality may step down to preserve control responsiveness.',
     ],
   },

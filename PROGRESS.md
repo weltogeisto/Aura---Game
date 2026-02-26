@@ -2,7 +2,30 @@
 
 ## Changelog
 
+- **2026-02-26 — Milestone 7**: All 9 scenarios confirmed playable; UI copy corrected from "6 playable" to "9 playable"; all SVG panoramas improved with richer architectural detail.
 - **2026-02-22 — Beta transition (`0.3.0-beta.1`)**: Bumped `aura-game/package.json` to `0.3.0-beta.1` and aligned release docs to versioned staging output under `release/web/v0.3.0-beta.1` (with `release/web/current` staying as desktop runtime alias).
+
+## Milestone 7 — Full 9-Scenario Unlock & Copy Accuracy
+
+Completed (2026-02-26):
+
+### UI Copy Correction
+- **uiCopyMap.ts**: Corrected stale "6 playable" copy to reflect all 9 scenarios playable. Updated `release.subtitle`, `startView.body`, `mainMenu.scenarioSummary`, `limitations.items`, and `scenarioSelect` sidebar copy.
+
+### Panorama Visual Improvements
+- **All 9 SVG panoramas** replaced with richer atmospheric backgrounds featuring proper ceiling/wall/floor zone gradients, repeated architectural elements (columns, tile patterns, book shelves, vault ribs), and venue-specific color palettes.
+
+### Documentation
+- **DEVLOG.md** created as ongoing session log.
+- **todo.md** updated: completed items moved, tier lists refreshed.
+
+## CI Status
+
+- `pnpm lint` — pass (0 errors)
+- `pnpm build` — pass (tsc + vite build)
+- `pnpm test:core` — pass (15/15 tests)
+
+---
 
 ## Milestone 6 — Scenario Promotion & UX Polish
 

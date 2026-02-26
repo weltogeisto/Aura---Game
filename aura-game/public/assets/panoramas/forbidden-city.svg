@@ -1,10 +1,166 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4096 2048'>
-<rect width='4096' height='2048' fill='#5e1414'/>
-<rect y='620' width='4096' height='1428' fill='#9e2e1d' opacity='0.45'/>
-<rect y='1080' width='4096' height='968' fill='#d9a15e' opacity='0.3'/>
-<rect x='0' y='960' width='78' height='120' fill='#5e1414' opacity='0.72'/><rect x='85' y='940' width='78' height='140' fill='#9e2e1d' opacity='0.72'/><rect x='170' y='920' width='78' height='160' fill='#d9a15e' opacity='0.72'/><rect x='255' y='900' width='78' height='180' fill='#5e1414' opacity='0.72'/><rect x='340' y='880' width='78' height='200' fill='#9e2e1d' opacity='0.72'/><rect x='425' y='860' width='78' height='220' fill='#d9a15e' opacity='0.72'/><rect x='510' y='840' width='78' height='240' fill='#5e1414' opacity='0.72'/><rect x='595' y='960' width='78' height='120' fill='#9e2e1d' opacity='0.72'/><rect x='680' y='940' width='78' height='140' fill='#d9a15e' opacity='0.72'/><rect x='765' y='920' width='78' height='160' fill='#5e1414' opacity='0.72'/><rect x='850' y='900' width='78' height='180' fill='#9e2e1d' opacity='0.72'/><rect x='935' y='880' width='78' height='200' fill='#d9a15e' opacity='0.72'/><rect x='1020' y='860' width='78' height='220' fill='#5e1414' opacity='0.72'/><rect x='1105' y='840' width='78' height='240' fill='#9e2e1d' opacity='0.72'/><rect x='1190' y='960' width='78' height='120' fill='#d9a15e' opacity='0.72'/><rect x='1275' y='940' width='78' height='140' fill='#5e1414' opacity='0.72'/><rect x='1360' y='920' width='78' height='160' fill='#9e2e1d' opacity='0.72'/><rect x='1445' y='900' width='78' height='180' fill='#d9a15e' opacity='0.72'/><rect x='1530' y='880' width='78' height='200' fill='#5e1414' opacity='0.72'/><rect x='1615' y='860' width='78' height='220' fill='#9e2e1d' opacity='0.72'/><rect x='1700' y='840' width='78' height='240' fill='#d9a15e' opacity='0.72'/><rect x='1785' y='960' width='78' height='120' fill='#5e1414' opacity='0.72'/><rect x='1870' y='940' width='78' height='140' fill='#9e2e1d' opacity='0.72'/><rect x='1955' y='920' width='78' height='160' fill='#d9a15e' opacity='0.72'/><rect x='2040' y='900' width='78' height='180' fill='#5e1414' opacity='0.72'/><rect x='2125' y='880' width='78' height='200' fill='#9e2e1d' opacity='0.72'/><rect x='2210' y='860' width='78' height='220' fill='#d9a15e' opacity='0.72'/><rect x='2295' y='840' width='78' height='240' fill='#5e1414' opacity='0.72'/><rect x='2380' y='960' width='78' height='120' fill='#9e2e1d' opacity='0.72'/><rect x='2465' y='940' width='78' height='140' fill='#d9a15e' opacity='0.72'/><rect x='2550' y='920' width='78' height='160' fill='#5e1414' opacity='0.72'/><rect x='2635' y='900' width='78' height='180' fill='#9e2e1d' opacity='0.72'/><rect x='2720' y='880' width='78' height='200' fill='#d9a15e' opacity='0.72'/><rect x='2805' y='860' width='78' height='220' fill='#5e1414' opacity='0.72'/><rect x='2890' y='840' width='78' height='240' fill='#9e2e1d' opacity='0.72'/><rect x='2975' y='960' width='78' height='120' fill='#d9a15e' opacity='0.72'/><rect x='3060' y='940' width='78' height='140' fill='#5e1414' opacity='0.72'/><rect x='3145' y='920' width='78' height='160' fill='#9e2e1d' opacity='0.72'/><rect x='3230' y='900' width='78' height='180' fill='#d9a15e' opacity='0.72'/><rect x='3315' y='880' width='78' height='200' fill='#5e1414' opacity='0.72'/><rect x='3400' y='860' width='78' height='220' fill='#9e2e1d' opacity='0.72'/><rect x='3485' y='840' width='78' height='240' fill='#d9a15e' opacity='0.72'/><rect x='3570' y='960' width='78' height='120' fill='#5e1414' opacity='0.72'/><rect x='3655' y='940' width='78' height='140' fill='#9e2e1d' opacity='0.72'/><rect x='3740' y='920' width='78' height='160' fill='#d9a15e' opacity='0.72'/><rect x='3825' y='900' width='78' height='180' fill='#5e1414' opacity='0.72'/><rect x='3910' y='880' width='78' height='200' fill='#9e2e1d' opacity='0.72'/><rect x='3995' y='860' width='78' height='220' fill='#d9a15e' opacity='0.72'/>
-<path d='M80 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M335 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M590 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M845 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M1100 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M1355 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M1610 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M1865 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M2120 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M2375 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M2630 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M2885 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M3140 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M3395 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M3650 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/><path d='M3905 690 q85 -130 170 0 v390 h-170z' fill='#9e2e1d' opacity='0.28'/>
-<g opacity='0.18' stroke='#d9a15e' stroke-width='5'>
-<line x1='0' y1='730' x2='4096' y2='760'/><line x1='0' y1='785' x2='4096' y2='815'/><line x1='0' y1='840' x2='4096' y2='870'/><line x1='0' y1='895' x2='4096' y2='925'/><line x1='0' y1='950' x2='4096' y2='980'/><line x1='0' y1='1005' x2='4096' y2='1035'/><line x1='0' y1='1060' x2='4096' y2='1090'/><line x1='0' y1='1115' x2='4096' y2='1145'/><line x1='0' y1='1170' x2='4096' y2='1200'/><line x1='0' y1='1225' x2='4096' y2='1255'/><line x1='0' y1='1280' x2='4096' y2='1310'/><line x1='0' y1='1335' x2='4096' y2='1365'/><line x1='0' y1='1390' x2='4096' y2='1420'/><line x1='0' y1='1445' x2='4096' y2='1475'/><line x1='0' y1='1500' x2='4096' y2='1530'/><line x1='0' y1='1555' x2='4096' y2='1585'/><line x1='0' y1='1610' x2='4096' y2='1640'/><line x1='0' y1='1665' x2='4096' y2='1695'/>
+<defs>
+  <linearGradient id='ceilG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#050202'/>
+    <stop offset='0.3' stop-color='#1a0808'/>
+    <stop offset='1' stop-color='#c87820'/>
+  </linearGradient>
+  <linearGradient id='wallG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#c01010'/>
+    <stop offset='0.5' stop-color='#990000'/>
+    <stop offset='1' stop-color='#5a0000'/>
+  </linearGradient>
+  <linearGradient id='floorG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#c0b890'/>
+    <stop offset='0.4' stop-color='#806840'/>
+    <stop offset='1' stop-color='#180808'/>
+  </linearGradient>
+  <linearGradient id='colG' x1='0' y1='0' x2='1' y2='0'>
+    <stop offset='0' stop-color='#7a0000'/>
+    <stop offset='0.2' stop-color='#cc1010'/>
+    <stop offset='0.5' stop-color='#ee2020'/>
+    <stop offset='0.8' stop-color='#cc1010'/>
+    <stop offset='1' stop-color='#7a0000'/>
+  </linearGradient>
+  <radialGradient id='dragonGlow' cx='50%' cy='30%' r='55%'>
+    <stop offset='0' stop-color='#f0d840' stop-opacity='0.45'/>
+    <stop offset='0.5' stop-color='#c87820' stop-opacity='0.2'/>
+    <stop offset='1' stop-color='#990000' stop-opacity='0'/>
+  </radialGradient>
+  <pattern id='dragonCeil' x='0' y='0' width='400' height='300' patternUnits='userSpaceOnUse'>
+    <rect width='400' height='300' fill='#c87820'/>
+    <rect x='6' y='6' width='388' height='288' fill='#a86010' rx='4'/>
+    <rect x='16' y='16' width='368' height='268' fill='#c87820' rx='2'/>
+    <!-- Stylized dragon cloud panel -->
+    <ellipse cx='200' cy='150' rx='100' ry='70' fill='#e8a020' opacity='0.4'/>
+    <path d='M100,120 q30,-40 60,-20 q20,-30 40,0 q20,-30 60,-10 q30,-40 60,10 q20,0 30,30' fill='none' stroke='#f0c830' stroke-width='3' opacity='0.6'/>
+    <path d='M100,180 q30,40 60,20 q20,30 40,0 q20,30 60,10 q30,40 60,-10 q20,0 30,-30' fill='none' stroke='#f0c830' stroke-width='3' opacity='0.6'/>
+    <circle cx='200' cy='150' r='22' fill='#f5d840' opacity='0.5'/>
+    <circle cx='200' cy='150' r='10' fill='#fffae0' opacity='0.4'/>
+    <!-- Corner bracket clouds -->
+    <path d='M0,0 q30,0 30,30 q0,30 30,30' fill='none' stroke='#f0c830' stroke-width='2' opacity='0.5'/>
+    <path d='M400,0 q-30,0 -30,30 q0,30 -30,30' fill='none' stroke='#f0c830' stroke-width='2' opacity='0.5'/>
+    <path d='M0,300 q30,0 30,-30 q0,-30 30,-30' fill='none' stroke='#f0c830' stroke-width='2' opacity='0.5'/>
+    <path d='M400,300 q-30,0 -30,-30 q0,-30 -30,-30' fill='none' stroke='#f0c830' stroke-width='2' opacity='0.5'/>
+  </pattern>
+  <pattern id='stoneTerrace' x='0' y='0' width='200' height='100' patternUnits='userSpaceOnUse'>
+    <rect width='200' height='100' fill='#b0a888'/>
+    <rect x='0' y='0' width='200' height='100' fill='none' stroke='#989070' stroke-width='3'/>
+    <rect x='5' y='5' width='90' height='40' fill='#c0b898' stroke='#909070' stroke-width='1'/>
+    <rect x='100' y='5' width='95' height='40' fill='#b8b090' stroke='#909070' stroke-width='1'/>
+    <rect x='5' y='55' width='90' height='40' fill='#b8b090' stroke='#909070' stroke-width='1'/>
+    <rect x='100' y='55' width='95' height='40' fill='#c0b898' stroke='#909070' stroke-width='1'/>
+  </pattern>
+</defs>
+<!-- CEILING y=0-580 -->
+<rect width='4096' height='580' fill='url(#ceilG)'/>
+<!-- Dragon-cloud ceiling panels -->
+<rect width='4096' height='550' fill='url(#dragonCeil)' opacity='0.85'/>
+<!-- Dragon glow emanating from ceiling center -->
+<ellipse cx='2048' cy='180' rx='600' ry='280' fill='url(#dragonGlow)'/>
+<!-- Top dark void -->
+<rect width='4096' height='60' fill='#020101' opacity='0.75'/>
+<!-- Ceiling beam grid in gold -->
+<g stroke='#c87820' stroke-width='8' opacity='0.55' fill='none'>
+  <line x1='0' y1='130' x2='4096' y2='130'/>
+  <line x1='0' y1='260' x2='4096' y2='260'/>
+  <line x1='0' y1='390' x2='4096' y2='390'/>
+  <line x1='0' y1='520' x2='4096' y2='520'/>
 </g>
+<g stroke='#c87820' stroke-width='8' opacity='0.45' fill='none'>
+  <line x1='400' y1='0' x2='400' y2='580'/>
+  <line x1='800' y1='0' x2='800' y2='580'/>
+  <line x1='1200' y1='0' x2='1200' y2='580'/>
+  <line x1='1600' y1='0' x2='1600' y2='580'/>
+  <line x1='2000' y1='0' x2='2000' y2='580'/>
+  <line x1='2400' y1='0' x2='2400' y2='580'/>
+  <line x1='2800' y1='0' x2='2800' y2='580'/>
+  <line x1='3200' y1='0' x2='3200' y2='580'/>
+  <line x1='3600' y1='0' x2='3600' y2='580'/>
+</g>
+<!-- CORNICE / bracketing y=548-645 -->
+<rect y='548' width='4096' height='100' fill='#c87820'/>
+<rect y='548' width='4096' height='12' fill='#f5e070' opacity='0.9'/>
+<rect y='628' width='4096' height='12' fill='#8a5000' opacity='0.9'/>
+<!-- Dougong bracket suggestion (stepped) -->
+<g fill='#a86010' opacity='0.8'>
+  <rect x='0' y='558' width='4096' height='6' fill='none' stroke='#f0d840' stroke-width='3' stroke-dasharray='40 20'/>
+  <rect x='0' y='576' width='4096' height='6' fill='none' stroke='#c87820' stroke-width='2' stroke-dasharray='20 20'/>
+</g>
+<!-- WALLS y=640-1400 -->
+<rect y='640' width='4096' height='760' fill='url(#wallG)'/>
+<!-- Vertical vermillion lacquer columns (paired) -->
+<g>
+  <rect x='60' y='640' width='90' height='760' fill='url(#colG)'/><rect x='60' y='640' width='90' height='760' fill='none' stroke='#f0d030' stroke-width='3' opacity='0.5'/>
+  <rect x='180' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='540' y='640' width='90' height='760' fill='url(#colG)'/><rect x='630' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='1020' y='640' width='90' height='760' fill='url(#colG)'/><rect x='1110' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='1500' y='640' width='90' height='760' fill='url(#colG)'/><rect x='1590' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='1980' y='640' width='90' height='760' fill='url(#colG)'/><rect x='2070' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='2460' y='640' width='90' height='760' fill='url(#colG)'/><rect x='2550' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='2940' y='640' width='90' height='760' fill='url(#colG)'/><rect x='3030' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='3420' y='640' width='90' height='760' fill='url(#colG)'/><rect x='3510' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+  <rect x='3900' y='640' width='90' height='760' fill='url(#colG)' opacity='0.88'/>
+</g>
+<!-- Column gold top bands (capitals) -->
+<g fill='#c87820' opacity='0.9'>
+  <rect x='52' y='640' width='226' height='24' rx='3'/>
+  <rect x='532' y='640' width='196' height='24' rx='3'/>
+  <rect x='1012' y='640' width='196' height='24' rx='3'/>
+  <rect x='1492' y='640' width='196' height='24' rx='3'/>
+  <rect x='1972' y='640' width='196' height='24' rx='3'/>
+  <rect x='2452' y='640' width='196' height='24' rx='3'/>
+  <rect x='2932' y='640' width='196' height='24' rx='3'/>
+  <rect x='3412' y='640' width='196' height='24' rx='3'/>
+</g>
+<!-- Column gold base bands -->
+<g fill='#a86010' opacity='0.8'>
+  <rect x='52' y='1370' width='226' height='18' rx='2'/>
+  <rect x='532' y='1370' width='196' height='18' rx='2'/>
+  <rect x='1012' y='1370' width='196' height='18' rx='2'/>
+  <rect x='1492' y='1370' width='196' height='18' rx='2'/>
+  <rect x='1972' y='1370' width='196' height='18' rx='2'/>
+  <rect x='2452' y='1370' width='196' height='18' rx='2'/>
+  <rect x='2932' y='1370' width='196' height='18' rx='2'/>
+  <rect x='3412' y='1370' width='196' height='18' rx='2'/>
+</g>
+<!-- Gold border bands on red walls -->
+<rect y='640' width='4096' height='6' fill='#c87820' opacity='0.9'/>
+<rect y='800' width='4096' height='6' fill='#c87820' opacity='0.5'/>
+<rect y='1200' width='4096' height='6' fill='#c87820' opacity='0.5'/>
+<rect y='1370' width='4096' height='8' fill='#c87820' opacity='0.7'/>
+<!-- Jade green panel accents between columns -->
+<g fill='#2a6840' opacity='0.3'>
+  <rect x='280' y='820' width='250' height='480'/>
+  <rect x='760' y='820' width='250' height='480'/>
+  <rect x='1240' y='820' width='250' height='480'/>
+  <rect x='1720' y='820' width='250' height='480'/>
+  <rect x='2200' y='820' width='250' height='480'/>
+  <rect x='2680' y='820' width='250' height='480'/>
+  <rect x='3160' y='820' width='250' height='480'/>
+  <rect x='3640' y='820' width='250' height='480'/>
+</g>
+<!-- Gold border on jade panels -->
+<g fill='none' stroke='#c87820' stroke-width='5' opacity='0.65'>
+  <rect x='280' y='820' width='250' height='480'/>
+  <rect x='760' y='820' width='250' height='480'/>
+  <rect x='1240' y='820' width='250' height='480'/>
+  <rect x='1720' y='820' width='250' height='480'/>
+  <rect x='2200' y='820' width='250' height='480'/>
+  <rect x='2680' y='820' width='250' height='480'/>
+  <rect x='3160' y='820' width='250' height='480'/>
+  <rect x='3640' y='820' width='250' height='480'/>
+</g>
+<!-- Baseboard gold -->
+<rect y='1382' width='4096' height='26' fill='#c87820'/>
+<rect y='1380' width='4096' height='5' fill='#f5e060' opacity='0.8'/>
+<!-- FLOOR y=1400-2048 — marble terrace with stone slabs -->
+<rect y='1400' width='4096' height='648' fill='url(#floorG)'/>
+<rect y='1400' width='4096' height='500' fill='url(#stoneTerrace)' opacity='0.75'/>
+<!-- Marble terrace steps at floor level -->
+<rect y='1400' width='4096' height='20' fill='#d8d0b8' opacity='0.5'/>
+<rect y='1430' width='4096' height='16' fill='#c0b8a0' opacity='0.4'/>
+<rect y='1460' width='4096' height='12' fill='#b0a888' opacity='0.3'/>
+<!-- Floor depth shadow -->
+<rect y='1850' width='4096' height='198' fill='#060202' opacity='0.6'/>
 </svg>
