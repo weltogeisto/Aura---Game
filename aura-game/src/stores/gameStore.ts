@@ -122,6 +122,7 @@ export const useGameStore = create<GameStore>((set) => ({
         selectedScenario: scenario,
         gamePhase: 'aiming',
         ...RUN_STATE_RESET,
+        runTelemetry: { ...TELEMETRY_RESET, runStartedAt: Date.now() },
       };
     }),
 
