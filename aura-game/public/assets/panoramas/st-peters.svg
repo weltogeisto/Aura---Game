@@ -1,168 +1,633 @@
 <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4096 2048'>
 <defs>
-  <linearGradient id='domeG' x1='0' y1='0' x2='0' y2='1'>
-    <stop offset='0' stop-color='#1a1510'/>
-    <stop offset='0.25' stop-color='#3a3028'/>
-    <stop offset='0.6' stop-color='#c8a030'/>
-    <stop offset='1' stop-color='#e8dcc8'/>
+  <!-- Ceiling gradient: dark apex fading to golden vault -->
+  <linearGradient id='ceilG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#1a1408'/>
+    <stop offset='0.15' stop-color='#2e2410'/>
+    <stop offset='0.5' stop-color='#8a7028'/>
+    <stop offset='0.85' stop-color='#c8a030'/>
+    <stop offset='1' stop-color='#d8b848'/>
   </linearGradient>
-  <linearGradient id='wallG' x1='0' y1='0' x2='0' y2='1'>
-    <stop offset='0' stop-color='#d0c8b8'/>
-    <stop offset='1' stop-color='#908070'/>
-  </linearGradient>
-  <linearGradient id='floorG' x1='0' y1='0' x2='0' y2='1'>
-    <stop offset='0' stop-color='#ccc4b4'/>
-    <stop offset='1' stop-color='#40382c'/>
-  </linearGradient>
-  <linearGradient id='colG' x1='0' y1='0' x2='1' y2='0'>
-    <stop offset='0' stop-color='#c8c0b0'/>
-    <stop offset='0.3' stop-color='#f0ece4'/>
-    <stop offset='0.7' stop-color='#e0d8c8'/>
-    <stop offset='1' stop-color='#a09080'/>
-  </linearGradient>
-  <radialGradient id='domeLight' cx='50%' cy='20%' r='45%'>
-    <stop offset='0' stop-color='#fff8d0' stop-opacity='0.5'/>
-    <stop offset='0.5' stop-color='#c8a030' stop-opacity='0.2'/>
-    <stop offset='1' stop-color='#3a3028' stop-opacity='0'/>
+  <!-- Divine light radial from center top -->
+  <radialGradient id='divineLight' cx='0.5' cy='0.05' r='0.55' fx='0.5' fy='0.02'>
+    <stop offset='0' stop-color='#fffce8' stop-opacity='0.7'/>
+    <stop offset='0.15' stop-color='#fff4c0' stop-opacity='0.45'/>
+    <stop offset='0.35' stop-color='#e8c860' stop-opacity='0.2'/>
+    <stop offset='0.6' stop-color='#c8a030' stop-opacity='0.08'/>
+    <stop offset='1' stop-color='#1a1408' stop-opacity='0'/>
   </radialGradient>
-  <pattern id='mosaicTop' x='0' y='0' width='40' height='40' patternUnits='userSpaceOnUse'>
-    <rect width='40' height='40' fill='#c8a030'/>
-    <rect x='2' y='2' width='16' height='16' fill='#e8c860' opacity='0.8'/>
-    <rect x='22' y='2' width='16' height='16' fill='#b89020' opacity='0.8'/>
-    <rect x='2' y='22' width='16' height='16' fill='#d4b040' opacity='0.8'/>
-    <rect x='22' y='22' width='16' height='16' fill='#f0d870' opacity='0.8'/>
+  <!-- Dome ring glow -->
+  <radialGradient id='domeRing' cx='0.5' cy='0.08' r='0.18'>
+    <stop offset='0' stop-color='#fffef0' stop-opacity='0.6'/>
+    <stop offset='0.4' stop-color='#f0d870' stop-opacity='0.3'/>
+    <stop offset='1' stop-color='#a08020' stop-opacity='0'/>
+  </radialGradient>
+  <!-- Column gradient: lit from left-center, shadowed edges -->
+  <linearGradient id='colG' x1='0' y1='0' x2='1' y2='0'>
+    <stop offset='0' stop-color='#968878'/>
+    <stop offset='0.15' stop-color='#c8c0b0'/>
+    <stop offset='0.35' stop-color='#f0ece4'/>
+    <stop offset='0.55' stop-color='#e8e0d0'/>
+    <stop offset='0.8' stop-color='#c0b4a0'/>
+    <stop offset='1' stop-color='#8a7c6c'/>
+  </linearGradient>
+  <!-- Shadow column (back column of pair) -->
+  <linearGradient id='colGb' x1='0' y1='0' x2='1' y2='0'>
+    <stop offset='0' stop-color='#80746a'/>
+    <stop offset='0.3' stop-color='#b0a898'/>
+    <stop offset='0.6' stop-color='#d0c8b8'/>
+    <stop offset='1' stop-color='#78706a'/>
+  </linearGradient>
+  <!-- Capital gold gradient -->
+  <linearGradient id='capG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#e8d070'/>
+    <stop offset='0.4' stop-color='#c8a030'/>
+    <stop offset='1' stop-color='#a08020'/>
+  </linearGradient>
+  <!-- Wall gradient -->
+  <linearGradient id='wallG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#d8d0c0'/>
+    <stop offset='0.3' stop-color='#c8c0b0'/>
+    <stop offset='0.7' stop-color='#b0a898'/>
+    <stop offset='1' stop-color='#9a9080'/>
+  </linearGradient>
+  <!-- Floor gradient: perspective darkening -->
+  <linearGradient id='floorG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#d0c8b8'/>
+    <stop offset='0.3' stop-color='#c0b8a8'/>
+    <stop offset='0.7' stop-color='#807060'/>
+    <stop offset='1' stop-color='#302818'/>
+  </linearGradient>
+  <!-- Cornice gradient -->
+  <linearGradient id='cornG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#d8c898'/>
+    <stop offset='0.3' stop-color='#c0a870'/>
+    <stop offset='0.5' stop-color='#a89060'/>
+    <stop offset='0.8' stop-color='#b8a070'/>
+    <stop offset='1' stop-color='#8a7858'/>
+  </linearGradient>
+  <!-- Niche interior gradient -->
+  <radialGradient id='nicheG' cx='0.5' cy='0.3' r='0.65'>
+    <stop offset='0' stop-color='#605040'/>
+    <stop offset='0.6' stop-color='#3a3028'/>
+    <stop offset='1' stop-color='#201810'/>
+  </radialGradient>
+  <!-- Lunette mosaic gradient -->
+  <radialGradient id='lunetteG' cx='0.5' cy='0.6' r='0.55'>
+    <stop offset='0' stop-color='#c8a030'/>
+    <stop offset='0.5' stop-color='#a08020'/>
+    <stop offset='1' stop-color='#605018'/>
+  </radialGradient>
+  <!-- Gold mosaic coffer pattern -->
+  <pattern id='cofferP' x='0' y='0' width='256' height='145' patternUnits='userSpaceOnUse'>
+    <rect width='256' height='145' fill='#a08020'/>
+    <rect x='4' y='4' width='248' height='137' fill='#b89830' rx='3'/>
+    <rect x='12' y='12' width='232' height='121' fill='#c8a840' rx='2'/>
+    <rect x='22' y='22' width='212' height='101' fill='#b89028'/>
+    <rect x='22' y='22' width='212' height='101' fill='none' stroke='#d8b848' stroke-width='1.5' rx='1'/>
+    <!-- Inner rosette -->
+    <circle cx='128' cy='72' r='30' fill='#d4b040' opacity='0.5'/>
+    <circle cx='128' cy='72' r='18' fill='#e8c860' opacity='0.45'/>
+    <circle cx='128' cy='72' r='8' fill='#f0d870' opacity='0.5'/>
+    <!-- Corner accents -->
+    <circle cx='34' cy='34' r='6' fill='#d4b040' opacity='0.3'/>
+    <circle cx='222' cy='34' r='6' fill='#d4b040' opacity='0.3'/>
+    <circle cx='34' cy='110' r='6' fill='#d4b040' opacity='0.3'/>
+    <circle cx='222' cy='110' r='6' fill='#d4b040' opacity='0.3'/>
+    <!-- Papal key/cross motif suggestion in coffer center -->
+    <line x1='128' y1='60' x2='128' y2='84' stroke='#e8d070' stroke-width='1.5' opacity='0.35'/>
+    <line x1='122' y1='68' x2='134' y2='68' stroke='#e8d070' stroke-width='1.5' opacity='0.35'/>
+    <line x1='120' y1='78' x2='125' y2='84' stroke='#e8d070' stroke-width='1' opacity='0.25'/>
+    <line x1='136' y1='78' x2='131' y2='84' stroke='#e8d070' stroke-width='1' opacity='0.25'/>
   </pattern>
-  <pattern id='vaultCoffer' x='0' y='0' width='320' height='200' patternUnits='userSpaceOnUse'>
-    <rect width='320' height='200' fill='#a88820'/>
-    <rect x='8' y='8' width='304' height='184' fill='#c8a840' rx='6'/>
-    <rect x='20' y='20' width='280' height='160' fill='#b89830' rx='4'/>
-    <circle cx='160' cy='100' r='28' fill='#e8c860' opacity='0.65'/>
-    <circle cx='160' cy='100' r='14' fill='#fff8d0' opacity='0.5'/>
+  <!-- Tessera pattern for lunette mosaics -->
+  <pattern id='tesseraP' x='0' y='0' width='12' height='12' patternUnits='userSpaceOnUse'>
+    <rect width='12' height='12' fill='#806820'/>
+    <rect x='1' y='1' width='5' height='5' fill='#a08828' opacity='0.7'/>
+    <rect x='7' y='1' width='4' height='5' fill='#907020' opacity='0.6'/>
+    <rect x='1' y='7' width='5' height='4' fill='#b09830' opacity='0.5'/>
+    <rect x='7' y='7' width='4' height='4' fill='#907828' opacity='0.7'/>
   </pattern>
-  <pattern id='marbFloor' x='0' y='0' width='240' height='240' patternUnits='userSpaceOnUse'>
-    <rect width='240' height='240' fill='#b8b0a0'/>
-    <rect x='0' y='0' width='120' height='120' fill='#ccc4b4'/>
-    <rect x='120' y='120' width='120' height='120' fill='#ccc4b4'/>
-    <rect x='0' y='0' width='120' height='120' fill='none' stroke='#9a8870' stroke-width='2'/>
-    <rect x='120' y='0' width='120' height='120' fill='none' stroke='#9a8870' stroke-width='2'/>
-    <rect x='0' y='120' width='120' height='120' fill='none' stroke='#9a8870' stroke-width='2'/>
-    <rect x='120' y='120' width='120' height='120' fill='none' stroke='#9a8870' stroke-width='2'/>
-    <polygon points='120,40 140,120 120,200 100,120' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.6'/>
-    <polygon points='40,120 120,100 200,120 120,140' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.6'/>
+  <!-- Cosmati floor pattern -->
+  <pattern id='cosmatiP' x='0' y='0' width='200' height='200' patternUnits='userSpaceOnUse' patternTransform='rotate(5)'>
+    <!-- Base cream -->
+    <rect width='200' height='200' fill='#c8c0b0'/>
+    <!-- Main grid -->
+    <rect x='0' y='0' width='100' height='100' fill='none' stroke='#685840' stroke-width='2.5'/>
+    <rect x='100' y='0' width='100' height='100' fill='none' stroke='#685840' stroke-width='2.5'/>
+    <rect x='0' y='100' width='100' height='100' fill='none' stroke='#685840' stroke-width='2.5'/>
+    <rect x='100' y='100' width='100' height='100' fill='none' stroke='#685840' stroke-width='2.5'/>
+    <!-- Porphyry circle top-left -->
+    <circle cx='50' cy='50' r='36' fill='#8a3030'/>
+    <circle cx='50' cy='50' r='36' fill='none' stroke='#604020' stroke-width='2'/>
+    <circle cx='50' cy='50' r='28' fill='none' stroke='#a04040' stroke-width='1'/>
+    <!-- Serpentine circle bottom-right -->
+    <circle cx='150' cy='150' r='36' fill='#2a6038'/>
+    <circle cx='150' cy='150' r='36' fill='none' stroke='#1a4028' stroke-width='2'/>
+    <circle cx='150' cy='150' r='28' fill='none' stroke='#3a7848' stroke-width='1'/>
+    <!-- Dark grey diamond top-right -->
+    <polygon points='150,18 182,50 150,82 118,50' fill='#484040'/>
+    <polygon points='150,18 182,50 150,82 118,50' fill='none' stroke='#383030' stroke-width='1.5'/>
+    <polygon points='150,28 174,50 150,72 126,50' fill='none' stroke='#585050' stroke-width='1'/>
+    <!-- Siena yellow diamond bottom-left -->
+    <polygon points='50,118 82,150 50,182 18,150' fill='#c8a040'/>
+    <polygon points='50,118 82,150 50,182 18,150' fill='none' stroke='#a08030' stroke-width='1.5'/>
+    <polygon points='50,128 74,150 50,172 26,150' fill='none' stroke='#d8b050' stroke-width='1'/>
+    <!-- Corner detail squares -->
+    <rect x='3' y='3' width='10' height='10' fill='#484040' opacity='0.5'/>
+    <rect x='87' y='3' width='10' height='10' fill='#2a6038' opacity='0.5'/>
+    <rect x='3' y='87' width='10' height='10' fill='#8a3030' opacity='0.5'/>
+    <rect x='87' y='87' width='10' height='10' fill='#c8a040' opacity='0.5'/>
+    <rect x='103' y='3' width='10' height='10' fill='#8a3030' opacity='0.5'/>
+    <rect x='187' y='3' width='10' height='10' fill='#c8a040' opacity='0.5'/>
+    <rect x='103' y='87' width='10' height='10' fill='#2a6038' opacity='0.5'/>
+    <rect x='187' y='87' width='10' height='10' fill='#484040' opacity='0.5'/>
+    <rect x='3' y='103' width='10' height='10' fill='#c8a040' opacity='0.5'/>
+    <rect x='87' y='103' width='10' height='10' fill='#484040' opacity='0.5'/>
+    <rect x='3' y='187' width='10' height='10' fill='#2a6038' opacity='0.5'/>
+    <rect x='87' y='187' width='10' height='10' fill='#8a3030' opacity='0.5'/>
+    <rect x='103' y='103' width='10' height='10' fill='#c8a040' opacity='0.5'/>
+    <rect x='187' y='103' width='10' height='10' fill='#8a3030' opacity='0.5'/>
+    <rect x='103' y='187' width='10' height='10' fill='#484040' opacity='0.5'/>
+    <rect x='187' y='187' width='10' height='10' fill='#2a6038' opacity='0.5'/>
+  </pattern>
+  <!-- Marble panel colors -->
+  <linearGradient id='marbleCream' x1='0' y1='0' x2='0.1' y2='1'>
+    <stop offset='0' stop-color='#e8e0d0'/><stop offset='1' stop-color='#d8d0c0'/>
+  </linearGradient>
+  <linearGradient id='marbleSiena' x1='0' y1='0' x2='0.15' y2='1'>
+    <stop offset='0' stop-color='#d8b050'/><stop offset='1' stop-color='#c09830'/>
+  </linearGradient>
+  <linearGradient id='marbleGreen' x1='0' y1='0' x2='0.1' y2='1'>
+    <stop offset='0' stop-color='#3a7848'/><stop offset='1' stop-color='#2a5838'/>
+  </linearGradient>
+  <linearGradient id='marbleRed' x1='0' y1='0' x2='0.1' y2='1'>
+    <stop offset='0' stop-color='#a04040'/><stop offset='1' stop-color='#803030'/>
+  </linearGradient>
+  <!-- Warm ambient overlay -->
+  <linearGradient id='ambientG' x1='0' y1='0' x2='0' y2='1'>
+    <stop offset='0' stop-color='#c8a040' stop-opacity='0.06'/>
+    <stop offset='0.5' stop-color='#c8a040' stop-opacity='0.03'/>
+    <stop offset='1' stop-color='#1a1408' stop-opacity='0.15'/>
+  </linearGradient>
+  <!-- Entablature modillion pattern -->
+  <pattern id='modillionP' x='0' y='0' width='48' height='20' patternUnits='userSpaceOnUse'>
+    <rect width='48' height='20' fill='#a89060'/>
+    <rect x='4' y='6' width='18' height='14' fill='#c8a870' rx='1'/>
+    <rect x='4' y='6' width='18' height='3' fill='#d8c090'/>
   </pattern>
 </defs>
-<!-- CEILING / DOME y=0-580 -->
-<rect width='4096' height='580' fill='url(#domeG)'/>
-<!-- Gold mosaic band at very top -->
-<rect y='0' width='4096' height='110' fill='url(#mosaicTop)' opacity='0.9'/>
-<rect y='0' width='4096' height='110' fill='url(#domeLight)'/>
-<!-- Barrel vault coffering below mosaic -->
-<rect y='110' width='4096' height='450' fill='url(#vaultCoffer)' opacity='0.75'/>
-<!-- Dome lantern glow -->
-<ellipse cx='2048' cy='55' rx='500' ry='55' fill='#fff8e0' opacity='0.22'/>
-<ellipse cx='2048' cy='55' rx='200' ry='30' fill='#fffad0' opacity='0.3'/>
-<!-- CORNICE y=555-645 -->
-<rect y='548' width='4096' height='100' fill='#9a8870'/>
-<rect y='548' width='4096' height='12' fill='#d8c898' opacity='0.9'/>
-<rect y='628' width='4096' height='12' fill='#6a5840' opacity='0.9'/>
-<!-- Egg-and-dart band -->
-<g fill='#c8a030' opacity='0.65'>
-  <rect x='0' y='564' width='4096' height='6' fill='none' stroke='#c8a030' stroke-width='4' stroke-dasharray='28 12'/>
+
+<!-- ============================================ -->
+<!-- CEILING / BARREL VAULT  y=0-580             -->
+<!-- ============================================ -->
+<rect width='4096' height='580' fill='url(#ceilG)'/>
+<!-- Gold mosaic coffer pattern across vault -->
+<rect y='50' width='4096' height='510' fill='url(#cofferP)' opacity='0.72'/>
+
+<!-- Central spine rib of barrel vault -->
+<rect x='2018' y='0' width='60' height='580' fill='#8a7020' opacity='0.5'/>
+<rect x='2028' y='0' width='40' height='580' fill='#b89830' opacity='0.4'/>
+<rect x='2040' y='0' width='16' height='580' fill='#d8b848' opacity='0.35'/>
+
+<!-- Transverse ribs across vault -->
+<g fill='#907828' opacity='0.35'>
+  <rect x='0' y='140' width='4096' height='8'/><rect x='0' y='283' width='4096' height='8'/>
+  <rect x='0' y='426' width='4096' height='8'/><rect x='0' y='46' width='4096' height='6'/>
 </g>
-<rect y='574' width='4096' height='40' fill='#8a7858' opacity='0.6'/>
-<g fill='#d4b040' opacity='0.55'>
-  <rect x='0' y='576' width='4096' height='4' fill='none' stroke='#d4b040' stroke-width='2' stroke-dasharray='16 8'/>
+
+<!-- Dome concentric rings suggesting ribbing at center -->
+<ellipse cx='2048' cy='40' rx='520' ry='50' fill='none' stroke='#d8b848' stroke-width='2' opacity='0.3'/>
+<ellipse cx='2048' cy='40' rx='380' ry='38' fill='none' stroke='#e8c860' stroke-width='2' opacity='0.25'/>
+<ellipse cx='2048' cy='40' rx='240' ry='26' fill='none' stroke='#f0d870' stroke-width='2' opacity='0.3'/>
+<ellipse cx='2048' cy='35' rx='120' ry='15' fill='none' stroke='#f8e890' stroke-width='1.5' opacity='0.35'/>
+
+<!-- Divine light: radial glow from center-top -->
+<rect width='4096' height='580' fill='url(#divineLight)'/>
+<rect width='4096' height='300' fill='url(#domeRing)'/>
+
+<!-- Divine light rays fanning from cx=2048 -->
+<g opacity='0.18' fill='none' stroke='#fffce8' stroke-linecap='round'>
+  <line x1='2048' y1='20' x2='800' y2='560' stroke-width='3'/>
+  <line x1='2048' y1='20' x2='1100' y2='560' stroke-width='2.5'/>
+  <line x1='2048' y1='20' x2='1400' y2='560' stroke-width='2'/>
+  <line x1='2048' y1='20' x2='1650' y2='560' stroke-width='2'/>
+  <line x1='2048' y1='20' x2='1850' y2='560' stroke-width='1.5'/>
+  <line x1='2048' y1='20' x2='2048' y2='560' stroke-width='3'/>
+  <line x1='2048' y1='20' x2='2246' y2='560' stroke-width='1.5'/>
+  <line x1='2048' y1='20' x2='2446' y2='560' stroke-width='2'/>
+  <line x1='2048' y1='20' x2='2696' y2='560' stroke-width='2'/>
+  <line x1='2048' y1='20' x2='2996' y2='560' stroke-width='2.5'/>
+  <line x1='2048' y1='20' x2='3296' y2='560' stroke-width='3'/>
 </g>
-<!-- WALLS y=640-1400 -->
+<!-- Wider soft rays -->
+<g opacity='0.07' stroke='#fff4c0' stroke-linecap='round' fill='none'>
+  <line x1='2048' y1='15' x2='400' y2='580' stroke-width='18'/>
+  <line x1='2048' y1='15' x2='1000' y2='580' stroke-width='14'/>
+  <line x1='2048' y1='15' x2='1500' y2='580' stroke-width='12'/>
+  <line x1='2048' y1='15' x2='2048' y2='580' stroke-width='16'/>
+  <line x1='2048' y1='15' x2='2596' y2='580' stroke-width='12'/>
+  <line x1='2048' y1='15' x2='3096' y2='580' stroke-width='14'/>
+  <line x1='2048' y1='15' x2='3696' y2='580' stroke-width='18'/>
+</g>
+
+<!-- Bright oculus center -->
+<ellipse cx='2048' cy='22' rx='80' ry='14' fill='#fffef0' opacity='0.55'/>
+<ellipse cx='2048' cy='22' rx='45' ry='9' fill='#ffffff' opacity='0.4'/>
+
+<!-- ============================================ -->
+<!-- ENTABLATURE / CORNICE  y=548-645            -->
+<!-- ============================================ -->
+<!-- Cornice (projecting with modillions) -->
+<rect y='548' width='4096' height='12' fill='#d8c898'/>
+<rect y='560' width='4096' height='20' fill='url(#modillionP)'/>
+<!-- Frieze band with running decoration -->
+<rect y='580' width='4096' height='28' fill='#9a8868'/>
+<rect y='582' width='4096' height='24' fill='#a89870'/>
+<!-- Frieze running ornament (dentil) -->
+<g fill='#c8b078' opacity='0.6'>
+  <rect x='0' y='586' width='4096' height='3' fill='none' stroke='#c8b078' stroke-width='3' stroke-dasharray='20 10'/>
+  <rect x='0' y='598' width='4096' height='2' fill='none' stroke='#b8a068' stroke-width='2' stroke-dasharray='14 7'/>
+</g>
+<!-- Architrave (smooth band) -->
+<rect y='608' width='4096' height='18' fill='#b0a080'/>
+<rect y='608' width='4096' height='3' fill='#c8b890' opacity='0.7'/>
+<rect y='623' width='4096' height='3' fill='#887860' opacity='0.7'/>
+<!-- Thin gold line -->
+<rect y='626' width='4096' height='2' fill='#d8b848' opacity='0.5'/>
+<!-- Shadow under entablature -->
+<rect y='628' width='4096' height='14' fill='#605040' opacity='0.5'/>
+
+<!-- ============================================ -->
+<!-- WALLS  y=640-1400                           -->
+<!-- ============================================ -->
 <rect y='640' width='4096' height='760' fill='url(#wallG)'/>
-<!-- Marble veining -->
-<g stroke='#b8a898' stroke-width='2' opacity='0.2' fill='none'>
-  <path d='M0 750 q600 -40 1200 30 q600 50 1200 -20 q600 -45 1000 25'/>
-  <path d='M0 950 q400 30 800 -20 q400 -45 800 30 q400 40 800 -15 q400 -35 800 25 q400 35 296 -10'/>
-  <path d='M0 1150 q500 -30 1000 40 q500 50 1000 -20 q500 -40 1000 30 q500 40 96 -15'/>
-</g>
-<!-- Paired marble columns -->
+
+<!-- Polychrome marble panels between column pairs -->
+<!-- 9 bays, each ~455px wide. Columns at: 80, 560, 1040, 1520, 2000, 2480, 2960, 3440, 3820 -->
+<!-- Panels in each bay between column pairs -->
 <g>
-  <rect x='80' y='640' width='75' height='760' fill='url(#colG)'/><rect x='80' y='640' width='75' height='760' fill='none' stroke='#9a8870' stroke-width='2'/>
-  <rect x='168' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='560' y='640' width='75' height='760' fill='url(#colG)'/><rect x='648' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='1040' y='640' width='75' height='760' fill='url(#colG)'/><rect x='1128' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='1520' y='640' width='75' height='760' fill='url(#colG)'/><rect x='1608' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='2000' y='640' width='75' height='760' fill='url(#colG)'/><rect x='2088' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='2480' y='640' width='75' height='760' fill='url(#colG)'/><rect x='2568' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='2960' y='640' width='75' height='760' fill='url(#colG)'/><rect x='3048' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='3440' y='640' width='75' height='760' fill='url(#colG)'/><rect x='3528' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
-  <rect x='3820' y='640' width='75' height='760' fill='url(#colG)'/><rect x='3908' y='640' width='75' height='760' fill='url(#colG)' opacity='0.85'/>
+  <!-- Bay 1: x=260 to x=540 -->
+  <rect x='268' y='920' width='264' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='278' y='930' width='100' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='388' y='930' width='134' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='278' y='1125' width='134' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='422' y='1125' width='100' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <!-- Molding strips -->
+  <rect x='268' y='1118' width='264' height='4' fill='#b8a078' opacity='0.6'/>
+  <rect x='375' y='930' width='3' height='185' fill='#b8a078' opacity='0.5'/>
+  <rect x='409' y='1125' width='3' height='185' fill='#b8a078' opacity='0.5'/>
+
+  <!-- Bay 2: x=740 to x=1020 -->
+  <rect x='748' y='920' width='264' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='758' y='930' width='120' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='888' y='930' width='114' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='758' y='1125' width='114' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='882' y='1125' width='120' height='185' fill='url(#marbleCream)' opacity='0.8' rx='1'/>
+  <rect x='748' y='1118' width='264' height='4' fill='#b8a078' opacity='0.6'/>
+
+  <!-- Bay 3: x=1220 to x=1500 -->
+  <rect x='1228' y='920' width='264' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='1238' y='930' width='100' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='1348' y='930' width='134' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='1238' y='1125' width='134' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='1382' y='1125' width='100' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='1228' y='1118' width='264' height='4' fill='#b8a078' opacity='0.6'/>
+
+  <!-- Bay 4: x=1700 to x=1980 -->
+  <rect x='1708' y='920' width='264' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='1718' y='930' width='120' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='1848' y='930' width='114' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='1718' y='1125' width='114' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='1842' y='1125' width='120' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='1708' y='1118' width='264' height='4' fill='#b8a078' opacity='0.6'/>
+
+  <!-- Bay 5: x=2180 to x=2460 -->
+  <rect x='2188' y='920' width='264' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='2198' y='930' width='100' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='2308' y='930' width='134' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='2198' y='1125' width='134' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='2342' y='1125' width='100' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='2188' y='1118' width='264' height='4' fill='#b8a078' opacity='0.6'/>
+
+  <!-- Bay 6: x=2660 to x=2940 -->
+  <rect x='2668' y='920' width='264' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='2678' y='930' width='120' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='2808' y='930' width='114' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='2678' y='1125' width='114' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='2802' y='1125' width='120' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='2668' y='1118' width='264' height='4' fill='#b8a078' opacity='0.6'/>
+
+  <!-- Bay 7: x=3140 to x=3420 -->
+  <rect x='3148' y='920' width='264' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='3158' y='930' width='100' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='3268' y='930' width='134' height='185' fill='url(#marbleGreen)' opacity='0.6' rx='1'/>
+  <rect x='3158' y='1125' width='134' height='185' fill='url(#marbleRed)' opacity='0.6' rx='1'/>
+  <rect x='3302' y='1125' width='100' height='185' fill='url(#marbleSiena)' opacity='0.7' rx='1'/>
+  <rect x='3148' y='1118' width='264' height='4' fill='#b8a078' opacity='0.6'/>
+
+  <!-- Bay 8: x=3600 to x=3800 (narrower, wrap edge) -->
+  <rect x='3608' y='920' width='184' height='400' fill='url(#marbleCream)' stroke='#a09080' stroke-width='2'/>
+  <rect x='3618' y='930' width='80' height='390' fill='url(#marbleGreen)' opacity='0.5' rx='1'/>
+  <rect x='3706' y='930' width='76' height='390' fill='url(#marbleRed)' opacity='0.5' rx='1'/>
+  <rect x='3608' y='1118' width='184' height='4' fill='#b8a078' opacity='0.6'/>
 </g>
-<!-- Column capitals (gold) -->
-<g fill='#c8a030' opacity='0.85'>
-  <rect x='72' y='640' width='180' height='28' rx='4'/>
-  <rect x='552' y='640' width='180' height='28' rx='4'/>
-  <rect x='1032' y='640' width='180' height='28' rx='4'/>
-  <rect x='1512' y='640' width='180' height='28' rx='4'/>
-  <rect x='1992' y='640' width='180' height='28' rx='4'/>
-  <rect x='2472' y='640' width='180' height='28' rx='4'/>
-  <rect x='2952' y='640' width='180' height='28' rx='4'/>
-  <rect x='3432' y='640' width='180' height='28' rx='4'/>
-  <rect x='3812' y='640' width='180' height='28' rx='4'/>
+
+<!-- Niche alcoves between column pairs -->
+<g>
+  <!-- Template: arched niche with dark interior and statue silhouette -->
+  <!-- Niche 1: bay center ~390 -->
+  <path d='M350,870 L350,1310 L430,1310 L430,870 A40,40 0 0 0 350,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M354,874 A36,36 0 0 1 426,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <!-- Statue silhouette -->
+  <ellipse cx='390' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M380,918 L375,1050 Q370,1060 378,1060 L383,990 L390,1060 L397,990 L402,1060 Q410,1060 405,1050 L400,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='378' y='1060' width='24' height='12' fill='#706050' rx='2'/>
+  <rect x='374' y='1072' width='32' height='8' fill='#807060' rx='1'/>
+
+  <!-- Niche 2: bay center ~870 -->
+  <path d='M830,870 L830,1310 L910,1310 L910,870 A40,40 0 0 0 830,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M834,874 A36,36 0 0 1 906,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <ellipse cx='870' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M860,918 L855,1050 Q850,1060 858,1060 L863,990 L870,1060 L877,990 L882,1060 Q890,1060 885,1050 L880,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='858' y='1060' width='24' height='12' fill='#706050' rx='2'/>
+  <rect x='854' y='1072' width='32' height='8' fill='#807060' rx='1'/>
+
+  <!-- Niche 3: bay center ~1350 -->
+  <path d='M1310,870 L1310,1310 L1390,1310 L1390,870 A40,40 0 0 0 1310,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M1314,874 A36,36 0 0 1 1386,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <ellipse cx='1350' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M1340,918 L1335,1050 Q1330,1060 1338,1060 L1343,990 L1350,1060 L1357,990 L1362,1060 Q1370,1060 1365,1050 L1360,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='1338' y='1060' width='24' height='12' fill='#706050' rx='2'/>
+
+  <!-- Niche 4: bay center ~1830 -->
+  <path d='M1790,870 L1790,1310 L1870,1310 L1870,870 A40,40 0 0 0 1790,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M1794,874 A36,36 0 0 1 1866,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <ellipse cx='1830' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M1820,918 L1815,1050 Q1810,1060 1818,1060 L1823,990 L1830,1060 L1837,990 L1842,1060 Q1850,1060 1845,1050 L1840,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='1818' y='1060' width='24' height='12' fill='#706050' rx='2'/>
+
+  <!-- Niche 5: bay center ~2310 -->
+  <path d='M2270,870 L2270,1310 L2350,1310 L2350,870 A40,40 0 0 0 2270,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M2274,874 A36,36 0 0 1 2346,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <ellipse cx='2310' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M2300,918 L2295,1050 Q2290,1060 2298,1060 L2303,990 L2310,1060 L2317,990 L2322,1060 Q2330,1060 2325,1050 L2320,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='2298' y='1060' width='24' height='12' fill='#706050' rx='2'/>
+
+  <!-- Niche 6: bay center ~2790 -->
+  <path d='M2750,870 L2750,1310 L2830,1310 L2830,870 A40,40 0 0 0 2750,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M2754,874 A36,36 0 0 1 2826,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <ellipse cx='2790' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M2780,918 L2775,1050 Q2770,1060 2778,1060 L2783,990 L2790,1060 L2797,990 L2802,1060 Q2810,1060 2805,1050 L2800,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='2778' y='1060' width='24' height='12' fill='#706050' rx='2'/>
+
+  <!-- Niche 7: bay center ~3270 -->
+  <path d='M3230,870 L3230,1310 L3310,1310 L3310,870 A40,40 0 0 0 3230,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M3234,874 A36,36 0 0 1 3306,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <ellipse cx='3270' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M3260,918 L3255,1050 Q3250,1060 3258,1060 L3263,990 L3270,1060 L3277,990 L3282,1060 Q3290,1060 3285,1050 L3280,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='3258' y='1060' width='24' height='12' fill='#706050' rx='2'/>
+
+  <!-- Niche 8: bay center ~3710 -->
+  <path d='M3670,870 L3670,1310 L3750,1310 L3750,870 A40,40 0 0 0 3670,870Z' fill='url(#nicheG)' stroke='#8a7860' stroke-width='2'/>
+  <path d='M3674,874 A36,36 0 0 1 3746,874' fill='none' stroke='#c8a030' stroke-width='2' opacity='0.5'/>
+  <ellipse cx='3710' cy='905' rx='10' ry='13' fill='#4a4038' opacity='0.7'/>
+  <path d='M3700,918 L3695,1050 Q3690,1060 3698,1060 L3703,990 L3710,1060 L3717,990 L3722,1060 Q3730,1060 3725,1050 L3720,918Z' fill='#4a4038' opacity='0.6'/>
+  <rect x='3698' y='1060' width='24' height='12' fill='#706050' rx='2'/>
 </g>
-<!-- Column bases (gold) -->
-<g fill='#b89820' opacity='0.7'>
-  <rect x='72' y='1372' width='180' height='20' rx='2'/>
-  <rect x='552' y='1372' width='180' height='20' rx='2'/>
-  <rect x='1032' y='1372' width='180' height='20' rx='2'/>
-  <rect x='1512' y='1372' width='180' height='20' rx='2'/>
-  <rect x='1992' y='1372' width='180' height='20' rx='2'/>
-  <rect x='2472' y='1372' width='180' height='20' rx='2'/>
-  <rect x='2952' y='1372' width='180' height='20' rx='2'/>
-  <rect x='3432' y='1372' width='180' height='20' rx='2'/>
-  <rect x='3812' y='1372' width='180' height='20' rx='2'/>
+
+<!-- Lunette arches above columns with mosaic and figure silhouettes -->
+<g>
+  <!-- Lunette 1 -->
+  <clipPath id='lun1'><ellipse cx='390' cy='780' rx='155' ry='100'/></clipPath>
+  <ellipse cx='390' cy='780' rx='155' ry='100' fill='url(#lunetteG)'/>
+  <ellipse cx='390' cy='780' rx='155' ry='100' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='390' cy='780' rx='155' ry='100' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='390' cy='780' rx='145' ry='90' fill='none' stroke='#c8a030' stroke-width='1.5' opacity='0.6'/>
+  <!-- Figure silhouette -->
+  <ellipse cx='390' cy='740' rx='12' ry='15' fill='#605020' opacity='0.5'/>
+  <path d='M375,758 L370,830 L390,820 L410,830 L405,758Z' fill='#605020' opacity='0.4'/>
+
+  <!-- Lunette 2 -->
+  <ellipse cx='870' cy='780' rx='155' ry='100' fill='url(#lunetteG)'/>
+  <ellipse cx='870' cy='780' rx='155' ry='100' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='870' cy='780' rx='155' ry='100' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='870' cy='740' rx='12' ry='15' fill='#605020' opacity='0.5'/>
+  <path d='M855,758 L850,830 L870,820 L890,830 L885,758Z' fill='#605020' opacity='0.4'/>
+
+  <!-- Lunette 3 -->
+  <ellipse cx='1350' cy='780' rx='155' ry='100' fill='url(#lunetteG)'/>
+  <ellipse cx='1350' cy='780' rx='155' ry='100' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='1350' cy='780' rx='155' ry='100' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='1350' cy='740' rx='12' ry='15' fill='#605020' opacity='0.5'/>
+  <path d='M1335,758 L1330,830 L1350,820 L1370,830 L1365,758Z' fill='#605020' opacity='0.4'/>
+
+  <!-- Lunette 4 -->
+  <ellipse cx='1830' cy='780' rx='155' ry='100' fill='url(#lunetteG)'/>
+  <ellipse cx='1830' cy='780' rx='155' ry='100' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='1830' cy='780' rx='155' ry='100' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='1830' cy='740' rx='12' ry='15' fill='#605020' opacity='0.5'/>
+  <path d='M1815,758 L1810,830 L1830,820 L1850,830 L1845,758Z' fill='#605020' opacity='0.4'/>
+
+  <!-- Lunette 5 -->
+  <ellipse cx='2310' cy='780' rx='155' ry='100' fill='url(#lunetteG)'/>
+  <ellipse cx='2310' cy='780' rx='155' ry='100' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='2310' cy='780' rx='155' ry='100' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='2310' cy='740' rx='12' ry='15' fill='#605020' opacity='0.5'/>
+  <path d='M2295,758 L2290,830 L2310,820 L2330,830 L2325,758Z' fill='#605020' opacity='0.4'/>
+
+  <!-- Lunette 6 -->
+  <ellipse cx='2790' cy='780' rx='155' ry='100' fill='url(#lunetteG)'/>
+  <ellipse cx='2790' cy='780' rx='155' ry='100' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='2790' cy='780' rx='155' ry='100' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='2790' cy='740' rx='12' ry='15' fill='#605020' opacity='0.5'/>
+  <path d='M2775,758 L2770,830 L2790,820 L2810,830 L2805,758Z' fill='#605020' opacity='0.4'/>
+
+  <!-- Lunette 7 -->
+  <ellipse cx='3270' cy='780' rx='155' ry='100' fill='url(#lunetteG)'/>
+  <ellipse cx='3270' cy='780' rx='155' ry='100' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='3270' cy='780' rx='155' ry='100' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='3270' cy='740' rx='12' ry='15' fill='#605020' opacity='0.5'/>
+  <path d='M3255,758 L3250,830 L3270,820 L3290,830 L3285,758Z' fill='#605020' opacity='0.4'/>
+
+  <!-- Lunette 8 -->
+  <ellipse cx='3710' cy='780' rx='130' ry='90' fill='url(#lunetteG)'/>
+  <ellipse cx='3710' cy='780' rx='130' ry='90' fill='url(#tesseraP)' opacity='0.5'/>
+  <ellipse cx='3710' cy='780' rx='130' ry='90' fill='none' stroke='#d8b848' stroke-width='4'/>
+  <ellipse cx='3710' cy='745' rx='10' ry='13' fill='#605020' opacity='0.5'/>
+  <path d='M3697,760 L3693,825 L3710,815 L3727,825 L3723,760Z' fill='#605020' opacity='0.4'/>
 </g>
-<!-- Lunette arches with gold mosaic fill -->
-<g fill='#c8a030' opacity='0.3'>
-  <ellipse cx='365' cy='780' rx='155' ry='95'/>
-  <ellipse cx='845' cy='780' rx='155' ry='95'/>
-  <ellipse cx='1325' cy='780' rx='155' ry='95'/>
-  <ellipse cx='1805' cy='780' rx='155' ry='95'/>
-  <ellipse cx='2285' cy='780' rx='155' ry='95'/>
-  <ellipse cx='2765' cy='780' rx='155' ry='95'/>
-  <ellipse cx='3245' cy='780' rx='155' ry='95'/>
-  <ellipse cx='3725' cy='780' rx='155' ry='95'/>
+
+<!-- Paired fluted Corinthian columns -->
+<!-- Each pair: front column + back column, with fluting, capital, and base -->
+<g>
+  <!-- Column pair positions (front x, back x): (80,155), (560,635), (1040,1115), (1520,1595), (2000,2075), (2480,2555), (2960,3035), (3440,3515), (3835,3910) -->
+
+  <!-- COLUMN PAIR 1 -->
+  <!-- Back column -->
+  <rect x='155' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='162' y1='680' x2='162' y2='1380'/><line x1='172' y1='680' x2='172' y2='1380'/><line x1='182' y1='680' x2='182' y2='1380'/><line x1='192' y1='680' x2='192' y2='1380'/><line x1='202' y1='680' x2='202' y2='1380'/><line x1='212' y1='680' x2='212' y2='1380'/></g>
+  <!-- Front column -->
+  <rect x='80' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='88' y1='680' x2='88' y2='1380'/><line x1='98' y1='680' x2='98' y2='1380'/><line x1='108' y1='680' x2='108' y2='1380'/><line x1='118' y1='680' x2='118' y2='1380'/><line x1='128' y1='680' x2='128' y2='1380'/><line x1='138' y1='680' x2='138' y2='1380'/></g>
+  <!-- Capitals (inverted trapezoid + volute suggestion) -->
+  <polygon points='68,680 232,680 220,650 80,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='72' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <!-- Volute scrolls -->
+  <path d='M74,665 Q74,655 84,655 Q90,655 90,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M226,665 Q226,655 216,655 Q210,655 210,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <!-- Bases (stacked rects) -->
+  <rect x='72' y='1380' width='160' height='6' fill='#c8b878'/>
+  <rect x='76' y='1374' width='152' height='6' fill='#b8a868'/>
+  <rect x='80' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 2 -->
+  <rect x='635' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='642' y1='680' x2='642' y2='1380'/><line x1='652' y1='680' x2='652' y2='1380'/><line x1='662' y1='680' x2='662' y2='1380'/><line x1='672' y1='680' x2='672' y2='1380'/><line x1='682' y1='680' x2='682' y2='1380'/><line x1='692' y1='680' x2='692' y2='1380'/></g>
+  <rect x='560' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='568' y1='680' x2='568' y2='1380'/><line x1='578' y1='680' x2='578' y2='1380'/><line x1='588' y1='680' x2='588' y2='1380'/><line x1='598' y1='680' x2='598' y2='1380'/><line x1='608' y1='680' x2='608' y2='1380'/><line x1='618' y1='680' x2='618' y2='1380'/></g>
+  <polygon points='548,680 712,680 700,650 560,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='552' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M554,665 Q554,655 564,655 Q570,655 570,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M706,665 Q706,655 696,655 Q690,655 690,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='552' y='1380' width='160' height='6' fill='#c8b878'/><rect x='556' y='1374' width='152' height='6' fill='#b8a868'/><rect x='560' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 3 -->
+  <rect x='1115' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='1122' y1='680' x2='1122' y2='1380'/><line x1='1132' y1='680' x2='1132' y2='1380'/><line x1='1142' y1='680' x2='1142' y2='1380'/><line x1='1152' y1='680' x2='1152' y2='1380'/><line x1='1162' y1='680' x2='1162' y2='1380'/><line x1='1172' y1='680' x2='1172' y2='1380'/></g>
+  <rect x='1040' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='1048' y1='680' x2='1048' y2='1380'/><line x1='1058' y1='680' x2='1058' y2='1380'/><line x1='1068' y1='680' x2='1068' y2='1380'/><line x1='1078' y1='680' x2='1078' y2='1380'/><line x1='1088' y1='680' x2='1088' y2='1380'/><line x1='1098' y1='680' x2='1098' y2='1380'/></g>
+  <polygon points='1028,680 1192,680 1180,650 1040,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='1032' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M1034,665 Q1034,655 1044,655 Q1050,655 1050,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M1186,665 Q1186,655 1176,655 Q1170,655 1170,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='1032' y='1380' width='160' height='6' fill='#c8b878'/><rect x='1036' y='1374' width='152' height='6' fill='#b8a868'/><rect x='1040' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 4 -->
+  <rect x='1595' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='1602' y1='680' x2='1602' y2='1380'/><line x1='1612' y1='680' x2='1612' y2='1380'/><line x1='1622' y1='680' x2='1622' y2='1380'/><line x1='1632' y1='680' x2='1632' y2='1380'/><line x1='1642' y1='680' x2='1642' y2='1380'/><line x1='1652' y1='680' x2='1652' y2='1380'/></g>
+  <rect x='1520' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='1528' y1='680' x2='1528' y2='1380'/><line x1='1538' y1='680' x2='1538' y2='1380'/><line x1='1548' y1='680' x2='1548' y2='1380'/><line x1='1558' y1='680' x2='1558' y2='1380'/><line x1='1568' y1='680' x2='1568' y2='1380'/><line x1='1578' y1='680' x2='1578' y2='1380'/></g>
+  <polygon points='1508,680 1672,680 1660,650 1520,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='1512' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M1514,665 Q1514,655 1524,655 Q1530,655 1530,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M1666,665 Q1666,655 1656,655 Q1650,655 1650,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='1512' y='1380' width='160' height='6' fill='#c8b878'/><rect x='1516' y='1374' width='152' height='6' fill='#b8a868'/><rect x='1520' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 5 -->
+  <rect x='2075' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='2082' y1='680' x2='2082' y2='1380'/><line x1='2092' y1='680' x2='2092' y2='1380'/><line x1='2102' y1='680' x2='2102' y2='1380'/><line x1='2112' y1='680' x2='2112' y2='1380'/><line x1='2122' y1='680' x2='2122' y2='1380'/><line x1='2132' y1='680' x2='2132' y2='1380'/></g>
+  <rect x='2000' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='2008' y1='680' x2='2008' y2='1380'/><line x1='2018' y1='680' x2='2018' y2='1380'/><line x1='2028' y1='680' x2='2028' y2='1380'/><line x1='2038' y1='680' x2='2038' y2='1380'/><line x1='2048' y1='680' x2='2048' y2='1380'/><line x1='2058' y1='680' x2='2058' y2='1380'/></g>
+  <polygon points='1988,680 2152,680 2140,650 2000,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='1992' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M1994,665 Q1994,655 2004,655 Q2010,655 2010,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M2146,665 Q2146,655 2136,655 Q2130,655 2130,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='1992' y='1380' width='160' height='6' fill='#c8b878'/><rect x='1996' y='1374' width='152' height='6' fill='#b8a868'/><rect x='2000' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 6 -->
+  <rect x='2555' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='2562' y1='680' x2='2562' y2='1380'/><line x1='2572' y1='680' x2='2572' y2='1380'/><line x1='2582' y1='680' x2='2582' y2='1380'/><line x1='2592' y1='680' x2='2592' y2='1380'/><line x1='2602' y1='680' x2='2602' y2='1380'/><line x1='2612' y1='680' x2='2612' y2='1380'/></g>
+  <rect x='2480' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='2488' y1='680' x2='2488' y2='1380'/><line x1='2498' y1='680' x2='2498' y2='1380'/><line x1='2508' y1='680' x2='2508' y2='1380'/><line x1='2518' y1='680' x2='2518' y2='1380'/><line x1='2528' y1='680' x2='2528' y2='1380'/><line x1='2538' y1='680' x2='2538' y2='1380'/></g>
+  <polygon points='2468,680 2632,680 2620,650 2480,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='2472' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M2474,665 Q2474,655 2484,655 Q2490,655 2490,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M2626,665 Q2626,655 2616,655 Q2610,655 2610,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='2472' y='1380' width='160' height='6' fill='#c8b878'/><rect x='2476' y='1374' width='152' height='6' fill='#b8a868'/><rect x='2480' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 7 -->
+  <rect x='3035' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='3042' y1='680' x2='3042' y2='1380'/><line x1='3052' y1='680' x2='3052' y2='1380'/><line x1='3062' y1='680' x2='3062' y2='1380'/><line x1='3072' y1='680' x2='3072' y2='1380'/><line x1='3082' y1='680' x2='3082' y2='1380'/><line x1='3092' y1='680' x2='3092' y2='1380'/></g>
+  <rect x='2960' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='2968' y1='680' x2='2968' y2='1380'/><line x1='2978' y1='680' x2='2978' y2='1380'/><line x1='2988' y1='680' x2='2988' y2='1380'/><line x1='2998' y1='680' x2='2998' y2='1380'/><line x1='3008' y1='680' x2='3008' y2='1380'/><line x1='3018' y1='680' x2='3018' y2='1380'/></g>
+  <polygon points='2948,680 3112,680 3100,650 2960,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='2952' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M2954,665 Q2954,655 2964,655 Q2970,655 2970,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M3106,665 Q3106,655 3096,655 Q3090,655 3090,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='2952' y='1380' width='160' height='6' fill='#c8b878'/><rect x='2956' y='1374' width='152' height='6' fill='#b8a868'/><rect x='2960' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 8 -->
+  <rect x='3515' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='3522' y1='680' x2='3522' y2='1380'/><line x1='3532' y1='680' x2='3532' y2='1380'/><line x1='3542' y1='680' x2='3542' y2='1380'/><line x1='3552' y1='680' x2='3552' y2='1380'/><line x1='3562' y1='680' x2='3562' y2='1380'/><line x1='3572' y1='680' x2='3572' y2='1380'/></g>
+  <rect x='3440' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='3448' y1='680' x2='3448' y2='1380'/><line x1='3458' y1='680' x2='3458' y2='1380'/><line x1='3468' y1='680' x2='3468' y2='1380'/><line x1='3478' y1='680' x2='3478' y2='1380'/><line x1='3488' y1='680' x2='3488' y2='1380'/><line x1='3498' y1='680' x2='3498' y2='1380'/></g>
+  <polygon points='3428,680 3592,680 3580,650 3440,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='3432' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M3434,665 Q3434,655 3444,655 Q3450,655 3450,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M3586,665 Q3586,655 3576,655 Q3570,655 3570,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='3432' y='1380' width='160' height='6' fill='#c8b878'/><rect x='3436' y='1374' width='152' height='6' fill='#b8a868'/><rect x='3440' y='1368' width='144' height='6' fill='#a89858'/>
+
+  <!-- COLUMN PAIR 9 (wrapping edge) -->
+  <rect x='3910' y='680' width='65' height='700' fill='url(#colGb)'/>
+  <g stroke='#a09888' stroke-width='0.8' opacity='0.4'><line x1='3917' y1='680' x2='3917' y2='1380'/><line x1='3927' y1='680' x2='3927' y2='1380'/><line x1='3937' y1='680' x2='3937' y2='1380'/><line x1='3947' y1='680' x2='3947' y2='1380'/><line x1='3957' y1='680' x2='3957' y2='1380'/><line x1='3967' y1='680' x2='3967' y2='1380'/></g>
+  <rect x='3835' y='680' width='70' height='700' fill='url(#colG)'/>
+  <g stroke='#b0a898' stroke-width='0.8' opacity='0.35'><line x1='3843' y1='680' x2='3843' y2='1380'/><line x1='3853' y1='680' x2='3853' y2='1380'/><line x1='3863' y1='680' x2='3863' y2='1380'/><line x1='3873' y1='680' x2='3873' y2='1380'/><line x1='3883' y1='680' x2='3883' y2='1380'/><line x1='3893' y1='680' x2='3893' y2='1380'/></g>
+  <polygon points='3823,680 3987,680 3975,650 3835,650' fill='url(#capG)' stroke='#a08020' stroke-width='1'/>
+  <rect x='3827' y='646' width='156' height='6' fill='#d8c070' rx='1'/>
+  <path d='M3829,665 Q3829,655 3839,655 Q3845,655 3845,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <path d='M3981,665 Q3981,655 3971,655 Q3965,655 3965,662' fill='none' stroke='#d8b848' stroke-width='1.5' opacity='0.6'/>
+  <rect x='3827' y='1380' width='160' height='6' fill='#c8b878'/><rect x='3831' y='1374' width='152' height='6' fill='#b8a868'/><rect x='3835' y='1368' width='144' height='6' fill='#a89858'/>
 </g>
-<!-- Lunette arch outlines -->
-<g fill='none' stroke='#c8a030' stroke-width='4' opacity='0.6'>
-  <ellipse cx='365' cy='780' rx='155' ry='95'/>
-  <ellipse cx='845' cy='780' rx='155' ry='95'/>
-  <ellipse cx='1325' cy='780' rx='155' ry='95'/>
-  <ellipse cx='1805' cy='780' rx='155' ry='95'/>
-  <ellipse cx='2285' cy='780' rx='155' ry='95'/>
-  <ellipse cx='2765' cy='780' rx='155' ry='95'/>
-  <ellipse cx='3245' cy='780' rx='155' ry='95'/>
-  <ellipse cx='3725' cy='780' rx='155' ry='95'/>
+
+<!-- Inter-column shadow depth -->
+<g fill='#1a1408' opacity='0.15'>
+  <rect x='230' y='650' width='330' height='740'/>
+  <rect x='710' y='650' width='330' height='740'/>
+  <rect x='1190' y='650' width='330' height='740'/>
+  <rect x='1670' y='650' width='330' height='740'/>
+  <rect x='2150' y='650' width='330' height='740'/>
+  <rect x='2630' y='650' width='330' height='740'/>
+  <rect x='3110' y='650' width='330' height='740'/>
+  <rect x='3590' y='650' width='245' height='740'/>
 </g>
-<!-- Pilaster moulding lines -->
-<rect y='1350' width='4096' height='14' fill='#c8a030' opacity='0.45'/>
-<rect y='1368' width='4096' height='6' fill='#e8d090' opacity='0.35'/>
-<!-- FLOOR y=1400-2048 -->
+
+<!-- Pilaster moulding at floor line -->
+<rect y='1386' width='4096' height='4' fill='#e8d890' opacity='0.5'/>
+<rect y='1390' width='4096' height='10' fill='#c8a030' opacity='0.5'/>
+
+<!-- ============================================ -->
+<!-- FLOOR  y=1400-2048                          -->
+<!-- ============================================ -->
 <rect y='1400' width='4096' height='648' fill='url(#floorG)'/>
-<rect y='1400' width='4096' height='648' fill='url(#marbFloor)' opacity='0.88'/>
-<!-- Floor sheen -->
-<rect y='1400' width='4096' height='90' fill='#e8e0d0' opacity='0.12'/>
-<!-- Step / plinth base -->
-<rect y='1390' width='4096' height='18' fill='#c8a030' opacity='0.55'/>
-<rect y='1386' width='4096' height='6' fill='#f0e0c0' opacity='0.5'/>
-<!-- Shadow at column bases -->
-<g fill='#2a2018' opacity='0.28'>
-  <rect x='72' y='1390' width='180' height='18'/>
-  <rect x='552' y='1390' width='180' height='18'/>
-  <rect x='1032' y='1390' width='180' height='18'/>
-  <rect x='1512' y='1390' width='180' height='18'/>
-  <rect x='1992' y='1390' width='180' height='18'/>
-  <rect x='2472' y='1390' width='180' height='18'/>
-  <rect x='2952' y='1390' width='180' height='18'/>
-  <rect x='3432' y='1390' width='180' height='18'/>
-  <rect x='3812' y='1390' width='180' height='18'/>
+<!-- Cosmati marble floor pattern -->
+<rect y='1400' width='4096' height='648' fill='url(#cosmatiP)' opacity='0.75'/>
+
+<!-- Floor sheen / reflection near columns -->
+<rect y='1400' width='4096' height='80' fill='#e8e0d0' opacity='0.1'/>
+<rect y='1400' width='4096' height='30' fill='#f0e8d8' opacity='0.08'/>
+
+<!-- Column base shadows on floor -->
+<g fill='#1a1408' opacity='0.25'>
+  <ellipse cx='150' cy='1400' rx='100' ry='12'/><ellipse cx='630' cy='1400' rx='100' ry='12'/>
+  <ellipse cx='1110' cy='1400' rx='100' ry='12'/><ellipse cx='1590' cy='1400' rx='100' ry='12'/>
+  <ellipse cx='2070' cy='1400' rx='100' ry='12'/><ellipse cx='2550' cy='1400' rx='100' ry='12'/>
+  <ellipse cx='3030' cy='1400' rx='100' ry='12'/><ellipse cx='3510' cy='1400' rx='100' ry='12'/>
+  <ellipse cx='3905' cy='1400' rx='100' ry='12'/>
 </g>
-<!-- Floor depth vignette -->
-<rect y='1850' width='4096' height='198' fill='#1a1510' opacity='0.5'/>
+
+<!-- Floor depth darkening -->
+<rect y='1800' width='4096' height='248' fill='#0a0808' opacity='0.45'/>
+<rect y='1950' width='4096' height='98' fill='#050404' opacity='0.3'/>
+
+<!-- ============================================ -->
+<!-- ATMOSPHERE / GLOBAL OVERLAYS                -->
+<!-- ============================================ -->
+<!-- Warm golden ambient -->
+<rect width='4096' height='2048' fill='url(#ambientG)'/>
+
+<!-- Holy light wash from above into nave -->
+<radialGradient id='naveLightG' cx='0.5' cy='0.15' r='0.6'>
+  <stop offset='0' stop-color='#fffce8' stop-opacity='0.08'/>
+  <stop offset='0.4' stop-color='#e8c860' stop-opacity='0.04'/>
+  <stop offset='1' stop-color='#000000' stop-opacity='0'/>
+</radialGradient>
+<rect width='4096' height='2048' fill='url(#naveLightG)'/>
+
+<!-- Subtle vignette edges for depth -->
+<radialGradient id='vignetteG' cx='0.5' cy='0.45' r='0.7'>
+  <stop offset='0.5' stop-color='#000000' stop-opacity='0'/>
+  <stop offset='1' stop-color='#0a0808' stop-opacity='0.2'/>
+</radialGradient>
+<rect width='4096' height='2048' fill='url(#vignetteG)'/>
 </svg>
