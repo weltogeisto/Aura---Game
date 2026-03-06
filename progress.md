@@ -47,3 +47,11 @@
 ## Follow-up — screenshot reliability
 - Added a DEV-only `window.__AURA_DEVTOOLS__.store` hook in `src/main.tsx` so Playwright can force deterministic UI states (especially ResultsScreen) without relying on WebGL shot simulation in headless mode.
 - Re-captured mobile screenshots using explicit UI-state setup to avoid black-screen artifacts.
+
+## Milestone 4 — Same-day ship scaffolding (asset migration)
+- Switched scenario panorama metadata to a production-ready path contract:
+  - lowRes keeps existing local SVG fallback (`/assets/panoramas/<id>.svg`)
+  - mediumRes points to `/panoramas/<id>-2048.jpg`
+  - highRes points to `/panoramas/<id>-8192.jpg`
+- Hardened panorama texture upgrade flow to fail-soft if JPEG assets are missing or still being staged, so gameplay continues with the SVG fallback instead of rendering instability.
+- Added regression test coverage for the panorama path contract to protect future refactors.

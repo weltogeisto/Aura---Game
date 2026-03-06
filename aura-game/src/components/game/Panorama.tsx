@@ -66,6 +66,11 @@ export function Panorama({
   }, [lowResTexture]);
 
   useEffect(() => {
+    setUpgradedTexture((current) => {
+      current?.dispose();
+      return null;
+    });
+
     if (targetTexturePath === panoramaAsset.lowRes) {
       return;
     }
@@ -73,24 +78,35 @@ export function Panorama({
     let cancelled = false;
     const loader = new THREE.TextureLoader();
 
-    loader.load(targetTexturePath, (loadedTexture) => {
-      if (cancelled) {
-        loadedTexture.dispose();
-        return;
+    loader.load(
+      targetTexturePath,
+      (loadedTexture) => {
+        if (cancelled) {
+          loadedTexture.dispose();
+          return;
+        }
+
+        const tuned = configureTexture(
+          loadedTexture,
+          renderTier,
+          textureSize,
+          gl.capabilities.getMaxAnisotropy()
+        );
+
+        setUpgradedTexture((current) => {
+          current?.dispose();
+          return tuned;
+        });
+      },
+      undefined,
+      () => {
+        if (cancelled) return;
+        setUpgradedTexture((current) => {
+          current?.dispose();
+          return null;
+        });
       }
-
-      const tuned = configureTexture(
-        loadedTexture,
-        renderTier,
-        textureSize,
-        gl.capabilities.getMaxAnisotropy()
-      );
-
-      setUpgradedTexture((current) => {
-        current?.dispose();
-        return tuned;
-      });
-    });
+    );
 
     return () => {
       cancelled = true;

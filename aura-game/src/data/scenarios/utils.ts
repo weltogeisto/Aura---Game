@@ -90,8 +90,8 @@ const createScenarioPanoramaAsset = (
   palette: { tint: string; tintStrength: number }
 ) => ({
   lowRes: ensureOfflineAssetPath(`/assets/panoramas/${scenarioId}.svg`),
-  mediumRes: ensureOfflineAssetPath(`/assets/panoramas/${scenarioId}.svg`),
-  highRes: ensureOfflineAssetPath(`/assets/panoramas/${scenarioId}.svg`),
+  mediumRes: ensureOfflineAssetPath(`/panoramas/${scenarioId}-2048.jpg`),
+  highRes: ensureOfflineAssetPath(`/panoramas/${scenarioId}-8192.jpg`),
   tint: palette.tint,
   tintStrength: palette.tintStrength,
 });
