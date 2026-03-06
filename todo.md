@@ -14,7 +14,7 @@ Open work items ordered by priority tier.
 
 ## Tier 1 — Required for public release
 
-- [ ] **Real panorama assets** — Replace procedural SVG panoramas with real equirectangular JPEGs for all 9 playable venues. Asset pipeline: 8192×4096 JPEG hi-res + 2048×1024 JPEG lo-res per venue, placed under `aura-game/public/panoramas/`. Current SVGs are used as placeholder until photo assets are licensed.
+- [ ] **Real panorama assets** — Replace procedural SVG panoramas with real equirectangular JPEGs for all 9 playable venues. Asset pipeline is now prewired in scenario config (`/panoramas/<id>-2048.jpg` + `/panoramas/<id>-8192.jpg`) with fail-soft SVG fallback until licensed photos are staged under `aura-game/public/panoramas/`.
 - [ ] **Audio files** — Record or license impact SFX + ambient loops for all 9 venues. Howler.js is wired; no `.ogg`/`.mp3` assets on disk. Sentinel strings `data:audio/x-aura-ambient,<venue>` are used as placeholders.
 
 ## Tier 2 — Polish before public beta
