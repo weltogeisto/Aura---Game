@@ -66,13 +66,16 @@ export function Panorama({
   }, [lowResTexture]);
 
   useEffect(() => {
-    setUpgradedTexture((current) => {
-      current?.dispose();
-      return null;
-    });
+    // Defer the synchronous setState to avoid cascading render warning
+    const resetT = setTimeout(() => {
+      setUpgradedTexture((current) => {
+        current?.dispose();
+        return null;
+      });
+    }, 0);
 
     if (targetTexturePath === panoramaAsset.lowRes) {
-      return;
+      return () => clearTimeout(resetT);
     }
 
     let cancelled = false;
@@ -110,6 +113,7 @@ export function Panorama({
 
     return () => {
       cancelled = true;
+      clearTimeout(resetT);
     };
   }, [gl, panoramaAsset.lowRes, renderTier, targetTexturePath, textureSize]);
 

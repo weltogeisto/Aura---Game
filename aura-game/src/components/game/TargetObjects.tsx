@@ -1,3 +1,7 @@
+import { useRef } from 'react';
+import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
+import { useGameStore } from '@/stores/gameStore';
 import type { Target } from '@/types';
 
 interface TargetObjectsProps {
@@ -26,38 +30,100 @@ const roughnessOffsetFromId = (targetId: string): number => {
   const seed = targetId
     .split('')
     .reduce((acc, character, index) => acc + character.charCodeAt(0) * (index + 1), 0);
-
   return ((seed % 7) - 3) * 0.015;
 };
 
 const getSculptureMaterialPreset = (material?: string) => {
   const materialKey = (material ?? '').toLowerCase();
-
   if (materialKey.includes('gild') || materialKey.includes('gold')) {
-    return {
-      color: '#c9a84f',
-      emissive: '#2b1f08',
-      metalness: 0.92,
-      roughness: 0.2,
-    };
+    return { color: '#c9a84f', emissive: '#2b1f08', metalness: 0.92, roughness: 0.2 };
   }
-
   if (materialKey.includes('bronze')) {
-    return {
-      color: '#7b5a3e',
-      emissive: '#19120b',
-      metalness: 0.82,
-      roughness: 0.34,
-    };
+    return { color: '#7b5a3e', emissive: '#19120b', metalness: 0.82, roughness: 0.34 };
   }
-
-  return {
-    color: '#d8d8d6',
-    emissive: '#101010',
-    metalness: 0.15,
-    roughness: 0.58,
-  };
+  return { color: '#d8d8d6', emissive: '#101010', metalness: 0.15, roughness: 0.58 };
 };
+
+/** Wraps a target group with hit-reaction animation (scale pulse + Z recoil) */
+function HitAnimatedGroup({
+  targetId,
+  children,
+  position,
+  isPainting = false,
+}: {
+  targetId: string;
+  children: React.ReactNode;
+  position: [number, number, number];
+  isPainting?: boolean;
+}) {
+  const groupRef = useRef<THREE.Group>(null);
+  const animStartRef = useRef<number | null>(null);
+  const reducedMotion = useGameStore((state) => state.accessibility.reducedMotion);
+  const lastShotResult = useGameStore((state) => state.lastShotResult);
+  const isHit = lastShotResult?.hitTargetId === targetId;
+
+  useFrame((_, delta) => {
+    if (!groupRef.current || reducedMotion || !isHit) {
+      if (groupRef.current && !isHit) {
+        // Reset transform if no longer hit
+        groupRef.current.scale.setScalar(1);
+        groupRef.current.position.set(...position);
+      }
+      return;
+    }
+
+    if (animStartRef.current === null) {
+      animStartRef.current = 0;
+    }
+
+    animStartRef.current += delta;
+    const t = animStartRef.current;
+    const duration = 0.7;
+
+    if (t >= duration) {
+      groupRef.current.scale.setScalar(1);
+      groupRef.current.position.set(...position);
+      return;
+    }
+
+    const progress = t / duration;
+
+    // Scale pulse: 1.0 → 1.06 → 0.97 → 1.0
+    let scale: number;
+    if (progress < 0.2) {
+      scale = 1 + (progress / 0.2) * 0.06;
+    } else if (progress < 0.45) {
+      scale = 1.06 - ((progress - 0.2) / 0.25) * 0.09;
+    } else {
+      const easeBack = (progress - 0.45) / 0.55;
+      scale = 0.97 + easeBack * 0.03;
+    }
+    groupRef.current.scale.setScalar(scale);
+
+    // Paintings recoil backward (Z), then spring back
+    if (isPainting) {
+      const recoilZ = progress < 0.25
+        ? position[2] - (progress / 0.25) * 0.12
+        : position[2] - (1 - (progress - 0.25) / 0.75) * 0.12;
+      groupRef.current.position.set(position[0], position[1], recoilZ);
+    }
+  });
+
+  // Reset animation timer when hit status changes
+  useFrame(() => {
+    if (!isHit) {
+      animStartRef.current = null;
+    } else if (animStartRef.current === null) {
+      animStartRef.current = 0;
+    }
+  });
+
+  return (
+    <group ref={groupRef} position={position}>
+      {children}
+    </group>
+  );
+}
 
 function PaintingTarget({ target }: { target: Target }) {
   const hitData = createTargetHitData(target);
@@ -68,17 +134,31 @@ function PaintingTarget({ target }: { target: Target }) {
   const canvasWidth = frameWidth - canvasInset * 2;
   const canvasHeight = frameHeight - canvasInset * 2;
   const variation = roughnessOffsetFromId(target.id);
+  const lastShotResult = useGameStore((state) => state.lastShotResult);
+  const isHit = lastShotResult?.hitTargetId === target.id;
 
   return (
-    <group position={target.position}>
+    <HitAnimatedGroup targetId={target.id} position={target.position} isPainting>
       <mesh userData={hitData} castShadow receiveShadow>
         <boxGeometry args={[frameWidth, frameHeight, frameDepth]} />
-        <meshStandardMaterial color="#4d3523" metalness={0.35} roughness={0.5 + variation} />
+        <meshStandardMaterial
+          color="#4d3523"
+          metalness={0.35}
+          roughness={0.5 + variation}
+          emissive={isHit ? '#4a2000' : '#000000'}
+          emissiveIntensity={isHit ? 0.8 : 0}
+        />
       </mesh>
 
       <mesh position={[0, 0, frameDepth * 0.52]} userData={hitData}>
         <planeGeometry args={[canvasWidth, canvasHeight]} />
-        <meshStandardMaterial color="#d8c9a7" roughness={0.72 + variation} metalness={0.04} />
+        <meshStandardMaterial
+          color="#d8c9a7"
+          roughness={0.72 + variation}
+          metalness={0.04}
+          emissive={isHit ? '#3d2900' : '#000000'}
+          emissiveIntensity={isHit ? 0.6 : 0}
+        />
       </mesh>
 
       <mesh
@@ -95,7 +175,7 @@ function PaintingTarget({ target }: { target: Target }) {
           <meshBasicMaterial color="#ff00ff" wireframe transparent opacity={0.3} />
         </mesh>
       )}
-    </group>
+    </HitAnimatedGroup>
   );
 }
 
@@ -105,9 +185,11 @@ function SculptureTarget({ target }: { target: Target }) {
   const pedestalRadius = target.radius * 0.75;
   const pedestalHeight = target.radius * 1.05;
   const sculptureHeight = target.radius * 1.2;
+  const lastShotResult = useGameStore((state) => state.lastShotResult);
+  const isHit = lastShotResult?.hitTargetId === target.id;
 
   return (
-    <group position={target.position}>
+    <HitAnimatedGroup targetId={target.id} position={target.position}>
       <mesh position={[0, -pedestalHeight * 0.5, 0]} userData={hitData} receiveShadow>
         <cylinderGeometry args={[pedestalRadius, pedestalRadius * 1.1, pedestalHeight, 24]} />
         <meshStandardMaterial color="#f0efe9" metalness={0.05} roughness={0.72} />
@@ -119,7 +201,11 @@ function SculptureTarget({ target }: { target: Target }) {
         castShadow
       >
         <icosahedronGeometry args={[target.radius, 3]} />
-        <meshStandardMaterial {...sculptureMaterial} />
+        <meshStandardMaterial
+          {...sculptureMaterial}
+          emissive={isHit ? '#ffffff' : sculptureMaterial.emissive}
+          emissiveIntensity={isHit ? 1.0 : 0}
+        />
       </mesh>
 
       {SHOW_DEBUG_PRIMITIVES && (
@@ -128,7 +214,7 @@ function SculptureTarget({ target }: { target: Target }) {
           <meshBasicMaterial color="#00ffff" wireframe transparent opacity={0.35} />
         </mesh>
       )}
-    </group>
+    </HitAnimatedGroup>
   );
 }
 
@@ -136,14 +222,17 @@ function InteractiveObjectTarget({ target }: { target: Target }) {
   const hitData = createTargetHitData(target);
   const isSystemic = target.type === 'easter-egg-systemic';
   const isDadaist = target.type === 'easter-egg-dadaist';
+  const lastShotResult = useGameStore((state) => state.lastShotResult);
+  const isHit = lastShotResult?.hitTargetId === target.id;
 
   return (
-    <group position={target.position}>
+    <HitAnimatedGroup targetId={target.id} position={target.position}>
       <mesh userData={hitData} castShadow>
         <boxGeometry args={[target.radius * 1.8, target.radius * 1.2, target.radius * 1.1]} />
         <meshStandardMaterial
           color={isSystemic ? '#8b0000' : '#6a503f'}
-          emissive={isSystemic ? '#360000' : '#1b130f'}
+          emissive={isHit ? '#ff4000' : (isSystemic ? '#360000' : '#1b130f')}
+          emissiveIntensity={isHit ? 1.2 : 0}
           metalness={isSystemic ? 0.82 : 0.18}
           roughness={isSystemic ? 0.24 : 0.64}
           transparent={isDadaist}
@@ -175,7 +264,7 @@ function InteractiveObjectTarget({ target }: { target: Target }) {
           <meshBasicMaterial color="#ffff00" wireframe transparent opacity={0.35} />
         </mesh>
       )}
-    </group>
+    </HitAnimatedGroup>
   );
 }
 
@@ -191,11 +280,9 @@ export function TargetObjects({ targets }: TargetObjectsProps) {
         if (target.type === 'masterpiece') {
           return <PaintingTarget key={target.id} target={target} />;
         }
-
         if (target.type === 'sculpture') {
           return <SculptureTarget key={target.id} target={target} />;
         }
-
         return <InteractiveObjectTarget key={target.id} target={target} />;
       })}
     </group>

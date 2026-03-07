@@ -7,6 +7,7 @@ import { Scene } from '@/components/game/Scene';
 import { HUD } from '@/components/game/HUD';
 import { ShotEffects } from '@/components/game/ShotEffects';
 import { GameAudioDirector } from '@/components/game/GameAudioDirector';
+import { ChainReactionOverlay } from '@/components/game/ChainReactionOverlay';
 import { StartView } from '@/components/ui/StartView';
 import { hasResult } from '@/stores/gameSelectors';
 
@@ -17,7 +18,10 @@ function App() {
   const highContrast = useGameStore((state) => state.accessibility.highContrast);
 
   return (
-    <div className={`w-screen h-screen overflow-hidden ${highContrast ? 'accessibility-high-contrast bg-black' : 'bg-black'}`}>
+    <div
+      data-game-wrapper
+      className={`w-screen h-screen overflow-hidden ${highContrast ? 'accessibility-high-contrast bg-black' : 'bg-black'}`}
+    >
       {gamePhase === 'start' && <StartView />}
       {gamePhase === 'menu' && <MainMenu />}
       {gamePhase === 'scenario-select' && <ScenarioSelect />}
@@ -26,6 +30,7 @@ function App() {
           <Scene />
           <HUD />
           <ShotEffects />
+          <ChainReactionOverlay />
           <GameAudioDirector />
         </>
       )}

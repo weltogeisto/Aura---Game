@@ -79,6 +79,7 @@ interface GameStore extends GameState {
   setGamePhase: (phase: GamePhase) => void;
   setSelectedScenario: (scenario: Scenario | null) => void;
   setCrosshairPosition: (x: number, y: number) => void;
+  setFocusedTargetValue: (value: number | null) => void;
   startRun: (scenario: Scenario) => void;
   enterAiming: () => void;
   commitShot: (result: ShotResult, feedback: ShotFeedback) => void;
@@ -96,6 +97,7 @@ export const useGameStore = create<GameStore>((set) => ({
   gamePhase: 'start',
   selectedScenario: null,
   crosshairPosition: { x: 0.5, y: 0.5 },
+  focusedTargetValue: null,
   accessibility: readAccessibilityFlags(),
   runTelemetry: TELEMETRY_RESET,
   ...RUN_STATE_RESET,
@@ -108,6 +110,9 @@ export const useGameStore = create<GameStore>((set) => ({
 
   setCrosshairPosition: (x: number, y: number) =>
     set({ crosshairPosition: { x, y } }),
+
+  setFocusedTargetValue: (value: number | null) =>
+    set({ focusedTargetValue: value }),
 
   startRun: (scenario: Scenario) =>
     set((state) => {

@@ -147,6 +147,8 @@ export interface GameState {
   gamePhase: GamePhase;
   selectedScenario: Scenario | null;
   crosshairPosition: { x: number; y: number };
+  /** Value (€) of the target currently under the crosshair, or null. */
+  focusedTargetValue: number | null;
   shotFired: boolean;
   hasFired: boolean;
   shotTimestamp: number | null;
