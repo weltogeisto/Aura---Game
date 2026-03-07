@@ -55,6 +55,7 @@ export function ValueMesh({ scenario }: ValueMeshProps) {
   const gamePhase = useGameStore((state) => state.gamePhase);
   const shotFeedback = useGameStore((state) => state.shotFeedback);
   const lastShotResult = useGameStore((state) => state.lastShotResult);
+  const setFocusedTargetValue = useGameStore((state) => state.setFocusedTargetValue);
   const [focusedTargetId, setFocusedTargetId] = useState<string | null>(null);
   const focusedTargetRef = useRef<string | null>(null);
 
@@ -113,6 +114,10 @@ export function ValueMesh({ scenario }: ValueMeshProps) {
     if (focusedTargetRef.current !== nearestTargetId) {
       focusedTargetRef.current = nearestTargetId;
       setFocusedTargetId(nearestTargetId);
+      const target = nearestTargetId
+        ? scenario.targets.find((t) => t.id === nearestTargetId) ?? null
+        : null;
+      setFocusedTargetValue(target ? target.value : null);
     }
   });
 

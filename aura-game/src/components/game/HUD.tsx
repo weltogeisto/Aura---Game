@@ -14,18 +14,20 @@ function AccessibilityToggles() {
   ];
 
   return (
-    <div className="pointer-events-auto absolute right-6 bottom-6 w-72 rounded-lg border border-white/15 bg-black/55 p-3 text-sm text-gray-200">
-      <p className="text-xs uppercase tracking-[0.2em] text-orange-200">{UI_COPY_MAP.accessibility.heading}</p>
+    <div className="pointer-events-auto absolute right-5 bottom-5 w-64 rounded-lg border border-white/10 bg-black/60 p-3 text-sm text-gray-200 backdrop-blur">
+      <p className="text-xs uppercase tracking-[0.2em] text-orange-200/80">
+        {UI_COPY_MAP.accessibility.heading}
+      </p>
       <div className="mt-2 space-y-2">
         {toggles.map((toggle) => (
           <label key={toggle.key} className="flex items-center justify-between gap-2">
-            <span>{toggle.label}</span>
+            <span className="text-sm text-gray-300">{toggle.label}</span>
             <button
               type="button"
               onClick={() => setAccessibilityFlag(toggle.key, !accessibility[toggle.key])}
-              className={`rounded-full px-3 py-1 text-xs font-semibold ${accessibility[toggle.key]
+              className={`rounded-full px-2.5 py-1 text-xs font-bold transition ${accessibility[toggle.key]
                 ? 'bg-orange-500 text-black'
-                : 'bg-gray-800 text-gray-300'}`}
+                : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`}
             >
               {accessibility[toggle.key] ? UI_COPY_MAP.accessibility.on : UI_COPY_MAP.accessibility.off}
             </button>
@@ -44,7 +46,10 @@ export function HUD() {
   const lastShotResult = useGameStore((state) => state.lastShotResult);
   const reducedMotion = useGameStore((state) => state.accessibility.reducedMotion);
   const criticText = lastShotResult?.criticLine ?? UI_COPY_MAP.hud.evaluating;
-  const typedCritic = useTypewriter(criticText, { disabled: reducedMotion || gamePhase !== 'shooting', speedMs: 16 });
+  const typedCritic = useTypewriter(criticText, {
+    disabled: reducedMotion || gamePhase !== 'shooting',
+    speedMs: 16,
+  });
 
   if ((gamePhase !== 'aiming' && gamePhase !== 'shooting') || !selectedScenario) {
     return null;
@@ -53,32 +58,59 @@ export function HUD() {
   const isShooting = gamePhase === 'shooting';
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-30">
-      <div className="absolute left-6 top-6 text-white">
-        <p className="text-xs uppercase tracking-[0.2em] text-orange-300">Active scenario</p>
-        <h2 className="mt-1 text-2xl font-semibold text-orange-400">{selectedScenario.name}</h2>
-        <p className="mt-1 text-sm text-gray-300">{isShooting ? MICROCOPY.shootingHint : MICROCOPY.aimingHint}</p>
+    <div className="pointer-events-none fixed inset-0 z-30 scanlines">
+      {/* Top-left: Scenario info */}
+      <div className="absolute left-5 top-5 text-white">
+        <p className="text-[10px] uppercase tracking-[0.28em] text-orange-300/70">
+          Active scenario
+        </p>
+        <h2 className="font-display mt-0.5 text-xl font-bold text-orange-400 sm:text-2xl">
+          {selectedScenario.name}
+        </h2>
+        <p className="mt-1 text-xs text-gray-400">
+          {isShooting ? MICROCOPY.shootingHint : MICROCOPY.aimingHint}
+        </p>
       </div>
 
-      <div className="absolute right-6 top-6 rounded-lg bg-black/50 px-4 py-2 text-white">
-        <p className="text-xs uppercase tracking-[0.2em] text-gray-300">Ammo</p>
-        <p className="text-3xl font-bold text-red-500">{ammoRemaining}</p>
+      {/* Top-right: Ammo counter */}
+      <div className="absolute right-5 top-5 rounded-xl border border-red-900/50 bg-black/65 px-4 py-3 text-center backdrop-blur">
+        <p className="text-[9px] uppercase tracking-[0.3em] text-gray-500">Ammo</p>
+        <p
+          className={`font-display leading-none font-black ${ammoRemaining > 0 ? 'text-red-500' : 'text-gray-700'}`}
+          style={{
+            fontSize: '3.5rem',
+            textShadow: ammoRemaining > 0 ? '0 0 20px rgba(239,68,68,0.5)' : 'none',
+          }}
+        >
+          {ammoRemaining}
+        </p>
+        <p className="text-[8px] uppercase tracking-[0.35em] text-red-400/60">One Shot</p>
       </div>
 
+      {/* Bottom-left: Controls or critic */}
       {gamePhase === 'aiming' ? (
-        <div className="absolute bottom-6 left-6 space-y-1 text-sm text-gray-300">
+        <div className="absolute bottom-5 left-5 space-y-1">
           {UI_COPY_MAP.hud.controls.map((control) => (
-            <p key={control}>{control}</p>
+            <p key={control} className="text-xs text-gray-500">{control}</p>
           ))}
-          {fireBlocked && <p className="text-orange-300">{UI_COPY_MAP.hud.blockedShot}</p>}
+          {fireBlocked && (
+            <p className="text-xs text-orange-300">{UI_COPY_MAP.hud.blockedShot}</p>
+          )}
         </div>
       ) : (
-        <div className="absolute bottom-6 left-6 max-w-xl rounded-lg border border-orange-500/35 bg-black/45 px-4 py-3 text-sm text-orange-100">
-          <p className="font-medium">{UI_COPY_MAP.hud.evaluating}</p>
-          <p className="mt-1 text-orange-200">{UI_COPY_MAP.hud.criticDeliveryPrefix} “{typedCritic.text}{typedCritic.done ? '' : '▌'}”</p>
+        <div className="absolute bottom-5 left-5 max-w-md rounded-xl border border-orange-500/30 bg-black/55 px-4 py-3 backdrop-blur">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-orange-300/70">
+            {UI_COPY_MAP.hud.evaluating}
+          </p>
+          <p className="font-serif mt-2 text-sm italic leading-relaxed text-orange-100">
+            &ldquo;{typedCritic.text}{typedCritic.done ? '' : '▌'}&rdquo;
+          </p>
           {lastShotResult?.hitTargetName && (
-            <p className="mt-1 text-orange-200">
-              {UI_COPY_MAP.hud.registeredPrefix} {lastShotResult.hitTargetName}
+            <p className="mt-1.5 text-xs text-orange-300/70">
+              {UI_COPY_MAP.hud.registeredPrefix}{' '}
+              <span className="font-semibold not-italic text-orange-200">
+                {lastShotResult.hitTargetName}
+              </span>
             </p>
           )}
         </div>
